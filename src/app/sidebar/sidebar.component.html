@@ -1,0 +1,72 @@
+<div id="sidebar">
+  <div class="row">
+    <div style="display: flex;">
+      <span class="material-icons perfil">
+        account_circle
+      </span>
+      <div style="margin-left: 8px;">
+        <h2 style="margin: 0;">{{ username }}</h2>
+        <h3 style="margin: 0;">{{ office }}</h3>
+      </div>
+    </div>
+    <span id="vpn-key" class="material-icons">
+      vpn_key
+    </span>
+  </div>
+  <div class="row">
+    <span class="material-icons icon-row">
+      storefront
+    </span>
+    <label for="Vendas">Vendas</label>
+  </div>
+  <div class="row">
+    <span class="material-icons icon-row">
+      people
+    </span>
+    <label for="Clientes">Clientes</label>
+  </div>
+  <div class="row">
+    <span class="material-icons icon-row">
+      local_laundry_service
+    </span>
+    <label>Peças</label>
+  </div>
+  <div
+    [routerLink]="['/measure']"
+    [ngClass]="{ selectedRow: rowSelected == 'measure' }"
+    class="row"
+  >
+    <span class="material-icons icon-row">
+      assessment
+    </span>
+    <label>Unidade</label>
+  </div>
+  <div
+    [routerLink]="['/property']"
+    [ngClass]="{ selectedRow: rowSelected == 'property' }"
+    class="row"
+  >
+    <span class="material-icons icon-row">
+      local_offer
+    </span>
+    <label>Propriedades</label>
+  </div>
+  <div class="row">
+    <span class="material-icons icon-row">
+      file_copy
+    </span>
+    <label>Relatorios</label>
+  </div>
+  <div class="row">
+    <span class="material-icons icon-row">
+      groups
+    </span>
+    <label>Usuarios</label>
+  </div>
+  <div [routerLink]="['']" class="row">
+    <span class="material-icons icon-row">
+      exit_to_app
+    </span>
+    <label>Sair</label>
+  </div>
+</div>

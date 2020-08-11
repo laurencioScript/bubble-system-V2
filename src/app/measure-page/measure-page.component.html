@@ -1,0 +1,14 @@
+<div id="container">
+  <app-sidebar rowSelected="measure"></app-sidebar>
+  <div>
+    <div class="header">
+      <img src="./../../assets/buble.svg" />
+      <h1>Unidades de Medida</h1>
+    </div>
+    <app-simple-table
+      id="measure-table"
+      [dataSource]="measures"
+      [name]="'Unidade'"
+    ></app-simple-table>
+  </div>
+</div>

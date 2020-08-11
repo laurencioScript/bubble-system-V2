@@ -1,0 +1,21 @@
+<div class="content">
+  <div class="div-logo">
+    <img src="./../assets/logo.svg" />
+  </div>
+  <div class="div-form">
+    <h1>Bem vindo ao <strong>Bubble System</strong></h1>
+    <form>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" placeholder="Digite seu email" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" placeholder="Digite sua senha" />
+      </mat-form-field>
+      <button mat-raised-button [routerLink]="['/measure']" color="primary">
+        Entrar
+      </button>
+    </form>
+  </div>
+</div>

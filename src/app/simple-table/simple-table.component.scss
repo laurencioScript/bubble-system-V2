@@ -1,0 +1,66 @@
+#container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 0;
+}
+
+.content-button {
+  width: 40%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  div:first-child {
+    width: 60%;
+    mat-form-field {
+      width: 100%;
+    }
+  }
+}
+
+.content-paginator {
+  margin-top: 16px;
+  width: 40%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+mat-table {
+  width: 40%;
+}
+
+.row-table:hover {
+  background: whitesmoke;
+}
+
+.btn-blue {
+  color: #3c7eff;
+  border: 1px solid #3c7eff;
+}
+
+.btn-blue:hover {
+  color: white;
+  background: #3c7eff;
+  border: 1px solid white;
+}
+
+.btn {
+  padding: 0 8px;
+  background-color: white;
+}
+
+.span-blue {
+  color: #3c7eff;
+}
+
+.span-blue:hover {
+  color: #3c7eff;
+  font-weight: bold;
+}
+
+.btn-icon {
+  cursor: pointer;
+}

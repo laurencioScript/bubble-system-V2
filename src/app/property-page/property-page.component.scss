@@ -1,0 +1,25 @@
+#container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  .content {
+    width: 100%;
+    overflow: scroll;
+    // height: 100%;
+
+    .mat-tab-group ::ng-deep .mat-tab-body-wrapper {
+      // height: 100%;
+      width: 100%;
+      margin: 32px 0;
+    }
+
+    .mat-tab-group ::ng-deep .mat-tab-label {
+      color: #3c7eff;
+    }
+
+    .mat-tab-group ::ng-deep .mat-ink-bar {
+      background-color: #3c7eff;
+    }
+  }
+}
