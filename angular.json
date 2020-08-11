@@ -123,6 +123,14 @@
               "devServerTarget": "bubble-system:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@netlify-builder/deploy:deploy",
+          "options": {
+            "outputPath": "dist/bubble-system",
+            "netlifyToken": "",
+            "siteId": "51820a3c-ccd9-4054-9aad-d300aa3186ce"
+          }
         }
       }
     }
