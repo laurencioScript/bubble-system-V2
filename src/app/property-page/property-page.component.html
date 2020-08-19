@@ -9,10 +9,7 @@
           </span>
           Cores
         </ng-template>
-        <app-simple-table
-          [dataSource]="dataSourceColor"
-          [name]="'Cor'"
-        ></app-simple-table>
+        <app-simple-table [dataSource]="dataSourceColor" [name]="'Cor'"></app-simple-table>
       </mat-tab>
       <mat-tab class="tab" label="Defeitos">
         <ng-template mat-tab-label class="mat-tab">
@@ -21,10 +18,7 @@
           </span>
           Defeitos
         </ng-template>
-        <app-simple-table
-          [dataSource]="dataSourceDefect"
-          [name]="'Defeito'"
-        ></app-simple-table>
+        <app-simple-table [dataSource]="dataSourceDefect" [name]="'Defeito'"></app-simple-table>
       </mat-tab>
       <mat-tab class="tab" label="Caracteristica">
         <ng-template mat-tab-label class="mat-tab">
@@ -37,6 +31,15 @@
           [dataSource]="dataSourceFeature"
           [name]="'Caracteristica'"
         ></app-simple-table>
+      </mat-tab>
+      <mat-tab class="tab" label="Caracteristica">
+        <ng-template mat-tab-label class="mat-tab">
+          <span class="material-icons">
+            square_foot
+          </span>
+          Unidades
+        </ng-template>
+        <app-simple-table [dataSource]="dataMeasures" [name]="'Unidade'"></app-simple-table>
       </mat-tab>
     </mat-tab-group>
   </div>

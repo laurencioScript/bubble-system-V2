@@ -37,6 +37,8 @@ export class PropertyPageComponent implements OnInit {
     { name: 'manchada' },
   ];
 
+  dataMeasures = [{ name: 'metros' }];
+
   constructor() {}
 
   ngOnInit(): void {}

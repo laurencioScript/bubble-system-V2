@@ -53,9 +53,7 @@ export class SimpleTableComponent implements OnInit {
         return;
       }
 
-      this.dataClone = this.dataClone.filter(
-        (value) => value.name != measureExist.name
-      );
+      this.dataClone = this.dataClone.filter((value) => value.name != measureExist.name);
 
       this.dataClone.push({
         ...measure,
@@ -69,9 +67,7 @@ export class SimpleTableComponent implements OnInit {
   filter() {
     this.data = this.dataClone;
 
-    this.data = this.data.filter(
-      (value) => value.name.indexOf(this.searchValue) >= 0
-    );
+    this.data = this.data.filter((value) => value.name.indexOf(this.searchValue) >= 0);
 
     this.paginator();
   }
@@ -80,11 +76,9 @@ export class SimpleTableComponent implements OnInit {
     if (!element) {
       return;
     }
-    this.dataClone = this.dataClone.filter(
-      (value) => value.name != element.name
-    );
+    this.dataClone = this.dataClone.filter((value) => value.name != element.name);
     this.data = this.clone(this.dataClone);
-    this.dataSource = new MatTableDataSource<any>(this.data);
+    this.paginator();
   }
 
   public getServerData(event?: PageEvent) {

@@ -17,7 +17,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 import { HomePageComponent } from './home-page/home-page.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { MeasurePageComponent } from './measure-page/measure-page.component';
 import { PropertyPageComponent } from './property-page/property-page.component';
 import { SimpleTableComponent } from './simple-table/simple-table.component';
 import { SimpleModalComponent } from './simple-table/simple-modal/simple-modal.component';
@@ -27,7 +26,6 @@ import { SimpleModalComponent } from './simple-table/simple-modal/simple-modal.c
     SidebarComponent,
     HomePageComponent,
     LoginComponent,
-    MeasurePageComponent,
     PropertyPageComponent,
     SimpleTableComponent,
     SimpleModalComponent,
