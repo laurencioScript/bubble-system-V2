@@ -46,8 +46,26 @@
       width: 100%;
     }
 
+    #password {
+      margin-bottom: 16px;
+    }
+
     button {
       background-color: #3c7eff;
+      mat-spinner {
+        zoom: 0.2;
+      }
+    }
+
+    button ::ng-deep .mat-progress-spinner circle,
+    .mat-spinner circle {
+      stroke: white;
     }
   }
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  padding: 6px;
 }

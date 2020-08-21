@@ -8,6 +8,13 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   async login(data) {
-    return this.http.post(`${environment.apiUrl}/user/login`, data).toPromise();
+    try {
+      const { result }: any = await this.http
+        .post(`${environment.apiUrl}/user/login`, data)
+        .toPromise();
+      return result;
+    } catch (error) {
+      return null;
+    }
   }
 }

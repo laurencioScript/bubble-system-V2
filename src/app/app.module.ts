@@ -11,10 +11,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { LoginComponent } from './login/login.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTabsModule } from '@angular/material/tabs';
 import { HttpClientModule } from '@angular/common/http';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { HomePageComponent } from './home-page/home-page.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -32,6 +33,7 @@ import { SimpleModalComponent } from './simple-table/simple-modal/simple-modal.c
     SimpleModalComponent,
   ],
   imports: [
+    ReactiveFormsModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
@@ -40,6 +42,7 @@ import { SimpleModalComponent } from './simple-table/simple-modal/simple-modal.c
     MatInputModule,
     MatButtonModule,
     MatTableModule,
+    MatProgressSpinnerModule,
     MatDialogModule,
     FormsModule,
     MatTabsModule,
