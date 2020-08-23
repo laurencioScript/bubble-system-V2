@@ -64,7 +64,7 @@ export class SimpleTableComponent implements OnInit {
         return;
       }
       // create
-      if (!objectGeneric.id) {
+      if (!objectGeneric.id && !this.dataClone.find((value) => objectGeneric.name == value.name)) {
         let generic;
         generic = await this.serviceGeneric.create({
           ...objectGeneric,
@@ -75,11 +75,24 @@ export class SimpleTableComponent implements OnInit {
 
       //update
       if (objectGeneric.id) {
-        let generic;
         delete objectGeneric.visible;
-        generic = await this.serviceGeneric.update(objectGeneric);
-        this.dataClone = this.dataClone.map((value) => {
-          if (value.id == measureExist.id) {
+        let generic,
+          updateValidate = false;
+        this.dataClone = this.dataClone.forEach((value) => {
+          if (
+            value.id == measureExist.id &&
+            !this.dataClone.find(
+              (valueExist) =>
+                objectGeneric.id != valueExist.id && objectGeneric.name == valueExist.name
+            )
+          ) {
+            updateValidate = true;
+          }
+        });
+
+        this.dataClone = this.dataClone.map(async (value) => {
+          if (updateValidate && objectGeneric.id != value.id) {
+            generic = await this.serviceGeneric.update(objectGeneric);
             return generic;
           }
           return value;

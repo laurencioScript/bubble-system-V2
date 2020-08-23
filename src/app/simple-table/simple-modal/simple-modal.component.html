@@ -6,6 +6,7 @@
         matInput
         type="text"
         [(ngModel)]="object.name"
+        autocomplete="off"
         placeholder="Digite a aqui"
         (keyup.enter)="sendName()"
       />
@@ -18,6 +19,7 @@
         matInput
         type="text"
         [(ngModel)]="object.hexadecimal"
+        autocomplete="off"
         placeholder="Digite a aqui"
         (keyup.enter)="sendHexadecimal()"
       />
