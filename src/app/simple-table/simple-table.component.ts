@@ -4,13 +4,20 @@ import { SimpleModalComponent } from './simple-modal/simple-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 
+interface genericService {
+  create: any;
+  update: any;
+  delete: any;
+  get: any;
+}
 @Component({
   selector: 'app-simple-table',
   templateUrl: './simple-table.component.html',
   styleUrls: ['./simple-table.component.scss'],
 })
 export class SimpleTableComponent implements OnInit {
-  @Input('dataSource') data: any[];
+  @Input('dataSource') data: any = [];
+  @Input('serviceGeneric') serviceGeneric: genericService;
   dataClone: any;
   @Input('name') name: string;
   pageEvent: PageEvent;
@@ -24,14 +31,18 @@ export class SimpleTableComponent implements OnInit {
 
   constructor(public dialog: MatDialog) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.dataClone = this.clone(this.data);
     this.length = this.data && Array.isArray(this.data) ? this.data.length : 0;
+    this.displayedColumns =
+      this.name == 'Cor' ? ['name', 'hexadecimal', 'edit', 'delete'] : this.displayedColumns;
 
-    if (this.name == 'Cor') {
-      this.displayedColumns = ['name', 'hexadecimal', 'edit', 'delete'];
-    }
+    this.paginator();
+  }
 
+  ngOnChanges() {
+    this.dataClone = this.clone(this.data);
+    this.length = this.data && Array.isArray(this.data) ? this.data.length : 0;
     this.paginator();
   }
 
@@ -45,22 +56,38 @@ export class SimpleTableComponent implements OnInit {
 
   openDialog(measureExist: any = {}) {
     const dialogRef = this.dialog.open(SimpleModalComponent, {
-      data: this.clone({ measureExist, name: this.name }),
+      data: this.clone({ measureExist, name: this.name, serviceGeneric: this.serviceGeneric }),
     });
 
-    dialogRef.afterClosed().subscribe((measure) => {
-      if (!measure) {
+    dialogRef.afterClosed().subscribe(async (objectGeneric) => {
+      if (!objectGeneric) {
         return;
       }
+      // create
+      if (!objectGeneric.id) {
+        let generic;
+        generic = await this.serviceGeneric.create({
+          ...objectGeneric,
+          name: objectGeneric.name.toLocaleLowerCase(),
+        });
+        this.dataClone.push(generic);
+      }
 
-      this.dataClone = this.dataClone.filter((value) => value.name != measureExist.name);
+      //update
+      if (objectGeneric.id) {
+        let generic;
+        delete objectGeneric.visible;
+        generic = await this.serviceGeneric.update(objectGeneric);
+        this.dataClone = this.dataClone.map((value) => {
+          if (value.id == measureExist.id) {
+            return generic;
+          }
+          return value;
+        });
+      }
 
-      this.dataClone.push({
-        ...measure,
-        name: measure.name.toLocaleLowerCase(),
-      });
       this.data = this.clone(this.dataClone);
-      this.dataSource = new MatTableDataSource<any>(this.data);
+      this.paginator();
     });
   }
 
@@ -72,9 +99,12 @@ export class SimpleTableComponent implements OnInit {
     this.paginator();
   }
 
-  remove(element) {
+  async remove(element) {
     if (!element) {
       return;
+    }
+    if (this.serviceGeneric) {
+      await this.serviceGeneric.delete(element.id);
     }
     this.dataClone = this.dataClone.filter((value) => value.name != element.name);
     this.data = this.clone(this.dataClone);
@@ -91,6 +121,7 @@ export class SimpleTableComponent implements OnInit {
 
   paginator() {
     let selectedValues = [];
+    this.data.sort(this.orderBy);
     for (let index = 0; index < this.pageSize; index++) {
       if (this.data[this.pageSize * this.pageIndex + index]) {
         selectedValues.push(this.data[this.pageSize * this.pageIndex + index]);
@@ -98,6 +129,16 @@ export class SimpleTableComponent implements OnInit {
     }
 
     this.dataSource = new MatTableDataSource<any>(selectedValues);
+  }
+
+  orderBy(current, next) {
+    if (current.name > next.name) {
+      return 1;
+    }
+    if (current.name < next.name) {
+      return -1;
+    }
+    return 0;
   }
 
   clone(object: any) {

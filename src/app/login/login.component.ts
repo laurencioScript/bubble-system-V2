@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from './../user.service';
+import { UserService } from './../service/user.service';
 import { Router } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
 @Component({
@@ -15,7 +15,10 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   async login() {
-    if (this.email.invalid || this.password.invalid) {
+    if (
+      (this.email.invalid && !this.email.hasError('badrequest')) ||
+      (this.password.invalid && !this.password.hasError('badrequest'))
+    ) {
       return;
     }
 

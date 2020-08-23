@@ -22,6 +22,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { PropertyPageComponent } from './property-page/property-page.component';
 import { SimpleTableComponent } from './simple-table/simple-table.component';
 import { SimpleModalComponent } from './simple-table/simple-modal/simple-modal.component';
+import { PropertyService } from './service/property.service';
+import { UserService } from './service/user.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +50,7 @@ import { SimpleModalComponent } from './simple-table/simple-modal/simple-modal.c
     MatTabsModule,
     MatPaginatorModule,
   ],
-  providers: [],
+  providers: [PropertyService, UserService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
