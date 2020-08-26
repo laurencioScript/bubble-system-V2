@@ -26,7 +26,7 @@ export class SimpleTableComponent implements OnInit {
   length: number;
   searchValue: string;
 
-  displayedColumns: string[] = ['name', 'edit', 'delete'];
+  displayedColumns: string[] = ['number', 'name', 'delete'];
   dataSource = new MatTableDataSource<any>();
 
   constructor(public dialog: MatDialog) {}
@@ -35,7 +35,7 @@ export class SimpleTableComponent implements OnInit {
     this.dataClone = this.clone(this.data);
     this.length = this.data && Array.isArray(this.data) ? this.data.length : 0;
     this.displayedColumns =
-      this.name == 'Cor' ? ['name', 'hexadecimal', 'edit', 'delete'] : this.displayedColumns;
+      this.name == 'Cor' ? ['number', 'name', 'hexadecimal', 'delete'] : this.displayedColumns;
 
     this.paginator();
   }
