@@ -16,7 +16,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTabsModule } from '@angular/material/tabs';
 import { HttpClientModule } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import { MatMenuModule } from '@angular/material/menu';
 import { HomePageComponent } from './home-page/home-page.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { PropertyPageComponent } from './property-page/property-page.component';
@@ -49,6 +49,7 @@ import { UserService } from './service/user.service';
     FormsModule,
     MatTabsModule,
     MatPaginatorModule,
+    MatMenuModule,
   ],
   providers: [PropertyService, UserService],
   bootstrap: [AppComponent],

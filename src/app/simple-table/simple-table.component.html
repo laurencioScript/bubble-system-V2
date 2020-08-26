@@ -1,8 +1,10 @@
 <div id="container">
   <div class="content-button">
     <div>
-      <mat-form-field appearance="standard">
-        <mat-label style="color: #3c7eff;">Filtro</mat-label>
+      <mat-form-field appearance="outline">
+        <span style="padding-right: 8px;" matPrefix class="material-icons">
+          search
+        </span>
         <input
           matInput
           placeholder="Pesquise aqui"
@@ -21,38 +23,50 @@
 
   <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- Name Column -->
+    <ng-container matColumnDef="number">
+      <mat-header-cell *matHeaderCellDef> N° </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        {{ dataSource.filteredData.indexOf(element) + 1 + pageIndex * pageSize }}
+      </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> NOME </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
     </ng-container>
 
     <ng-container *ngIf="name == 'Cor'" matColumnDef="hexadecimal">
-      <mat-header-cell *matHeaderCellDef> Hexadecimal </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> HEXADECIMAL </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <span
+        <div
           class="material-icons"
-          style="margin-right: 8px; border: 1.5px solid black; border-radius: 50px;"
-          [ngStyle]="{ color: element.hexadecimal }"
-        >
-          fiber_manual_record
-        </span>
-        {{ element.hexadecimal }}
+          style="margin-right: 8px; padding: 8px; border: 1px solid black; border-radius: 50px;"
+          [ngStyle]="{ 'background-color': element.hexadecimal }"
+        ></div>
+        {{ element.hexadecimal | uppercase }}
       </mat-cell>
     </ng-container>
 
-    <!-- Weight Column -->
-    <ng-container matColumnDef="edit">
-      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-      <mat-cell style="justify-content: center;" *matCellDef="let element">
-        <span class="btn-icon span-blue" (click)="openDialog(element)">Editar</span>
-      </mat-cell>
-    </ng-container>
-
-    <!-- Symbol Column -->
     <ng-container matColumnDef="delete">
       <mat-header-cell *matHeaderCellDef> </mat-header-cell>
       <mat-cell style="justify-content: center;" *matCellDef="let element">
-        <span class="btn-icon span-blue" (click)="remove(element)">Deletar</span>
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          aria-label="Example icon-button with a menu"
+        >
+          <span class="material-icons">
+            more_vert
+          </span>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button (click)="openDialog(element)" mat-menu-item>
+            <span>Editar</span>
+          </button>
+          <button (click)="remove(element)" mat-menu-item>
+            <span>Remover</span>
+          </button>
+        </mat-menu>
       </mat-cell>
     </ng-container>
 
