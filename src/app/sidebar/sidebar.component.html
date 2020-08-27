@@ -25,7 +25,7 @@
     </span>
     <label for="Clientes">Clientes</label>
   </div>
-  <div class="row">
+  <div [routerLink]="['/parts']" [ngClass]="{ selectedRow: rowSelected == 'parts' }" class="row">
     <span class="material-icons icon-row">
       local_laundry_service
     </span>
