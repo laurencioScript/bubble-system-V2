@@ -2,7 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
+import { FormsPartsComponent } from './forms-parts/forms-parts.component';
+import { PartsService } from '../service/parts.service';
 
+interface genericService {
+  create: any;
+  update: any;
+  delete: any;
+  get: any;
+}
 @Component({
   selector: 'app-parts-page',
   templateUrl: './parts-page.component.html',
@@ -15,6 +23,7 @@ export class PartsPageComponent implements OnInit {
   pageSize: number = 5;
   length: number;
   searchValue: string;
+  partsService: genericService;
   data: any = [
     { name: 'Camisa', measure: 'Unidade', unityValue: '40,00' },
     { name: 'Roupa Social', measure: 'Unidade', unityValue: '100,00' },
@@ -29,14 +38,19 @@ export class PartsPageComponent implements OnInit {
   displayedColumns: string[] = ['name', 'measure', 'unityValue', 'options'];
   dataSource = new MatTableDataSource<any>();
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private readonly serviceParts: PartsService) {}
 
   async ngOnInit() {
     this.dataClone = this.clone(this.data);
     this.length = this.data && Array.isArray(this.data) ? this.data.length : 0;
     this.displayedColumns =
       this.name == 'Cor' ? ['number', 'name', 'hexadecimal', 'delete'] : this.displayedColumns;
-
+    this.partsService = {
+      create: this.serviceParts.createParts,
+      update: this.serviceParts.updateParts,
+      delete: this.serviceParts.deleteParts,
+      get: this.serviceParts.getParts,
+    };
     this.paginator();
   }
 
@@ -54,55 +68,51 @@ export class PartsPageComponent implements OnInit {
     value.visible = false;
   }
 
-  openDialog(measureExist: any = {}) {
-    return null;
-    // const dialogRef = this.dialog.open(SimpleModalComponent, {
-    //   data: this.clone({ measureExist, name: this.name, serviceGeneric: this.serviceGeneric }),
-    // });
+  openDialog(partsExist: any = {}) {
+    const dialogRef = this.dialog.open(FormsPartsComponent, {
+      data: this.clone({ partsExist, name: this.name, serviceGeneric: this.partsService }),
+    });
 
-    // dialogRef.afterClosed().subscribe(async (objectGeneric) => {
-    //   if (!objectGeneric) {
-    //     return;
-    //   }
-    //   // create
-    //   if (!objectGeneric.id && !this.dataClone.find((value) => objectGeneric.name == value.name)) {
-    //     let generic;
-    //     generic = await this.serviceGeneric.create({
-    //       ...objectGeneric,
-    //       name: objectGeneric.name.toLocaleLowerCase(),
-    //     });
-    //     this.dataClone.push(generic);
-    //   }
-
-    //   //update
-    //   if (objectGeneric.id) {
-    //     delete objectGeneric.visible;
-    //     let generic,
-    //       updateValidate = false;
-    //     this.dataClone = this.dataClone.forEach((value) => {
-    //       if (
-    //         value.id == measureExist.id &&
-    //         !this.dataClone.find(
-    //           (valueExist) =>
-    //             objectGeneric.id != valueExist.id && objectGeneric.name == valueExist.name
-    //         )
-    //       ) {
-    //         updateValidate = true;
-    //       }
-    //     });
-
-    //     this.dataClone = this.dataClone.map(async (value) => {
-    //       if (updateValidate && objectGeneric.id != value.id) {
-    //         generic = await this.serviceGeneric.update(objectGeneric);
-    //         return generic;
-    //       }
-    //       return value;
-    //     });
-    //   }
-
-    //   this.data = this.clone(this.dataClone);
-    //   this.paginator();
-    // });
+    dialogRef.afterClosed().subscribe(async (objectGeneric) => {
+      // if (!objectGeneric) {
+      //   return;
+      // }
+      // // create
+      // if (!objectGeneric.id && !this.dataClone.find((value) => objectGeneric.name == value.name)) {
+      //   let generic;
+      //   generic = await this.serviceGeneric.create({
+      //     ...objectGeneric,
+      //     name: objectGeneric.name.toLocaleLowerCase(),
+      //   });
+      //   this.dataClone.push(generic);
+      // }
+      // //update
+      // if (objectGeneric.id) {
+      //   delete objectGeneric.visible;
+      //   let generic,
+      //     updateValidate = false;
+      //   this.dataClone = this.dataClone.forEach((value) => {
+      //     if (
+      //       value.id == measureExist.id &&
+      //       !this.dataClone.find(
+      //         (valueExist) =>
+      //           objectGeneric.id != valueExist.id && objectGeneric.name == valueExist.name
+      //       )
+      //     ) {
+      //       updateValidate = true;
+      //     }
+      //   });
+      //   this.dataClone = this.dataClone.map(async (value) => {
+      //     if (updateValidate && objectGeneric.id != value.id) {
+      //       generic = await this.serviceGeneric.update(objectGeneric);
+      //       return generic;
+      //     }
+      //     return value;
+      //   });
+      // }
+      // this.data = this.clone(this.dataClone);
+      // this.paginator();
+    });
   }
 
   filter() {

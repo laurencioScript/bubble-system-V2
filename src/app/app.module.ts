@@ -25,6 +25,7 @@ import { SimpleModalComponent } from './simple-table/simple-modal/simple-modal.c
 import { PropertyService } from './service/property.service';
 import { UserService } from './service/user.service';
 import { PartsPageComponent } from './parts-page/parts-page.component';
+import { FormsPartsComponent } from './parts-page/forms-parts/forms-parts.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +36,7 @@ import { PartsPageComponent } from './parts-page/parts-page.component';
     SimpleTableComponent,
     SimpleModalComponent,
     PartsPageComponent,
+    FormsPartsComponent,
   ],
   imports: [
     ReactiveFormsModule,

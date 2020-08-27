@@ -35,11 +35,11 @@ export class PropertyService {
   async createUnity(data) {
     try {
       const options = this.getOptions();
-      const x: any = await this.http
+      const responseRequest: any = await this.http
         .post(`${environment.apiUrl}/unity/register`, data, options)
         .toPromise();
 
-      return x;
+      return responseRequest;
     } catch (error) {
       console.log('>>> error', error);
       return null;
@@ -87,11 +87,11 @@ export class PropertyService {
   async createColor(data) {
     try {
       const options = this.getOptions();
-      const x: any = await this.http
+      const responseRequest: any = await this.http
         .post(`${environment.apiUrl}/color/register`, data, options)
         .toPromise();
 
-      return x;
+      return responseRequest;
     } catch (error) {
       console.log('>>> error', error);
       return null;
@@ -139,11 +139,11 @@ export class PropertyService {
   async createDefect(data) {
     try {
       const options = this.getOptions();
-      const x: any = await this.http
+      const responseRequest: any = await this.http
         .post(`${environment.apiUrl}/defect/register`, data, options)
         .toPromise();
 
-      return x;
+      return responseRequest;
     } catch (error) {
       console.log('>>> error', error);
       return null;
@@ -191,11 +191,11 @@ export class PropertyService {
   async createFeature(data) {
     try {
       const options = this.getOptions();
-      const x: any = await this.http
+      const responseRequest: any = await this.http
         .post(`${environment.apiUrl}/characteristic/register`, data, options)
         .toPromise();
 
-      return x;
+      return responseRequest;
     } catch (error) {
       console.log('>>> error', error);
       return null;
