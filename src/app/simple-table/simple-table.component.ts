@@ -78,7 +78,7 @@ export class SimpleTableComponent implements OnInit {
         delete objectGeneric.visible;
         let generic,
           updateValidate = false;
-        this.dataClone = this.dataClone.forEach((value) => {
+        this.dataClone.forEach((value) => {
           if (
             value.id == measureExist.id &&
             !this.dataClone.find(
@@ -89,24 +89,27 @@ export class SimpleTableComponent implements OnInit {
             updateValidate = true;
           }
         });
-
-        this.dataClone = this.dataClone.map(async (value) => {
-          if (updateValidate && objectGeneric.id != value.id) {
+        console.log('>>> PRE', this.dataClone);
+        this.data = [];
+        for (const value of this.dataClone) {
+          if (updateValidate && objectGeneric.id == value.id) {
             generic = await this.serviceGeneric.update(objectGeneric);
-            return generic;
+            this.data.push(generic);
           }
-          return value;
-        });
+          if (objectGeneric.id != value.id) {
+            this.data.push(value);
+          }
+        }
       }
-
-      this.data = this.clone(this.dataClone);
+      console.log('>>> this.dataClone', this.dataClone);
+      this.dataClone = this.clone(this.data);
       this.paginator();
     });
   }
 
   filter() {
     this.data = this.dataClone;
-
+    this.pageIndex = 0;
     this.data = this.data.filter((value) => value.name.indexOf(this.searchValue) >= 0);
 
     this.paginator();
