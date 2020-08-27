@@ -1,0 +1,98 @@
+<div id="container">
+  <app-sidebar rowSelected="parts"></app-sidebar>
+  <div class="content">
+    <h1>Peças</h1>
+    <div id="container-table">
+      <div class="content-button">
+        <div>
+          <mat-form-field appearance="outline">
+            <span style="padding-right: 8px;" matPrefix class="material-icons">
+              search
+            </span>
+            <input
+              matInput
+              placeholder="Pesquise aqui"
+              [(ngModel)]="searchValue"
+              (keyup)="filter()"
+              autocomplete="off"
+            />
+          </mat-form-field>
+        </div>
+        <div class="group-buttons">
+          <button mat-stroked-button class="btn btn-blue" (click)="openDialog()">
+            Reajustar
+          </button>
+          <button mat-stroked-button class="btn btn-blue" (click)="openDialog()">
+            Novo
+          </button>
+        </div>
+      </div>
+
+      <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="number">
+          <mat-header-cell *matHeaderCellDef> N° </mat-header-cell>
+          <mat-cell *matCellDef="let element; let i = index">
+            {{ dataSource.filteredData.indexOf(element) + 1 + pageIndex * pageSize }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> NOME </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="measure">
+          <mat-header-cell *matHeaderCellDef> UNIDADE </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.measure }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="unityValue">
+          <mat-header-cell *matHeaderCellDef> VALOR (U) </mat-header-cell>
+          <mat-cell *matCellDef="let element"> R${{ element.unityValue }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="options">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell style="justify-content: center;" *matCellDef="let element">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              aria-label="Example icon-button with a menu"
+            >
+              <span class="material-icons">
+                more_vert
+              </span>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button (click)="openDialog(element)" mat-menu-item>
+                <span>Editar</span>
+              </button>
+              <button (click)="remove(element)" mat-menu-item>
+                <span>Remover</span>
+              </button>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row
+          class="row-table"
+          *matRowDef="let row; columns: displayedColumns"
+          (mouseenter)="mouseEnter(row)"
+          (mouseleave)="mouseLeave(row)"
+        ></mat-row>
+      </mat-table>
+
+      <div class="content-paginator">
+        <mat-paginator
+          [length]="data.length"
+          [pageIndex]="pageIndex"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[5, 10, 25]"
+          (page)="pageEvent = getServerData($event)"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>
