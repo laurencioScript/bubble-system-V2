@@ -1,5 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { PropertyService } from '../../service/property.service';
+import { FormControl } from '@angular/forms';
+
 
 @Component({
   selector: 'app-forms-parts',
@@ -9,35 +12,34 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class FormsPartsComponent implements OnInit {
   name: string;
   object: any;
+  measures = [];
 
   constructor(
     public dialogRef: MatDialogRef<FormsPartsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private readonly propertyService : PropertyService
   ) {
     this.object = this.data.partsExist;
     this.name = this.data.name;
   }
 
-  ngOnInit(): void {}
-
-  sendName(): void {
-    this.dialogRef.close(this.object);
+  async ngOnInit() {
+    this.measures = await this.propertyService.getUnity();
   }
 
-  sendHexadecimal(): void {
+  sendName(): void {
+    console.log('>>> this.object',this.object);
     this.dialogRef.close(this.object);
   }
 
   formInvaldid() {
-    if (this.name == 'Cor') {
-      return (
+    return (
         this.object.name == '' ||
         !this.object.name ||
-        this.object.hexadecimal == '' ||
-        !this.object.hexadecimal
+        this.object.unity == '' ||
+        !this.object.unity ||
+        this.object.value == '' ||
+        !this.object.value
       );
     }
-
-    return this.object.name == '' || !this.object.name;
-  }
 }

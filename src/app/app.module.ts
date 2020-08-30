@@ -22,10 +22,13 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { PropertyPageComponent } from './property-page/property-page.component';
 import { SimpleTableComponent } from './simple-table/simple-table.component';
 import { SimpleModalComponent } from './simple-table/simple-modal/simple-modal.component';
-import { PropertyService } from './service/property.service';
-import { UserService } from './service/user.service';
 import { PartsPageComponent } from './parts-page/parts-page.component';
 import { FormsPartsComponent } from './parts-page/forms-parts/forms-parts.component';
+import {MatSelectModule} from '@angular/material/select';
+
+import { PropertyService } from './service/property.service';
+import { UserService } from './service/user.service';
+import { PartsService } from './service/parts.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,8 +57,9 @@ import { FormsPartsComponent } from './parts-page/forms-parts/forms-parts.compon
     MatTabsModule,
     MatPaginatorModule,
     MatMenuModule,
+    MatSelectModule
   ],
-  providers: [PropertyService, UserService],
+  providers: [PropertyService, UserService, PartsService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

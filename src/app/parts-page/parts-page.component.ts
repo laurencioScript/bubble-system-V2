@@ -25,31 +25,38 @@ export class PartsPageComponent implements OnInit {
   searchValue: string;
   partsService: genericService;
   data: any = [
-    { name: 'Camisa', measure: 'Unidade', unityValue: '40,00' },
-    { name: 'Roupa Social', measure: 'Unidade', unityValue: '100,00' },
-    { name: 'Calçado', measure: 'Par', unityValue: '20,00' },
-    { name: 'Tapete', measure: 'Metros', unityValue: '15,00' },
-    { name: 'Cortina', measure: 'Metros', unityValue: '13,50' },
-    { name: 'Cortina', measure: 'Metros', unityValue: '13,50' },
-    { name: 'Cortina', measure: 'Metros', unityValue: '13,50' },
+    // { name: 'Camisa', measure: 'Unidade', unityValue: '40,00' },
+    // { name: 'Roupa Social', measure: 'Unidade', unityValue: '100,00' },
+    // { name: 'Calçado', measure: 'Par', unityValue: '20,00' },
+    // { name: 'Tapete', measure: 'Metros', unityValue: '15,00' },
+    // { name: 'Cortina', measure: 'Metros', unityValue: '13,50' },
+    // { name: 'Cortina', measure: 'Metros', unityValue: '13,50' },
+    // { name: 'Cortina', measure: 'Metros', unityValue: '13,50' },
   ];
   name: string = 'Peças';
 
-  displayedColumns: string[] = ['name', 'measure', 'unityValue', 'options'];
+  displayedColumns: string[] = ['number','name', 'measure', 'unityValue', 'options'];
   dataSource = new MatTableDataSource<any>();
 
-  constructor(public dialog: MatDialog, private readonly serviceParts: PartsService) {}
+  constructor(public dialog: MatDialog, public readonly serviceParts: PartsService) {}
 
   async ngOnInit() {
+    const pieces = await this.serviceParts.getParts();
+    this.data = pieces.map(piece =>{
+      return {
+        id : piece.id_piece,
+        name : piece.piece_name,
+        unity : piece.unity,
+        value : piece.value,
+      }
+    })
     this.dataClone = this.clone(this.data);
     this.length = this.data && Array.isArray(this.data) ? this.data.length : 0;
-    this.displayedColumns =
-      this.name == 'Cor' ? ['number', 'name', 'hexadecimal', 'delete'] : this.displayedColumns;
     this.partsService = {
-      create: this.serviceParts.createParts,
-      update: this.serviceParts.updateParts,
-      delete: this.serviceParts.deleteParts,
-      get: this.serviceParts.getParts,
+      create: (data) => this.serviceParts.createParts(data),
+      update: (data) => this.serviceParts.updateParts(data),
+      delete: (id) => this.serviceParts.deleteParts(id),
+      get: () => this.serviceParts.getParts()
     };
     this.paginator();
   }
@@ -74,50 +81,53 @@ export class PartsPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(async (objectGeneric) => {
-      // if (!objectGeneric) {
-      //   return;
-      // }
-      // // create
-      // if (!objectGeneric.id && !this.dataClone.find((value) => objectGeneric.name == value.name)) {
-      //   let generic;
-      //   generic = await this.serviceGeneric.create({
-      //     ...objectGeneric,
-      //     name: objectGeneric.name.toLocaleLowerCase(),
-      //   });
-      //   this.dataClone.push(generic);
-      // }
-      // //update
-      // if (objectGeneric.id) {
-      //   delete objectGeneric.visible;
-      //   let generic,
-      //     updateValidate = false;
-      //   this.dataClone = this.dataClone.forEach((value) => {
-      //     if (
-      //       value.id == measureExist.id &&
-      //       !this.dataClone.find(
-      //         (valueExist) =>
-      //           objectGeneric.id != valueExist.id && objectGeneric.name == valueExist.name
-      //       )
-      //     ) {
-      //       updateValidate = true;
-      //     }
-      //   });
-      //   this.dataClone = this.dataClone.map(async (value) => {
-      //     if (updateValidate && objectGeneric.id != value.id) {
-      //       generic = await this.serviceGeneric.update(objectGeneric);
-      //       return generic;
-      //     }
-      //     return value;
-      //   });
-      // }
-      // this.data = this.clone(this.dataClone);
-      // this.paginator();
+      if (!objectGeneric) {
+        return;
+      }
+      // create
+      if (!objectGeneric.id && !this.dataClone.find((value) => objectGeneric.name == value.name)) {
+        let generic;
+        generic = await this.partsService.create({
+          ...objectGeneric,
+          name: objectGeneric.name.toLocaleLowerCase(),
+        });
+        this.data.push(generic);
+      }
+      //update
+      if (objectGeneric.id) {
+        delete objectGeneric.visible;
+        let generic,
+          updateValidate = false;
+        this.dataClone.forEach((value) => {
+          if (
+            value.id == partsExist.id &&
+            !this.dataClone.find(
+              (valueExist) =>
+                objectGeneric.id != valueExist.id && objectGeneric.name == valueExist.name
+            )
+          ) {
+            updateValidate = true;
+          }
+        });
+        this.data = [];
+        for (const value of this.dataClone) {
+          if (updateValidate && objectGeneric.id == value.id) {
+            generic = await this.partsService.update(objectGeneric);
+            this.data.push(generic);
+          }
+          if (objectGeneric.id != value.id) {
+            this.data.push(value);
+          }
+        }
+      }
+      this.dataClone = this.clone(this.data);
+      this.paginator();
     });
   }
 
   filter() {
     this.data = this.dataClone;
-
+    this.pageIndex = 0;
     this.data = this.data.filter((value) => value.name.indexOf(this.searchValue) >= 0);
 
     this.paginator();
@@ -127,9 +137,7 @@ export class PartsPageComponent implements OnInit {
     if (!element) {
       return;
     }
-    // if (this.serviceGeneric) {
-    //   await this.serviceGeneric.delete(element.id);
-    // }
+    await this.partsService.delete(element.id);
     this.dataClone = this.dataClone.filter((value) => value.name != element.name);
     this.data = this.clone(this.dataClone);
     this.paginator();
