@@ -70,7 +70,7 @@ export class SimpleTableComponent implements OnInit {
           ...objectGeneric,
           name: objectGeneric.name.toLocaleLowerCase(),
         });
-        this.dataClone.push(generic);
+        this.data.push(generic);
       }
 
       //update

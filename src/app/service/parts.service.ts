@@ -6,20 +6,18 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class PartsService {
-  constructor(public readonly http: HttpClient) {}
-
-  getOptions() {
-    return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-      }),
-    };
+  options : any;
+  
+  constructor(public  http: HttpClient) {
+    this.options = { headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+    })};
   }
 
   async getParts() {
     try {
-      const options = this.getOptions();
+      const options = this.options;
       const { result }: any = await this.http
         .get(`${environment.apiUrl}/piece`, options)
         .toPromise();
@@ -31,8 +29,8 @@ export class PartsService {
 
   async updateParts(data) {
     try {
-      const options = this.getOptions();
-      const { result }: any = await this.http
+      const options = this.options;
+      const {result}: any = await this.http
         .put(`${environment.apiUrl}/piece/${data.id}`, data, options)
         .toPromise();
       return result;
@@ -43,12 +41,11 @@ export class PartsService {
 
   async createParts(data) {
     try {
-      const options = this.getOptions();
-      const { result }: any = await this.http
+      const options = this.options;
+      const responseRequest: any = await this.http
         .post(`${environment.apiUrl}/piece/register`, data, options)
         .toPromise();
-
-      return result;
+      return responseRequest;
     } catch (error) {
       console.log('>>> error', error);
       return null;
@@ -57,7 +54,7 @@ export class PartsService {
 
   async deleteParts(id) {
     try {
-      const options = this.getOptions();
+      const options = this.options;
       const { result }: any = await this.http
         .delete(`${environment.apiUrl}/piece/${id}`, options)
         .toPromise();

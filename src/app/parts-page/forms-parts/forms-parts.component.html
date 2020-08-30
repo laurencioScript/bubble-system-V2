@@ -9,23 +9,23 @@
         [(ngModel)]="object.name"
         autocomplete="off"
         placeholder="Digite a aqui"
-        (keyup.enter)="sendName()"
       />
     </mat-form-field>
-    <mat-form-field appearance="outline">
       <mat-label>Unidade</mat-label>
-      <input matInput type="text" [(ngModel)]="object.name" autocomplete="off" />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+      <mat-select [(ngModel)]="object.unity" name="unity" >
+        <mat-option *ngFor="let measure of measures" [value]="measure.unity_name">{{measure.unity_name}}</mat-option>
+      </mat-select>
+      </mat-form-field>
+   
     <mat-form-field appearance="outline">
       <mat-label>Valor Unitario</mat-label>
       <input
         matInput
-        type="text"
-        [(ngModel)]="object.name"
+        type="number"
+        [(ngModel)]="object.value"
         autocomplete="off"
-        placeholde
-        r="R$0,00"
-        (keyup.enter)="sendName()"
+        placeholder="R$0,00"
       />
     </mat-form-field>
   </div>

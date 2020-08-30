@@ -43,12 +43,12 @@
 
         <ng-container matColumnDef="measure">
           <mat-header-cell *matHeaderCellDef> UNIDADE </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{ element.measure }} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{ element.unity }} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="unityValue">
           <mat-header-cell *matHeaderCellDef> VALOR (U) </mat-header-cell>
-          <mat-cell *matCellDef="let element"> R${{ element.unityValue }} </mat-cell>
+          <mat-cell *matCellDef="let element"> R${{ element.value }} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="options">
