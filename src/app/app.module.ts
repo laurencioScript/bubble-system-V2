@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID  } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,10 +25,12 @@ import { SimpleModalComponent } from './simple-table/simple-modal/simple-modal.c
 import { PartsPageComponent } from './parts-page/parts-page.component';
 import { FormsPartsComponent } from './parts-page/forms-parts/forms-parts.component';
 import {MatSelectModule} from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { PropertyService } from './service/property.service';
 import { UserService } from './service/user.service';
 import { PartsService } from './service/parts.service';
+import { FormsReadjustComponent } from './parts-page/forms-readjust/forms-readjust.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +42,7 @@ import { PartsService } from './service/parts.service';
     SimpleModalComponent,
     PartsPageComponent,
     FormsPartsComponent,
+    FormsReadjustComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -57,7 +60,8 @@ import { PartsService } from './service/parts.service';
     MatTabsModule,
     MatPaginatorModule,
     MatMenuModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule
   ],
   providers: [PropertyService, UserService, PartsService],
   bootstrap: [AppComponent],

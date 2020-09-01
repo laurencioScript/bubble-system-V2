@@ -1,8 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PropertyService } from '../../service/property.service';
-import { FormControl } from '@angular/forms';
-
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-forms-parts',
@@ -10,17 +9,17 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./forms-parts.component.scss'],
 })
 export class FormsPartsComponent implements OnInit {
-  name: string;
+  name = new FormControl('', [Validators.required, Validators.maxLength(30)]);
   object: any;
   measures = [];
 
   constructor(
     public dialogRef: MatDialogRef<FormsPartsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private readonly propertyService : PropertyService
+    private readonly propertyService: PropertyService
   ) {
     this.object = this.data.partsExist;
-    this.name = this.data.name;
+    this.name.setValue(this.object.name);
   }
 
   async ngOnInit() {
@@ -28,18 +27,27 @@ export class FormsPartsComponent implements OnInit {
   }
 
   sendName(): void {
-    console.log('>>> this.object',this.object);
+    this.object.name = this.name.value;
     this.dialogRef.close(this.object);
+  }
+
+  getErrorMessage(field) {
+    if (field == 'name' && this.name.hasError('required')) {
+      return 'Nome é obrigatorio!';
+    }
+
+    if (field == 'name' && this.name.hasError('maxlength')) {
+      return 'O maximo é de 30 caracteres.';
+    }
   }
 
   formInvaldid() {
     return (
-        this.object.name == '' ||
-        !this.object.name ||
-        this.object.unity == '' ||
-        !this.object.unity ||
-        this.object.value == '' ||
-        !this.object.value
-      );
-    }
+      this.name.invalid ||
+      this.object.unity == '' ||
+      !this.object.unity ||
+      this.object.value == '' ||
+      !this.object.value
+    );
+  }
 }

@@ -6,10 +6,12 @@
       <input
         matInput
         type="text"
-        [(ngModel)]="object.name"
+        [formControl]="name"
+        name="name"
         autocomplete="off"
         placeholder="Digite a aqui"
       />
+      <mat-error *ngIf="name.invalid">{{ getErrorMessage('name') }}</mat-error>
     </mat-form-field>
       <mat-label>Unidade</mat-label>
       <mat-form-field appearance="fill">
