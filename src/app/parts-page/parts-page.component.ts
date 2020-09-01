@@ -4,6 +4,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { FormsPartsComponent } from './forms-parts/forms-parts.component';
 import { PartsService } from '../service/parts.service';
+import { FormsReadjustComponent } from './forms-readjust/forms-readjust.component';
 
 interface genericService {
   create: any;
@@ -34,29 +35,30 @@ export class PartsPageComponent implements OnInit {
     // { name: 'Cortina', measure: 'Metros', unityValue: '13,50' },
   ];
   name: string = 'Peças';
-
-  displayedColumns: string[] = ['number','name', 'measure', 'unityValue', 'options'];
+  viewSelect: boolean = false;
+  displayedColumns: string[] = ['number', 'name', 'measure', 'unityValue', 'options'];
   dataSource = new MatTableDataSource<any>();
+  selectedAll: any = false;
 
   constructor(public dialog: MatDialog, public readonly serviceParts: PartsService) {}
 
   async ngOnInit() {
     const pieces = await this.serviceParts.getParts();
-    this.data = pieces.map(piece =>{
+    this.data = pieces.map((piece) => {
       return {
-        id : piece.id_piece,
-        name : piece.piece_name,
-        unity : piece.unity,
-        value : piece.value,
-      }
-    })
+        id: piece.id_piece,
+        name: piece.piece_name,
+        unity: piece.unity,
+        value: piece.value,
+      };
+    });
     this.dataClone = this.clone(this.data);
     this.length = this.data && Array.isArray(this.data) ? this.data.length : 0;
     this.partsService = {
       create: (data) => this.serviceParts.createParts(data),
       update: (data) => this.serviceParts.updateParts(data),
       delete: (id) => this.serviceParts.deleteParts(id),
-      get: () => this.serviceParts.getParts()
+      get: () => this.serviceParts.getParts(),
     };
     this.paginator();
   }
@@ -67,12 +69,84 @@ export class PartsPageComponent implements OnInit {
     this.paginator();
   }
 
+  selectAll(value) {
+    this.data.forEach((piece) => (piece.checked = value));
+  }
+
+  validateSelectAll() {
+    let existNotChecked = this.data.find((piece) => !piece.checked);
+    if (existNotChecked) {
+      this.selectedAll = false;
+    } else {
+      this.selectedAll = true;
+    }
+  }
+
+  btnReadjustValidation() {
+    if (!this.viewSelect) {
+      return false;
+    }
+
+    if (this.viewSelect && !this.data.find((piece) => piece.checked)) {
+      return true;
+    }
+  }
+
+  readjust() {
+    if (!this.viewSelect) {
+      this.viewSelect = !this.viewSelect;
+    } else if (this.viewSelect) {
+      this.openFormReadjust();
+      this.dataClone = this.clone(this.data);
+      this.viewSelect = !this.viewSelect;
+      this.selectedAll = false;
+    }
+  }
+
   mouseEnter(value) {
     value.visible = true;
   }
 
   mouseLeave(value) {
     value.visible = false;
+  }
+
+  openFormReadjust() {
+    const dialogRef = this.dialog.open(FormsReadjustComponent, {});
+
+    dialogRef.afterClosed().subscribe(async (readJust) => {
+      if (!readJust) {
+        this.data.forEach((piece) => (piece.checked = false));
+        return;
+      }
+
+      for (const piece of this.data) {
+        if (piece.checked) {
+          piece.value =
+            readJust.discountValue && +piece.value - readJust.discountValue > 0
+              ? +piece.value - readJust.discountValue
+              : piece.value;
+          piece.value =
+            readJust.taxValue && +piece.value + readJust.taxValue > 0
+              ? +piece.value + readJust.taxValue
+              : piece.value;
+          piece.value =
+            readJust.discountPercentage &&
+            +piece.value - +piece.value * (readJust.discountPercentage / 100) > 0
+              ? +piece.value - +piece.value * (readJust.discountPercentage / 100)
+              : piece.value;
+
+          piece.value =
+            readJust.taxPercentage && +piece.value * (1 + readJust.taxPercentage / 100) > 0
+              ? +piece.value * (1 + readJust.taxPercentage / 100)
+              : piece.value;
+
+          await this.partsService.update({ ...piece, visible: undefined, checked: undefined });
+
+          piece.checked = false;
+        }
+      }
+    });
   }
 
   openDialog(partsExist: any = {}) {
@@ -131,6 +205,16 @@ export class PartsPageComponent implements OnInit {
     this.data = this.data.filter((value) => value.name.indexOf(this.searchValue) >= 0);
 
     this.paginator();
+  }
+
+  getValue(value) {
+    value = (+value).toFixed(2);
+    value = value.replace(/\D/g, '');
+    value = (value / 100).toFixed(2) + '';
+    value = value.replace('.', ',');
+    value = value.replace(/(\d)(\d{3})(\d{3}),/g, '$1.$2.$3,');
+    value = value.replace(/(\d)(\d{3}),/g, '$1.$2,');
+    return value;
   }
 
   async remove(element) {

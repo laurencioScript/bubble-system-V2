@@ -19,7 +19,13 @@
           </mat-form-field>
         </div>
         <div class="group-buttons">
-          <button mat-stroked-button class="btn btn-blue">
+          <button
+            mat-stroked-button
+            [disabled]="btnReadjustValidation()"
+            (click)="readjust()"
+            class="btn btn-blue"
+            id="btn-readjust"
+          >
             Reajustar
           </button>
           <button mat-stroked-button class="btn btn-blue" (click)="openDialog()">
@@ -30,9 +36,30 @@
 
       <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="number">
-          <mat-header-cell *matHeaderCellDef> N° </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>
+            <label *ngIf="!viewSelect"> N°</label>
+            <mat-checkbox
+              color="primary"
+              *ngIf="viewSelect"
+              [(ngModel)]="selectedAll"
+              (change)="selectAll($event.checked)"
+            >
+              N°
+            </mat-checkbox>
+          </mat-header-cell>
           <mat-cell *matCellDef="let element; let i = index">
-            {{ dataSource.filteredData.indexOf(element) + 1 + pageIndex * pageSize }}
+            <label *ngIf="!viewSelect">
+              {{ dataSource.filteredData.indexOf(element) + 1 + pageIndex * pageSize }}</label
+            >
+
+            <mat-checkbox
+              *ngIf="viewSelect"
+              color="primary"
+              (change)="validateSelectAll()"
+              [(ngModel)]="element.checked"
+            >
+              {{ dataSource.filteredData.indexOf(element) + 1 + pageIndex * pageSize }}
+            </mat-checkbox>
           </mat-cell>
         </ng-container>
 
@@ -48,7 +75,7 @@
 
         <ng-container matColumnDef="unityValue">
           <mat-header-cell *matHeaderCellDef> VALOR (U) </mat-header-cell>
-          <mat-cell *matCellDef="let element"> R${{ element.value }} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{ 'R$ ' + getValue(element.value) }} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="options">

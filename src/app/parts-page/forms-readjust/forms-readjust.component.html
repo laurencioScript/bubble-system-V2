@@ -1,0 +1,71 @@
+<div id="container">
+  <div style="display: flex; flex-direction: column;">
+    <h2 mat-dialog-title>Reajuste</h2>
+    <mat-label>Desconto</mat-label>
+    <div class="input-group">
+      <mat-form-field appearance="fill">
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="readJust.discountPercentage"
+          name="discountPercentage"
+          autocomplete="off"
+          (ngModelChange)="validationReadjust('discount', 'discountPercentage')"
+          placeholder="Digite a aqui"
+        />
+        <span matSuffix>%</span>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <input
+          matInput
+          type="number"
+          name="discountValue"
+          [(ngModel)]="readJust.discountValue"
+          autocomplete="off"
+          (ngModelChange)="validationReadjust('discount', 'discountValue')"
+          placeholder="Digite a aqui"
+        />
+        <span matSuffix>R$</span>
+      </mat-form-field>
+    </div>
+    <mat-label>Juros</mat-label>
+    <div class="input-group">
+      <mat-form-field appearance="fill">
+        <input
+          matInput
+          type="number"
+          name="taxPercentage"
+          [(ngModel)]="readJust.taxPercentage"
+          autocomplete="off"
+          (ngModelChange)="validationReadjust('tax', 'taxPercentage')"
+          placeholder="Digite a aqui"
+        />
+        <span matSuffix>%</span>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <input
+          matInput
+          type="number"
+          name="taxValue"
+          [(ngModel)]="readJust.taxValue"
+          autocomplete="off"
+          (ngModelChange)="validationReadjust('tax', 'taxValue')"
+          placeholder="Digite a aqui"
+        />
+        <span matSuffix>R$</span>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="content-button" style="display: flex; justify-content: space-between;">
+    <button mat-raised-button mat-dialog-close>Cancelar</button>
+    <button
+      mat-raised-button
+      [disabled]="formInvalid()"
+      (click)="send()"
+      class="btn-save"
+      cdkFocusInitial
+    >
+      Salvar
+    </button>
+  </div>
+</div>

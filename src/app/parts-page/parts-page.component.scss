@@ -85,3 +85,15 @@ mat-table {
 .btn-icon {
   cursor: pointer;
 }
+
+#btn-readjust:disabled {
+  color: white;
+  opacity: 0.5;
+}
+
+#btn-readjust:disabled:hover {
+  color: white;
+  background: #3c7eff;
+  opacity: 0.5;
+  font-weight: 100;
+}
