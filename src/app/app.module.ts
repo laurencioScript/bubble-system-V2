@@ -33,7 +33,6 @@ import { PartsService } from './service/parts.service';
 import { FormsReadjustComponent } from './parts-page/forms-readjust/forms-readjust.component';
 import { AuthService } from './auth/auth.service';
 import { AuthGuardService, HomeGuardService } from './auth/auth-guard.service';
-import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
 @NgModule({
   declarations: [
     AppComponent,
