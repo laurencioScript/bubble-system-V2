@@ -13,6 +13,12 @@
       vpn_key
     </span>
   </div>
+  <div [routerLink]="['/home']" [ngClass]="{ selectedRow: rowSelected == 'home' }" class="row">
+    <span class="material-icons icon-row">
+      home
+    </span>
+    <label for="Home">Home</label>
+  </div>
   <div class="row">
     <span class="material-icons icon-row">
       storefront
@@ -53,7 +59,7 @@
     </span>
     <label>Usuarios</label>
   </div>
-  <div [routerLink]="['']" class="row">
+  <div (click)="logout()" class="row">
     <span class="material-icons icon-row">
       exit_to_app
     </span>

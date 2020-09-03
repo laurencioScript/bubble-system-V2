@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID  } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,13 +24,16 @@ import { SimpleTableComponent } from './simple-table/simple-table.component';
 import { SimpleModalComponent } from './simple-table/simple-modal/simple-modal.component';
 import { PartsPageComponent } from './parts-page/parts-page.component';
 import { FormsPartsComponent } from './parts-page/forms-parts/forms-parts.component';
-import {MatSelectModule} from '@angular/material/select';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { PropertyService } from './service/property.service';
 import { UserService } from './service/user.service';
 import { PartsService } from './service/parts.service';
 import { FormsReadjustComponent } from './parts-page/forms-readjust/forms-readjust.component';
+import { AuthService } from './auth/auth.service';
+import { AuthGuardService, HomeGuardService } from './auth/auth-guard.service';
+import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,9 +64,16 @@ import { FormsReadjustComponent } from './parts-page/forms-readjust/forms-readju
     MatPaginatorModule,
     MatMenuModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
   ],
-  providers: [PropertyService, UserService, PartsService],
+  providers: [
+    PropertyService,
+    UserService,
+    PartsService,
+    AuthService,
+    AuthGuardService,
+    HomeGuardService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
