@@ -1,0 +1,156 @@
+<h2 *ngIf="mode == 'create'">Cadastro de cliente</h2>
+<h2 *ngIf="mode == 'edit'">Edição de cliente</h2>
+<h2 *ngIf="mode == 'view'">Visualização de cliente</h2>
+
+<mat-tab-group mat-align-tabs="start">
+  <mat-tab label="Dados Pessoais">
+    <p style="margin-top: 16px;">
+      <mat-form-field class="input-text" style="margin: 0;" appearance="outline">
+        <mat-label>Nome</mat-label>
+        <input
+          matInput
+          type="text"
+          [formControl]="client.name_client"
+          name="name_client"
+          [readonly]="mode == 'view'"
+          autocomplete="off"
+          maxlength="100"
+          required
+        />
+      </mat-form-field>
+    </p>
+
+    <p style="display: flex;">
+      <mat-form-field class="input-text" style="margin-right: 8px;" appearance="outline">
+        <mat-label>CPF ou CNPJ</mat-label>
+        <input
+          matInput
+          type="text"
+          [formControl]="client.cpf_cnpj"
+          [readonly]="mode == 'view'"
+          name="cpf_cnpj"
+          autocomplete="off"
+          maxlength="20"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field class="input-text" style="margin-left: 8px;" appearance="outline">
+        <mat-label>E-mail</mat-label>
+        <input
+          matInput
+          type="email"
+          maxlength="100"
+          [readonly]="mode == 'view'"
+          [formControl]="client.email"
+          name="email"
+          autocomplete="off"
+        />
+      </mat-form-field>
+    </p>
+
+    <p style="">
+      <mat-form-field class="input-text" style="margin: 0;" appearance="outline">
+        <mat-label>Razão Social</mat-label>
+        <input
+          matInput
+          type="text"
+          maxlength="100"
+          [readonly]="mode == 'view'"
+          [formControl]="client.corporate_name"
+          name="corporate_name"
+          autocomplete="off"
+        />
+      </mat-form-field>
+    </p>
+
+    <div style="display: flex;">
+      <mat-form-field class="input-text" style="margin-right: 8px;" appearance="outline">
+        <mat-label>Contato</mat-label>
+        <input
+          matInput
+          type="text"
+          [formControl]="contact1"
+          name="contact1"
+          [readonly]="mode == 'view'"
+          autocomplete="off"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field class="input-text" style="margin-left: 8px;" appearance="outline">
+        <mat-label>Contato Opcional</mat-label>
+        <input matInput type="text" [formControl]="contact2" name="contact2" autocomplete="off" />
+      </mat-form-field>
+    </div>
+  </mat-tab>
+  <mat-tab label="Dados Secundarios">
+    <p style="margin-top: 16px;">
+      <mat-form-field class="input-text" style="margin: 0;" appearance="outline">
+        <mat-label>CEP</mat-label>
+        <input matInput type="text"  [readonly]="mode == 'view'" [formControl]="client.cep" maxlength="100" />
+      </mat-form-field>
+    </p>
+
+    <p style="display: flex;">
+      <mat-form-field class="input-text" style="margin-right: 8px;" appearance="outline">
+        <mat-label>Endereço</mat-label>
+        <input matInput type="text"  [readonly]="mode == 'view'" [formControl]="client.address_client" maxlength="100" />
+      </mat-form-field>
+
+      <mat-form-field class="input-text" style="margin-left: 8px;" appearance="outline">
+        <mat-label>Bairro</mat-label>
+        <input matInput type="text"  [readonly]="mode == 'view'" [formControl]="client.neighborhood" maxlength="50" />
+      </mat-form-field>
+    </p>
+
+    <p style="display: flex;">
+      <mat-form-field class="input-text" style="margin-right: 8px;" appearance="outline">
+        <mat-label>UF</mat-label>
+        <input matInput type="text"  [readonly]="mode == 'view'" [formControl]="client.state_city" maxlength="2" />
+      </mat-form-field>
+
+      <mat-form-field class="input-text" style="margin-left: 8px;" appearance="outline">
+        <mat-label>Cidade</mat-label>
+        <input matInput type="text"  [readonly]="mode == 'view'" [formControl]="client.city" maxlength="50" />
+      </mat-form-field>
+    </p>
+
+    <div style="display: flex;">
+      <mat-form-field class="input-text" style="margin-right: 8px;" appearance="outline">
+        <mat-label>N</mat-label>
+        <input matInput type="text"  [readonly]="mode == 'view'" [formControl]="client.number" maxlength="10" />
+      </mat-form-field>
+
+      <mat-form-field class="input-text" style="margin-left: 8px;" appearance="outline">
+        <mat-label>Complemento</mat-label>
+        <input matInput type="text"  [readonly]="mode == 'view'" [formControl]="client.complement" maxlength="50" />
+      </mat-form-field>
+    </div>
+  </mat-tab>
+  <mat-tab label="Observação">
+    <mat-form-field style="width: 100%; margin-top: 16px;">
+      <textarea
+        matInput
+        [readonly]="mode == 'view'"
+        rows="5"
+        [formControl]="client.observation_description"
+        maxlength="300"
+        placeholder="Digite aqui..."
+      ></textarea>
+    </mat-form-field>
+  </mat-tab>
+</mat-tab-group>
+<div *ngIf="mode !='view'" class="content-button">
+  <button mat-raised-button  mat-dialog-close class="btn">
+    Cancelar
+  </button>
+  <button mat-raised-button  [disabled]="formInvaldid()" (click)="send()" class="btn btn-blue">
+    Confirmar
+  </button>
+</div>
+<div *ngIf="mode =='view'" class="content-button">
+  <button mat-raised-button  style="width: auto;" mat-dialog-close class="btn">
+    Fechar
+  </button>
+</div>

@@ -1,0 +1,99 @@
+#container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  .content {
+    margin: 32px;
+    overflow: hidden;
+    width: 100%;
+
+    #container-table {
+      display: flex;
+      flex-direction: column;
+      // border: 1px solid #d3d3d3;
+      // padding: 16px;
+      height: 500px;
+      width: 72%;
+    }
+
+    .content-button {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      div:first-child {
+        width: 60%;
+        mat-form-field {
+          width: 100%;
+        }
+        ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+          border-radius: 0px !important;
+        }
+        ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start {
+          border-radius: 0px !important;
+        }
+      }
+      .group-buttons {
+        padding-bottom: 1.34375em;
+        button {
+          margin: 0 8px;
+        }
+      }
+    }
+  }
+}
+
+.content-paginator {
+  margin-top: 16px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  // position: absolute;
+  // bottom: 0;
+  // left: 0;
+}
+
+mat-table {
+  width: 100%;
+  height: 80%;
+  box-shadow: none;
+}
+
+.btn-blue {
+  color: #3c7eff;
+  border: 1px solid #3c7eff;
+}
+
+.btn-blue:hover {
+  color: #3c7eff;
+  background-color: white;
+  border: 1px solid #3c7eff;
+  font-weight: 500;
+}
+
+.btn {
+  padding: 0.75em 1.2em;
+  background: #3c7eff;
+  color: white;
+  border-radius: 0;
+  font-weight: 100;
+}
+
+.btn-icon {
+  cursor: pointer;
+}
+
+#btn-readjust:disabled {
+  color: white;
+  opacity: 0.5;
+}
+
+#btn-readjust:disabled:hover {
+  color: white;
+  background: #3c7eff;
+  opacity: 0.5;
+  font-weight: 100;
+}

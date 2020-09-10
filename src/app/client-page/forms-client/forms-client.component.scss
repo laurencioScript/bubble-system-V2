@@ -1,0 +1,28 @@
+.input-text {
+  width: 100%;
+  ::ng-deep .mat-form-field-wrapper {
+    padding: 0;
+  }
+}
+
+.content-button {
+  margin: 16px 0;
+  display: flex;
+  justify-content: flex-end;
+  button:first-child {
+    margin-right: 8px;
+  }
+}
+
+.btn {
+  width: 100%;
+  border: 1px solid #808080;
+  color: #808080;
+}
+
+.btn-blue {
+  color: white;
+  background: #3c7eff;
+  border: 0px;
+}
+
