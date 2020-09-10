@@ -141,14 +141,16 @@
     </mat-form-field>
   </mat-tab>
 </mat-tab-group>
-<div class="content-button">
-  <button mat-raised-button *ngIf="mode !='view'" mat-dialog-close class="btn">
+<div *ngIf="mode !='view'" class="content-button">
+  <button mat-raised-button  mat-dialog-close class="btn">
     Cancelar
   </button>
-  <button mat-raised-button *ngIf="mode !='view'" [readonly]="formInvaldid()" (click)="send()" class="btn btn-blue">
+  <button mat-raised-button  [disabled]="formInvaldid()" (click)="send()" class="btn btn-blue">
     Confirmar
   </button>
-  <button mat-raised-button *ngIf="mode =='view'" style="width: auto;" [readonly]="mode =='view'" mat-dialog-close class="btn">
+</div>
+<div *ngIf="mode =='view'" class="content-button">
+  <button mat-raised-button  style="width: auto;" mat-dialog-close class="btn">
     Fechar
   </button>
 </div>
