@@ -14,6 +14,7 @@
           name="name_client"
           [readonly]="mode == 'view'"
           autocomplete="off"
+          oninput="this.value = this.value.toLowerCase()"
           maxlength="100"
           required
         />
@@ -29,8 +30,9 @@
           [formControl]="client.cpf_cnpj"
           [readonly]="mode == 'view'"
           name="cpf_cnpj"
+          mask="CPF_CNPJ"
           autocomplete="off"
-          maxlength="20"
+          maxlength="18"
           required
         />
       </mat-form-field>
@@ -71,7 +73,9 @@
           matInput
           type="text"
           [formControl]="contact1"
+          mask="(00) 0 0000-0000||(00) 0000-0000"
           name="contact1"
+          maxlength="16"
           [readonly]="mode == 'view'"
           autocomplete="off"
           required
@@ -80,7 +84,7 @@
 
       <mat-form-field class="input-text" style="margin-left: 8px;" appearance="outline">
         <mat-label>Contato Opcional</mat-label>
-        <input matInput type="text" [formControl]="contact2" name="contact2" autocomplete="off" />
+        <input matInput type="text" mask="(00) 0 0000-0000||(00) 0000-0000"  maxlength="16" [formControl]="contact2" name="contact2" autocomplete="off" />
       </mat-form-field>
     </div>
   </mat-tab>
@@ -88,7 +92,7 @@
     <p style="margin-top: 16px;">
       <mat-form-field class="input-text" style="margin: 0;" appearance="outline">
         <mat-label>CEP</mat-label>
-        <input matInput type="text"  [readonly]="mode == 'view'" [formControl]="client.cep" maxlength="100" />
+        <input matInput type="text" mask="99.999-999"  [readonly]="mode == 'view'" [formControl]="client.cep" maxlength="10" />
       </mat-form-field>
     </p>
 
@@ -107,7 +111,7 @@
     <p style="display: flex;">
       <mat-form-field class="input-text" style="margin-right: 8px;" appearance="outline">
         <mat-label>UF</mat-label>
-        <input matInput type="text"  [readonly]="mode == 'view'" [formControl]="client.state_city" maxlength="2" />
+        <input matInput type="text" oninput="this.value = this.value.toUpperCase()"  [readonly]="mode == 'view'" [formControl]="client.state_city" maxlength="2" />
       </mat-form-field>
 
       <mat-form-field class="input-text" style="margin-left: 8px;" appearance="outline">
@@ -118,7 +122,7 @@
 
     <div style="display: flex;">
       <mat-form-field class="input-text" style="margin-right: 8px;" appearance="outline">
-        <mat-label>N</mat-label>
+        <mat-label>Número</mat-label>
         <input matInput type="text"  [readonly]="mode == 'view'" [formControl]="client.number" maxlength="10" />
       </mat-form-field>
 
@@ -133,7 +137,7 @@
       <textarea
         matInput
         [readonly]="mode == 'view'"
-        rows="5"
+        rows="15"
         [formControl]="client.observation_description"
         maxlength="300"
         placeholder="Digite aqui..."

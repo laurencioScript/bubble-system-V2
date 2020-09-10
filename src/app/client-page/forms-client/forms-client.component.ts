@@ -41,7 +41,7 @@ export class FormsClientComponent implements OnInit {
     this.mode = this.data.mode || 'create';
     this.contact1 = new FormControl(
       client.contact && client.contact.length > 0 ? client.contact[0] : '',
-      [Validators.required]
+      [Validators.required, Validators.pattern(`^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$`)]
     );
     this.contact2 = new FormControl(
       client.contact && client.contact.length > 1 ? client.contact[1] : '',
