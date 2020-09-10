@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 
+import { NgxMaskModule } from 'ngx-mask';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,6 +35,9 @@ import { PartsService } from './service/parts.service';
 import { FormsReadjustComponent } from './parts-page/forms-readjust/forms-readjust.component';
 import { AuthService } from './auth/auth.service';
 import { AuthGuardService, HomeGuardService } from './auth/auth-guard.service';
+import { ClientPageComponent } from './client-page/client-page.component';
+import { FormsClientComponent } from './client-page/forms-client/forms-client.component';
+import { ClientService } from './service/client.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +50,8 @@ import { AuthGuardService, HomeGuardService } from './auth/auth-guard.service';
     PartsPageComponent,
     FormsPartsComponent,
     FormsReadjustComponent,
+    ClientPageComponent,
+    FormsClientComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -64,6 +71,7 @@ import { AuthGuardService, HomeGuardService } from './auth/auth-guard.service';
     MatMenuModule,
     MatSelectModule,
     MatCheckboxModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [
     PropertyService,
@@ -72,6 +80,7 @@ import { AuthGuardService, HomeGuardService } from './auth/auth-guard.service';
     AuthService,
     AuthGuardService,
     HomeGuardService,
+    ClientService,
   ],
   bootstrap: [AppComponent],
 })

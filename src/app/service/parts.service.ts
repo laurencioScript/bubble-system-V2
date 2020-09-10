@@ -6,13 +6,15 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class PartsService {
-  options : any;
-  
-  constructor(public  http: HttpClient) {
-    this.options = { headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-    })};
+  options: any;
+
+  constructor(public http: HttpClient) {
+    this.options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      }),
+    };
   }
 
   async getParts() {
@@ -30,7 +32,7 @@ export class PartsService {
   async updateParts(data) {
     try {
       const options = this.options;
-      const {result}: any = await this.http
+      const { result }: any = await this.http
         .put(`${environment.apiUrl}/piece/${data.id}`, data, options)
         .toPromise();
       return result;
@@ -47,7 +49,6 @@ export class PartsService {
         .toPromise();
       return responseRequest;
     } catch (error) {
-      console.log('>>> error', error);
       return null;
     }
   }
