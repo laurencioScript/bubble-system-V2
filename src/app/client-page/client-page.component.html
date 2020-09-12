@@ -67,7 +67,7 @@
           <mat-cell *matCellDef="let element"> 
             <mat-form-field appearance="fill">
               <!-- <mat-label>{{element.contact[0]}}</mat-label> -->
-              <mat-select value="13988153558" >
+              <mat-select [value]="element.contact[0]" >
                 <mat-option *ngFor="let contact of element.contact" [value]="contact" >{{contact}}</mat-option>
               </mat-select>
               </mat-form-field>

@@ -73,7 +73,7 @@
           matInput
           type="text"
           [formControl]="contact1"
-          mask="(00) 0 0000-0000||(00) 0000-0000"
+          
           name="contact1"
           maxlength="16"
           [readonly]="mode == 'view'"
@@ -84,7 +84,7 @@
 
       <mat-form-field class="input-text" style="margin-left: 8px;" appearance="outline">
         <mat-label>Contato Opcional</mat-label>
-        <input matInput type="text" mask="(00) 0 0000-0000||(00) 0000-0000"  maxlength="16" [formControl]="contact2" name="contact2" autocomplete="off" />
+        <input matInput type="text"   maxlength="16" [formControl]="contact2" name="contact2" autocomplete="off" />
       </mat-form-field>
     </div>
   </mat-tab>
