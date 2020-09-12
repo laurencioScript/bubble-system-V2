@@ -59,12 +59,20 @@
 
         <ng-container matColumnDef="measure">
           <mat-header-cell *matHeaderCellDef> CPF/CNPJ </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{ element.cpf_cnpj }} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{ element.cpf_cnpj | mask: 'CPF_CNPJ'  }} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="unityValue">
           <mat-header-cell *matHeaderCellDef> CONTATO </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{ element.contact[0] }} </mat-cell>
+          <mat-cell *matCellDef="let element"> 
+            <mat-form-field appearance="fill">
+              <!-- <mat-label>{{element.contact[0]}}</mat-label> -->
+              <mat-select [value]="element.contact[0]" >
+                <mat-option *ngFor="let contact of element.contact" [value]="contact" >{{contact}}</mat-option>
+              </mat-select>
+              </mat-form-field>
+            
+            </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="options">
