@@ -1,0 +1,38 @@
+<div class="content">
+  <div class="div-logo">
+    <img src="./../assets/logo.svg" />
+  </div>
+  <div class="div-form">
+    <h1>Bem vindo ao <strong>Bubble System</strong></h1>
+    <form>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          [formControl]="email"
+          name="email"
+          type="email"
+          placeholder="Digite seu email"
+          required
+        />
+        <mat-error *ngIf="email.invalid">{{ getErrorMessage('email') }}</mat-error>
+      </mat-form-field>
+      <mat-form-field id="password" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          [formControl]="password"
+          name="password"
+          type="password"
+          placeholder="Digite sua senha"
+          required
+        />
+        <mat-error *ngIf="password.invalid">{{ getErrorMessage('password') }}</mat-error>
+      </mat-form-field>
+      <button mat-raised-button [ngClass]="{ spinner: loading }" (click)="login()" color="primary">
+        <label *ngIf="!loading">Entrar</label>
+        <mat-spinner strokeWidth="10" *ngIf="loading"></mat-spinner>
+      </button>
+    </form>
+  </div>
+</div>

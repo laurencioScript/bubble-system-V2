@@ -1,0 +1,53 @@
+#sidebar {
+  background-color: #222c3c;
+  color: white;
+  width: 250px;
+  height: 100%;
+  padding: 16px 0px;
+  .row {
+    border-bottom: 1px solid white;
+    padding: 16px 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    label {
+      cursor: pointer;
+      padding-left: 8px;
+    }
+  }
+
+  .row:first-child {
+    padding: 16px 16px !important;
+    border-bottom: 0px;
+    display: flex;
+    justify-content: space-between;
+    #vpn-key {
+      cursor: pointer;
+    }
+  }
+
+  .row:first-child:hover {
+    background-color: #222c3c;
+    cursor: context-menu;
+    align-items: none;
+  }
+
+  .row:hover {
+    background-color: #394456;
+  }
+  .row:last-child {
+    border-bottom: 0px;
+  }
+}
+
+.selectedRow {
+  background-color: #394456;
+}
+
+.perfil {
+  font-size: 60px;
+}
+
+.icon-row {
+  font-size: 30px;
+}

@@ -1,0 +1,46 @@
+<div id='container'>
+    <app-sidebar rowSelected="users"></app-sidebar>
+
+    <div id='container'>
+      <div id='content'>
+        <div id='userSidebar'>
+          <h1>Usuários</h1>
+          <div id='userSearchDiv'>
+            <p>Filtro por:</p>
+            <!-- Select -->
+              <mat-form-field appearance="outline">
+                  <span style="padding-right: 8px;" matPrefix class="material-icons">
+                    search
+                  </span>
+                  <input
+                    matInput
+                    placeholder="Pesquise por Nome..."
+                    autocomplete="off"
+                  />
+                </mat-form-field>
+          </div>
+          <div id=userList>
+            <mat-selection-list [multiple]='false' #selectedUser>
+              <!-- <mat-list-option *ngFor='let user of data' [value]='data.name'>{{user}}</mat-list-option> -->
+              <mat-list-option *ngFor='let user of data' [value]='user.name'>
+                <div class="listOption">
+                  <mat-icon svgIcon="{{switchIcon(user.level)}}"></mat-icon>
+                  <p>{{user.name}}</p>
+                </div>
+              </mat-list-option>
+            </mat-selection-list>
+            
+            
+            <button mat-raised-button color="primary" id='newUserBtn'>Novo</button>
+          </div>
+          
+        </div>
+        
+        <div id='userView'>
+          <app-user-selection></app-user-selection>
+        </div>
+      </div>
+    </div>
+
+
+</div>

@@ -1,0 +1,23 @@
+import { UsersComponent } from './users/users.component';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { LoginComponent } from './login/login.component';
+import { PropertyPageComponent } from './property-page/property-page.component';
+import { PartsPageComponent } from './parts-page/parts-page.component';
+
+const routes: Routes = [
+  { path: '', component: LoginComponent },
+  { path: 'second', component: SidebarComponent },
+  { path: 'property', component: PropertyPageComponent },
+  { path: 'parts', component: PartsPageComponent },
+  { path: 'users', component: UsersComponent},
+  { path: '**', component: HomePageComponent },
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}

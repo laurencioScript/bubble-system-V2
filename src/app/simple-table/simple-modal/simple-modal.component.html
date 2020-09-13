@@ -1,0 +1,41 @@
+<div id="container">
+  <div>
+    <h2 mat-dialog-title>{{ !object.name ? 'Criando...' : 'Editando...' }}</h2>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ name }}</mat-label>
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="object.name"
+        autocomplete="off"
+        placeholder="Digite a aqui"
+        (keyup.enter)="sendName()"
+      />
+    </mat-form-field>
+  </div>
+  <div *ngIf="name == 'Cor'">
+    <mat-form-field appearance="outline">
+      <mat-label>Hexadecimal</mat-label>
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="object.hexadecimal"
+        autocomplete="off"
+        placeholder="Digite a aqui"
+        (keyup.enter)="sendHexadecimal()"
+      />
+    </mat-form-field>
+  </div>
+  <div class="content-button">
+    <button mat-raised-button mat-dialog-close>Cancelar</button>
+    <button
+      mat-raised-button
+      class="btn-save"
+      [disabled]="formInvaldid()"
+      (click)="sendName()"
+      cdkFocusInitial
+    >
+      Salvar
+    </button>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<div id="container">
+  <app-sidebar rowSelected="property"></app-sidebar>
+  <div class="content">
+    <h1>Propriedades</h1>
+    <mat-tab-group class="tab">
+      <mat-tab class="tab" label="Cores">
+        <ng-template mat-tab-label class="mat-tab">
+          <!-- <span class="material-icons">
+            palette
+          </span> -->
+          CORES
+        </ng-template>
+        <app-simple-table
+          [dataSource]="dataSourceColor"
+          [serviceGeneric]="serviceColor"
+          [name]="'Cor'"
+        ></app-simple-table>
+      </mat-tab>
+      <mat-tab class="tab" label="Defeitos">
+        <ng-template mat-tab-label class="mat-tab">
+          <!-- <span class="material-icons">
+            texture
+          </span> -->
+          DEFEITOS
+        </ng-template>
+        <app-simple-table
+          [dataSource]="dataSourceDefect"
+          [serviceGeneric]="serviceDefect"
+          [name]="'Defeito'"
+        ></app-simple-table>
+      </mat-tab>
+      <mat-tab class="tab" label="Caracteristica">
+        <ng-template mat-tab-label class="mat-tab">
+          <!-- <span class="material-icons">
+            bubble_chart
+          </span> -->
+          CARACTERISTICAS
+        </ng-template>
+        <app-simple-table
+          [dataSource]="dataSourceFeature"
+          [serviceGeneric]="serviceFeature"
+          [name]="'Caracteristica'"
+        ></app-simple-table>
+      </mat-tab>
+      <mat-tab class="tab" label="Caracteristica">
+        <ng-template mat-tab-label class="mat-tab">
+          <!-- <span class="material-icons">
+            square_foot
+          </span> -->
+          UNIDADES
+        </ng-template>
+        <app-simple-table
+          [dataSource]="dataMeasures"
+          [serviceGeneric]="serviceMeasures"
+          [name]="'Unidade'"
+        ></app-simple-table>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

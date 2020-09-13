@@ -1,0 +1,46 @@
+<div id="container">
+  <div style="display: flex; flex-direction: column;">
+    <h2 mat-dialog-title>{{ !object.name ? 'Criação de Peça ' : 'Edição de Peça' }}</h2>
+    <mat-form-field appearance="outline">
+      <mat-label>Nome</mat-label>
+      <input
+        matInput
+        type="text"
+        [formControl]="name"
+        name="name"
+        autocomplete="off"
+        placeholder="Digite a aqui"
+      />
+      <mat-error *ngIf="name.invalid">{{ getErrorMessage('name') }}</mat-error>
+    </mat-form-field>
+      <mat-label>Unidade</mat-label>
+      <mat-form-field appearance="fill">
+      <mat-select [(ngModel)]="object.unity" name="unity" >
+        <mat-option *ngFor="let measure of measures" [value]="measure.unity_name">{{measure.unity_name}}</mat-option>
+      </mat-select>
+      </mat-form-field>
+   
+    <mat-form-field appearance="outline">
+      <mat-label>Valor Unitario</mat-label>
+      <input
+        matInput
+        type="number"
+        [(ngModel)]="object.value"
+        autocomplete="off"
+        placeholder="R$0,00"
+      />
+    </mat-form-field>
+  </div>
+  <div class="content-button" style="display: flex; justify-content: space-between;">
+    <button mat-raised-button mat-dialog-close>Cancelar</button>
+    <button
+      mat-raised-button
+      class="btn-save"
+      [disabled]="formInvaldid()"
+      (click)="sendName()"
+      cdkFocusInitial
+    >
+      Salvar
+    </button>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+#container {
+  display: flex;
+  flex-direction: column;
+  // border: 1px solid #d3d3d3;
+  // padding: 16px;
+  height: 500px;
+}
+
+.content-button {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  div:first-child {
+    width: 60%;
+    mat-form-field {
+      width: 100%;
+    }
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+      border-radius: 0px !important;
+    }
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start {
+      border-radius: 0px !important;
+    }
+  }
+}
+
+.content-paginator {
+  margin-top: 16px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+mat-table {
+  width: 100%;
+  box-shadow: none;
+}
+
+.row-table:hover {
+  background: whitesmoke;
+}
+
+.btn-blue {
+  color: #3c7eff;
+  border: 1px solid #3c7eff;
+}
+
+.btn-blue:hover {
+  color: #3c7eff;
+  background-color: white;
+  border: 1px solid #3c7eff;
+  font-weight: 500;
+}
+
+.btn {
+  padding: 0.75em 1.2em;
+  background: #3c7eff;
+  color: white;
+  border-radius: 0;
+  font-weight: 100;
+}
+
+.span-blue {
+  color: #3c7eff;
+}
+
+.span-blue:hover {
+  color: #3c7eff;
+  font-weight: bold;
+}
+
+.btn-icon {
+  cursor: pointer;
+}
