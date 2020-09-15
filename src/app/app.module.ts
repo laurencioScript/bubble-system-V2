@@ -29,12 +29,14 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 
+
 import { PropertyService } from './service/property.service';
 import { UserService } from './service/user.service';
 import { PartsService } from './service/parts.service';
 import { FormsReadjustComponent } from './parts-page/forms-readjust/forms-readjust.component';
 import { UsersComponent } from './users/users.component';
 import { UserSelectionComponent } from './users/user-selection/user-selection.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,7 +71,8 @@ import { UserSelectionComponent } from './users/user-selection/user-selection.co
     MatSelectModule,
     MatCheckboxModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule,
   ],
   providers: [PropertyService, UserService, PartsService],
   bootstrap: [AppComponent],

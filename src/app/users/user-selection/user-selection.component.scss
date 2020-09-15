@@ -32,7 +32,25 @@
     }
 
     #createUser{
+
+        display: flex;
+        flex-direction: column;
         
+    }
+
+    #viewUser{
+        display: flex;
+        flex-direction: column;
+
+        ::placeholder{
+            color: black;
+            opacity: 0.7;
+        }
+
+        #buttonsDiv{
+            display: flex;
+            flex-direction: column;
+        }
     }
 
 }

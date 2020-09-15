@@ -9,6 +9,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class UserSelectionComponent implements OnInit {
 
+  selectedValue: string;
+  levels: any[] = ["Mestre", "Administrador", "Atendente"];
+
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) { 
     iconRegistry.addSvgIcon('bubbleIcon', sanitizer.bypassSecurityTrustResourceUrl('./../assets/icon/bubbleIcon.svg'));
   }
