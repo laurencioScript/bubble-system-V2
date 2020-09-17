@@ -30,6 +30,18 @@ export class UserService {
     }
   }
 
+  async createUser(data){
+    try{
+      const options = this.getOptions();
+      const responseRequest: any = await this.http
+        .post(`${environment.apiUrl}/user/register`, data, options)
+        .toPromise();
+    } catch(e) {
+      console.log('>>> error', e);
+      return null;
+    }
+  }
+
 
   getOptions() {
     return {

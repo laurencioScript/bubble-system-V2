@@ -5,13 +5,13 @@
             <mat-icon svgIcon="bubbleIcon"></mat-icon>
         </div> -->
 
-        <!-- <div id="createUser">
+        <div id="createUser">
             <p>Criação do Usuário</p>
 
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" id='create-levelSelect'>
                 <mat-label>Nivel da Conta</mat-label>
-                    <mat-select [(ngModel)]="selectedValue" name="level">
-                        <mat-option *ngFor="let level of levels" [value]="level">
+                    <mat-select [(ngModel)]="createSelectedLevel" name="level">
+                        <mat-option *ngFor="let level of levels" [value]="levels.indexOf(level)+1">
                             {{level}}
                         </mat-option>
                     </mat-select>
@@ -21,41 +21,49 @@
                 <input
                     appearence='outline'
                     matInput
+                    [formControl]="createName"
                     placeholder="Nome"
                     autocomplete="off"
+                    required
                 />
+                <mat-error *ngIf='createName.invalid'>{{createMesssageError('createName')}}</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
                 <input
                     appearence='outline'
                     matInput
+                    [formControl]="createEmail"
                     placeholder="E-mail"
                     autocomplete="off"
+                    required
                 />
+                <mat-error *ngIf='createEmail.invalid'>{{createMesssageError('createEmail')}}</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" matTooltip='A senha deve Conter 8 Caracteres no Minimo.'>
                 <mat-label>Senha</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'">
+                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="createPass">
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
+                <mat-error *ngIf='createPass.invalid'>{{createMesssageError('createPass')}}</mat-error>
               </mat-form-field>
 
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" matTooltip="Repita a Senha Digitada no Campo Acima">
                 <mat-label>Confirmar Senha</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'">
+                <input matInput [type]="hide ? 'password' : 'text'" [formControl]='confirmCreatePass'> 
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
+                <mat-error *ngIf='confirmCreatePass.invalid'>{{createMesssageError('confirmCreatePass')}}</mat-error>
               </mat-form-field>
 
               <div id="buttonsDiv">
                 <button mat-raised-button color="basic" id='newUserBtn'>Cancelar</button>
-                <button mat-raised-button color="primary" id='newUserBtn'>Confirmar</button>
+                <button mat-raised-button color="primary" id='newUserBtn' (click)="createUser()">Confirmar</button>
               </div>
-        </div> -->
+        </div>
     
         <!-- <div id="viewUser">
             <mat-icon svgIcon="bubbleIcon"></mat-icon>
@@ -96,6 +104,42 @@
                 <button mat-button color="primary" id='newUserBtn'>Confirmar</button>
             </div>
 
+        </div> -->
+    
+        <!-- <div id='editUser'>
+            <mat-icon svgIcon="bubbleIcon"></mat-icon>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Nivel da Conta</mat-label>
+                    <mat-select [(ngModel)]="selectedValue" name="level">
+                        <mat-option *ngFor="let level of levels" [value]="level">
+                            {{level}}
+                        </mat-option>
+                    </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <input
+                    appearence='outline'
+                    matInput
+                    placeholder="Nome"
+                    autocomplete="off"
+                />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <input
+                    appearence='outline'
+                    matInput
+                    placeholder="e-mail"
+                    autocomplete="off"
+                />
+            </mat-form-field>
+
+            <div id="buttonsDiv">
+                <button mat-raised-button color="basic" id='newUserBtn'>Cancelar</button>
+                <button mat-raised-button color="primary" id='newUserBtn'>Confirmar</button>
+            </div>
         </div> -->
     </div>
 </div>
