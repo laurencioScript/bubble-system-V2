@@ -37,7 +37,7 @@ export class ClientPageComponent implements OnInit {
 
   async ngOnInit() {
     const clients = await this.clientService.getClients();
-    this.data = clients;
+    this.data = clients || [];
     this.dataClone = this.clone(this.data);
     this.length = this.data && Array.isArray(this.data) ? this.data.length : 0;
     this.paginator();
