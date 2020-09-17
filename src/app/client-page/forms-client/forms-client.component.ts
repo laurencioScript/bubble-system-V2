@@ -31,6 +31,21 @@ export class FormsClientComponent implements OnInit {
   contact2: any;
   mode: string;
   maskCpfCnpj : string;
+  phoneMask = ['(00) 0000-00009','(00) 0000-00009'];
+  previusLength = 0;
+  state : any;
+  
+  onPhoneChanged(value,index) {
+    const CELLPHONE = '(00) 0 0000-0000';
+    const LANDLINE= '(00) 0000-00009';
+
+    if(value.length <= 10){
+      this.phoneMask[index] = LANDLINE;
+    }
+    else if(value.length > 10){
+      this.phoneMask[index] = CELLPHONE;
+    }
+  }
 
   constructor(
     public dialogRef: MatDialogRef<FormsClientComponent>,
@@ -47,6 +62,10 @@ export class FormsClientComponent implements OnInit {
       client.contact && client.contact.length > 1 ? client.contact[1] : '',
       []
     );
+
+    if(!client.observation_color ){
+      client.observation_color = 'FFFFFF';
+    }
 
     this.client = {
       contact: new FormControl(client.contact || '', [
@@ -76,7 +95,7 @@ export class FormsClientComponent implements OnInit {
       observation_description: new FormControl(client.observation_description || '', [
         Validators.maxLength(300),
       ]),
-      observation_color: new FormControl(client.observation_color || '', [
+      observation_color: new FormControl(client.observation_color, [
         Validators.maxLength(30),
       ]),
       state_city: new FormControl(client.state_city || '', [Validators.maxLength(50)]),
@@ -86,10 +105,28 @@ export class FormsClientComponent implements OnInit {
   ngOnInit(): void {}
 
   formInvaldid() {
-    return this.client.cpf_cnpj.invalid || this.client.name_client.invalid || this.contact1.invalid;
+    return this.client.cpf_cnpj.invalid || this.client.name_client.invalid || this.contact1.invalid || this.client.corporate_name.invalid;
+  }
+
+
+  corporateNameChange(){
+    if(this.client.cpf_cnpj.value.length == 14){
+      this.client.corporate_name = new FormControl(this.client.corporate_name.value, [Validators.maxLength(100), Validators.required]);
+    }
+    else{
+      this.client.corporate_name = new FormControl(this.client.corporate_name.value, [Validators.maxLength(100)]);
+    }
+  }
+
+  handleChange($event: any) {
+    let color = $event.color;
+    this.client.observation_color.setValue(color.hex);
   }
 
   send() {
+
+
+    
     const client = {
       id_client:this.data.clientExist.id_client,
       contact: [],
