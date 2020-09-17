@@ -1,4 +1,5 @@
-<h2 *ngIf="mode == 'create'">Cadastro de cliente</h2>
+<div style="width: 500px;">
+  <h2 *ngIf="mode == 'create'">Cadastro de cliente</h2>
 <h2 *ngIf="mode == 'edit'">Edição de cliente</h2>
 <h2 *ngIf="mode == 'view'">Visualização de cliente</h2>
 
@@ -29,6 +30,7 @@
           type="text"
           [formControl]="client.cpf_cnpj"
           [readonly]="mode == 'view'"
+          (change)="corporateNameChange()"
           name="cpf_cnpj"
           mask="CPF_CNPJ"
           autocomplete="off"
@@ -58,6 +60,7 @@
           matInput
           type="text"
           maxlength="100"
+          [required]="client.cpf_cnpj.value.length == 14"
           [readonly]="mode == 'view'"
           [formControl]="client.corporate_name"
           name="corporate_name"
@@ -73,9 +76,9 @@
           matInput
           type="text"
           [formControl]="contact1"
-          
+          mask="{{ phoneMask[0] }}"
+          (ngModelChange)="onPhoneChanged($event,0)"
           name="contact1"
-          maxlength="16"
           [readonly]="mode == 'view'"
           autocomplete="off"
           required
@@ -84,7 +87,7 @@
 
       <mat-form-field class="input-text" style="margin-left: 8px;" appearance="outline">
         <mat-label>Contato Opcional</mat-label>
-        <input matInput type="text"   maxlength="16" [formControl]="contact2" name="contact2" autocomplete="off" />
+        <input matInput type="text"   mask="{{ phoneMask[1] }}" (ngModelChange)="onPhoneChanged($event,1)"  [formControl]="contact2" name="contact2" autocomplete="off" />
       </mat-form-field>
     </div>
   </mat-tab>
@@ -92,7 +95,7 @@
     <p style="margin-top: 16px;">
       <mat-form-field class="input-text" style="margin: 0;" appearance="outline">
         <mat-label>CEP</mat-label>
-        <input matInput type="text" mask="99.999-999"  [readonly]="mode == 'view'" [formControl]="client.cep" maxlength="10" />
+        <input matInput type="text" mask="00.000-000"  [readonly]="mode == 'view'" [formControl]="client.cep" maxlength="10" />
       </mat-form-field>
     </p>
 
@@ -132,17 +135,23 @@
       </mat-form-field>
     </div>
   </mat-tab>
-  <mat-tab label="Observação">
-    <mat-form-field style="width: 100%; margin-top: 16px;">
-      <textarea
-        matInput
-        [readonly]="mode == 'view'"
-        rows="15"
-        [formControl]="client.observation_description"
-        maxlength="300"
-        placeholder="Digite aqui..."
-      ></textarea>
-    </mat-form-field>
+  <mat-tab label="Observação"   >
+    <div style="display: flex; flex-direction: row;margin: 8px; ">
+      <mat-form-field style="width: 50%;height:100%;margin-right: 16px;">
+        <textarea
+          matInput
+          [readonly]="mode == 'view'"
+          rows="15"
+          [formControl]="client.observation_description"
+          maxlength="300"
+          placeholder="Digite aqui..."
+        ></textarea>
+      </mat-form-field>
+      <div style="width: 50%;">
+        <color-sketch [presetColors]="[]" [color]="client.observation_color.value" (onChangeComplete)="handleChange($event)" ></color-sketch>
+      </div>
+    </div>
+  
   </mat-tab>
 </mat-tab-group>
 <div *ngIf="mode !='view'" class="content-button">
@@ -157,4 +166,6 @@
   <button mat-raised-button  style="width: auto;" mat-dialog-close class="btn">
     Fechar
   </button>
+</div>
+
 </div>

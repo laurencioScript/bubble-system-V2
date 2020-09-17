@@ -80,6 +80,12 @@ export class ClientPageComponent implements OnInit {
     value.visible = false;
   }
 
+  clearFilter(){
+    this.searchValue = '';
+    this.data = this.clone(this.dataClone);
+    this.paginator();
+  }
+  
   openDialog(clientExist: any = {}, mode) {
     const dialogRef = this.dialog.open(FormsClientComponent, {
       data: this.clone({ clientExist, mode }),
@@ -134,7 +140,11 @@ export class ClientPageComponent implements OnInit {
   filter() {
     this.data = this.dataClone;
     this.pageIndex = 0;
-    this.data = this.data.filter((value) => value.name.indexOf(this.searchValue) >= 0);
+    this.data = this.data.filter((value) => 
+      value.name_client.indexOf(this.searchValue) >= 0 || 
+      value.cpf_cnpj.indexOf(this.searchValue) >= 0 || 
+      value.contact.find(contact=> contact.indexOf(this.searchValue) >= 0)
+    );
 
     this.paginator();
   }

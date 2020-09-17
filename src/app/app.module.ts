@@ -38,6 +38,8 @@ import { AuthGuardService, HomeGuardService } from './auth/auth-guard.service';
 import { ClientPageComponent } from './client-page/client-page.component';
 import { FormsClientComponent } from './client-page/forms-client/forms-client.component';
 import { ClientService } from './service/client.service';
+
+import { ColorSketchModule } from 'ngx-color/sketch';
 @NgModule({
   declarations: [
     AppComponent,
@@ -72,6 +74,7 @@ import { ClientService } from './service/client.service';
     MatSelectModule,
     MatCheckboxModule,
     NgxMaskModule.forRoot(),
+    ColorSketchModule
   ],
   providers: [
     PropertyService,

@@ -16,6 +16,9 @@
               (keyup)="filter()"
               autocomplete="off"
             />
+            <span *ngIf="searchValue" style="cursor:pointer" (click)="clearFilter()" class="material-icons" matSuffix>
+              clear
+            </span>
           </mat-form-field>
         </div>
         <button mat-stroked-button class="btn btn-blue" (click)="openDialog({}, 'create')">
@@ -25,59 +28,40 @@
 
       <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="number">
-          <mat-header-cell *matHeaderCellDef>
-            <label *ngIf="!viewSelect"> N°</label>
-            <mat-checkbox
-              color="primary"
-              *ngIf="viewSelect"
-              [(ngModel)]="selectedAll"
-              (change)="selectAll($event.checked)"
-            >
-              N°
-            </mat-checkbox>
+          <mat-header-cell  *matHeaderCellDef>
+            <label> N°</label>
           </mat-header-cell>
-          <mat-cell *matCellDef="let element; let i = index">
-            <label *ngIf="!viewSelect">
-              {{ dataSource.filteredData.indexOf(element) + 1 + pageIndex * pageSize }}</label
-            >
 
-            <mat-checkbox
-              *ngIf="viewSelect"
-              color="primary"
-              (change)="validateSelectAll()"
-              [(ngModel)]="element.checked"
-            >
-              {{ dataSource.filteredData.indexOf(element) + 1 + pageIndex * pageSize }}
-            </mat-checkbox>
+          <mat-cell *matCellDef="let element; let i = index">
+            {{ dataSource.filteredData.indexOf(element) + 1 + pageIndex * pageSize }} 
+            <span [ngStyle]="{'color': element.observation_color , 'margin-left': '16px'}"class="material-icons"> bubble_chart </span>
           </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef> NOME </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{ element.name_client }} </mat-cell>
+        <ng-container  matColumnDef="name">
+          <mat-header-cell style="flex: 2;" *matHeaderCellDef> NOME </mat-header-cell>
+          <mat-cell style="flex: 2;" *matCellDef="let element"> {{ element.name_client }} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="measure">
-          <mat-header-cell *matHeaderCellDef> CPF/CNPJ </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{ element.cpf_cnpj | mask: 'CPF_CNPJ'  }} </mat-cell>
+          <mat-header-cell style="flex: 2;" *matHeaderCellDef> CPF/CNPJ </mat-header-cell>
+          <mat-cell style="flex: 2;" *matCellDef="let element"> {{ element.cpf_cnpj | mask: 'CPF_CNPJ'  }} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="unityValue">
-          <mat-header-cell *matHeaderCellDef> CONTATO </mat-header-cell>
-          <mat-cell *matCellDef="let element"> 
+          <mat-header-cell style="flex: 2;" *matHeaderCellDef> CONTATO </mat-header-cell>
+          <mat-cell style="flex: 2;" *matCellDef="let element" class="column-select" > 
             <mat-form-field appearance="fill">
-              <!-- <mat-label>{{element.contact[0]}}</mat-label> -->
               <mat-select [value]="element.contact[0]" >
-                <mat-option *ngFor="let contact of element.contact" [value]="contact" >{{contact}}</mat-option>
+                <mat-option *ngFor="let contact of element.contact" [value]="contact" >{{contact | mask:"(00) 0000-0000||(00) 0 0000-0000" }}</mat-option>
               </mat-select>
               </mat-form-field>
-            
             </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="options">
-          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-          <mat-cell style="justify-content: center;" *matCellDef="let element">
+          <mat-header-cell  *matHeaderCellDef> </mat-header-cell>
+          <mat-cell  style="justify-content: center;" *matCellDef="let element">
             <button
               mat-icon-button
               [matMenuTriggerFor]="menu"
