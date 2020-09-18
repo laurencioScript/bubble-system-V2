@@ -11,6 +11,11 @@ export class FormResetPasswordComponent implements OnInit {
   confirmNewPassword = false;
   newPassword = '';
   newPasswordConfirm = '';
+  hiddenPassword = false;
+  hiddenPasswordConfirm = false;
+
+  typePassword = 'password';
+  typePasswordConfirm = 'password';
 
   ngOnInit(): void {}
 
@@ -22,5 +27,13 @@ export class FormResetPasswordComponent implements OnInit {
     }
 
     return this.dialogRef.close(this.newPassword);
+  }
+
+  getType(property) {}
+
+  setHidden(property) {
+    this[property] = !this[property];
+    this.typePassword = this.hiddenPassword ? 'text' : 'password';
+    this.typePasswordConfirm = this.hiddenPasswordConfirm ? 'text' : 'password';
   }
 }
