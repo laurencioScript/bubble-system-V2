@@ -28,6 +28,8 @@ export class UsersComponent implements OnInit {
 
   selectedUser: object;
 
+  componentPage: string = "edit";
+
   constructor(public readonly UserService: UserService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) { 
     iconRegistry.addSvgIcon('atendenteIcon', sanitizer.bypassSecurityTrustResourceUrl('./../assets/icon/atendenteIcon.svg'));
     iconRegistry.addSvgIcon('admIcon', sanitizer.bypassSecurityTrustResourceUrl('./../assets/icon/admIcon.svg'));
@@ -40,6 +42,7 @@ export class UsersComponent implements OnInit {
 
   async getUsers(){
     const users = await this.UserService.getUsers();
+    this.componentPage="viewUser";
   }
 
   level(level: number){

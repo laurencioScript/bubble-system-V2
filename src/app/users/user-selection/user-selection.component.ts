@@ -37,6 +37,14 @@ export class UserSelectionComponent implements OnInit {
     email: "",
     level: "",
   };
+
+  viewPages = {
+    initial: true,
+    view: false,
+    edit: false
+  };
+
+  @Input() componentPage: any;
   
   constructor(public readonly UserService: UserService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) { 
     iconRegistry.addSvgIcon('bubbleIcon', sanitizer.bypassSecurityTrustResourceUrl('./../assets/icon/bubbleIcon.svg'));
@@ -64,6 +72,14 @@ export class UserSelectionComponent implements OnInit {
 
   
   ngOnInit(): void {
+  }
+
+  public switchPage(page: string){
+    if(page === "initial"){ this.viewPages = { initial: true, view: false, edit: false } }
+    if(page === "view"){ this.viewPages = { initial: false, view: true, edit: false } }
+    if(page === "edit"){ this.viewPages = { initial: false, view: false, edit: true } }
+
+    console.log(page);
   }
 
   createMesssageError(error){

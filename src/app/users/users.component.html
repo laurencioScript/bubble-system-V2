@@ -34,7 +34,7 @@
           <div id=userList>
             <mat-selection-list [multiple]='false' #selectedUser>
               <!-- <mat-list-option *ngFor='let user of data' [value]='data.name'>{{user}}</mat-list-option> -->
-              <mat-list-option *ngFor='let user of data' [value]='user' (click)="viewComponent.getUser(user)">
+              <mat-list-option *ngFor='let user of data' [value]='user' (click)="viewComponent.getUser(user)" (click)="viewComponent.switchPage(componentPage)">
                 <div class="listOption">
                   <mat-icon svgIcon="{{switchIcon(user.level)}}"></mat-icon>
                     <div id='userNameDiv'>
@@ -52,7 +52,7 @@
         </div>
         
         <div id='userView'>
-          <app-user-selection #viewComponent></app-user-selection>
+          <app-user-selection #viewComponent componentPage='{{componentPage}}'></app-user-selection>
         </div>
       </div>
     </div>
