@@ -1,5 +1,10 @@
 <div id="sidebar">
-  <div class="row">
+  <div
+    [ngClass]="{ selectedRow: rowSelected == 'profile' }"
+    [routerLink]="['/profile']"
+    style="cursor: pointer;"
+    class="row"
+  >
     <div style="display: flex;">
       <span class="material-icons perfil">
         account_circle
@@ -9,9 +14,6 @@
         <h3 style="margin: 0;">{{ office }}</h3>
       </div>
     </div>
-    <span id="vpn-key" class="material-icons">
-      vpn_key
-    </span>
   </div>
   <div [routerLink]="['/home']" [ngClass]="{ selectedRow: rowSelected == 'home' }" class="row">
     <span class="material-icons icon-row">

@@ -41,13 +41,13 @@ export class LoginComponent implements OnInit {
       JSON.stringify({
         name: userSession.name_user,
         office: userSession.level_user,
+        id: userSession.id_user,
       })
     );
-
     sessionStorage.setItem('token', userSession.token);
     sessionStorage.setItem('level', userSession.level_user);
 
-    this.router.navigate(['/property']);
+    this.router.navigate(['/home']);
   }
 
   getErrorMessage(field) {

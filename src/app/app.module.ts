@@ -40,6 +40,9 @@ import { FormsClientComponent } from './client-page/forms-client/forms-client.co
 import { ClientService } from './service/client.service';
 
 import { ColorSketchModule } from 'ngx-color/sketch';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { FormUserComponent } from './profile-page/form-user/form-user.component';
+import { FormResetPasswordComponent } from './profile-page/form-reset-password/form-reset-password.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +57,9 @@ import { ColorSketchModule } from 'ngx-color/sketch';
     FormsReadjustComponent,
     ClientPageComponent,
     FormsClientComponent,
+    ProfilePageComponent,
+    FormUserComponent,
+    FormResetPasswordComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -74,7 +80,7 @@ import { ColorSketchModule } from 'ngx-color/sketch';
     MatSelectModule,
     MatCheckboxModule,
     NgxMaskModule.forRoot(),
-    ColorSketchModule
+    ColorSketchModule,
   ],
   providers: [
     PropertyService,

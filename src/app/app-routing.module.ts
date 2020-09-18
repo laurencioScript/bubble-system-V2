@@ -10,6 +10,7 @@ import {
   HomeGuardService as HomeGuard,
 } from './auth/auth-guard.service';
 import { ClientPageComponent } from './client-page/client-page.component';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [HomeGuard] },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'property', component: PropertyPageComponent, canActivate: [AuthGuard] },
   { path: 'parts', component: PartsPageComponent, canActivate: [AuthGuard] },
   { path: 'client', component: ClientPageComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfilePageComponent, canActivate: [AuthGuard] },
   { path: '**', component: HomePageComponent, canActivate: [AuthGuard] },
 ];
 
