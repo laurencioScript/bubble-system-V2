@@ -1,0 +1,49 @@
+<div id="container">
+  <app-sidebar rowSelected="profile"></app-sidebar>
+  <div class="content">
+    <h1>Perfil</h1>
+    <div style="display: flex; width: 80%; justify-content: flex-end;">
+      <button style="margin-right: 16px;" mat-raised-button (click)="resetPassword()">
+        Nova Senha
+        <span style="font-size: 20px;" class="material-icons">
+          vpn_key
+        </span>
+      </button>
+      <button
+        mat-raised-button
+        style="background-color: #3c7eff;"
+        (click)="editUser()"
+        color="primary"
+      >
+        Editar
+        <span style="font-size: 20px;" class="material-icons">
+          create
+        </span>
+      </button>
+    </div>
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        width: 50%;
+        flex-direction: column;
+        align-items: left;
+        margin-left: 8%;
+      "
+    >
+      <img id="profile-logo" src="./../../assets/profile.svg" />
+      <mat-form-field appearance="outline">
+        <mat-label>Nome</mat-label>
+        <input matInput name="name" [(ngModel)]="user.name_user" readonly type="text" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput name="email" [(ngModel)]="user.email" readonly type="email" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Cargo</mat-label>
+        <input matInput name="email" [(ngModel)]="user.cargo" readonly type="email" />
+      </mat-form-field>
+    </div>
+  </div>
+</div>

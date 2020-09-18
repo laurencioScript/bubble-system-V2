@@ -18,7 +18,7 @@ export class SidebarComponent implements OnInit {
       sessionUser = JSON.parse(sessionUser);
     }
     this.username = sessionUser.name ? this.capitalize(sessionUser.name) : this.username;
-    this.office = sessionUser.office === 1 ? 'Mestre' : this.office;
+    this.office = sessionUser.office === 1 ? 'Diretor' : this.office;
     this.office = sessionUser.office === 2 ? 'Administrador' : this.office;
     this.office = sessionUser.office === 3 ? 'Atendente' : this.office;
   }
