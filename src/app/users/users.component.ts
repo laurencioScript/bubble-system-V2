@@ -3,6 +3,7 @@ import { UserService } from './../service/user.service';
 import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-users',
@@ -25,7 +26,7 @@ export class UsersComponent implements OnInit {
   ];
   displayedColumns: string[] = ['id', 'name', 'group', 'options'];
 
-  selectedUser: string;
+  selectedUser: object;
 
   constructor(public readonly UserService: UserService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) { 
     iconRegistry.addSvgIcon('atendenteIcon', sanitizer.bypassSecurityTrustResourceUrl('./../assets/icon/atendenteIcon.svg'));
@@ -39,6 +40,22 @@ export class UsersComponent implements OnInit {
 
   async getUsers(){
     const users = await this.UserService.getUsers();
+  }
+
+  level(level: number){
+    let retorno; 
+    switch (level) {
+      case 1:
+        retorno = "Mestre";
+        break;
+      case 2:
+        retorno = "Administrador";
+        break;
+      case 3:
+        retorno = "Atendente";
+        break;
+    }
+    return retorno;
   }
 
   async ngOnInit() {

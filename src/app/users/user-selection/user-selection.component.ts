@@ -1,8 +1,9 @@
 import { UserService } from './../../service/user.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-selection',
@@ -30,8 +31,35 @@ export class UserSelectionComponent implements OnInit {
     password: "",
   }
 
+  selectedUser: any = {
+    id: "",
+    name: "",
+    email: "",
+    level: "",
+  };
+  
   constructor(public readonly UserService: UserService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) { 
     iconRegistry.addSvgIcon('bubbleIcon', sanitizer.bypassSecurityTrustResourceUrl('./../assets/icon/bubbleIcon.svg'));
+  }
+
+  level(level: any){
+    let retorno; 
+    switch (level) {
+      case 1:
+        retorno = "Mestre";
+        break;
+      case 2:
+        retorno = "Administrador";
+        break;
+      case 3:
+        retorno = "Atendente";
+        break;
+    }
+    return retorno;
+  }
+
+  public getUser(user: any){
+    this.selectedUser = user;
   }
 
   

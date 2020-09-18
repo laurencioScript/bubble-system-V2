@@ -6,26 +6,41 @@
         <div id='userSidebar'>
           <h1>Usuários</h1>
           <div id='userSearchDiv'>
-            <p>Filtro por:</p>
-            <!-- Select -->
-              <mat-form-field appearance="outline">
-                  <span style="padding-right: 8px;" matPrefix class="material-icons">
-                    search
-                  </span>
-                  <input
-                    matInput
-                    placeholder="Pesquise por Nome..."
-                    autocomplete="off"
-                  />
-                </mat-form-field>
+            <div id="userFilter">
+              <p>Filtro por:</p>
+              <mat-form-field appearence="outline">
+                <mat-select name="level">
+                  <mat-option value="Todos">Todos</mat-option>
+                  <mat-option value="Razao Social">Razao Social</mat-option>
+                  <mat-option value="CPF">CPF</mat-option>
+                  <mat-option value="CNPJ">CNPJ</mat-option>
+                  <mat-option value="Contato">Contato</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+
+            <mat-form-field appearance="outline" id="searchBarInput">
+                <span style="padding-right: 8px;" matPrefix class="material-icons">
+                  search
+                </span>
+                <input
+                  matInput
+                  placeholder="Pesquise por Nome..."
+                  autocomplete="off"
+                />
+              </mat-form-field>
           </div>
           <div id=userList>
             <mat-selection-list [multiple]='false' #selectedUser>
               <!-- <mat-list-option *ngFor='let user of data' [value]='data.name'>{{user}}</mat-list-option> -->
-              <mat-list-option *ngFor='let user of data' [value]='user.name'>
+              <mat-list-option *ngFor='let user of data' [value]='user' (click)="viewComponent.getUser(user)">
                 <div class="listOption">
                   <mat-icon svgIcon="{{switchIcon(user.level)}}"></mat-icon>
-                  <p>{{user.name}}</p>
+                    <div id='userNameDiv'>
+                      <p>{{user.name}}</p>
+                      <p>{{level(user.level)}}</p>
+                    </div>
                 </div>
               </mat-list-option>
             </mat-selection-list>
@@ -37,7 +52,7 @@
         </div>
         
         <div id='userView'>
-          <app-user-selection></app-user-selection>
+          <app-user-selection #viewComponent></app-user-selection>
         </div>
       </div>
     </div>

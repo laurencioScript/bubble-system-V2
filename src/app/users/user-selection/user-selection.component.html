@@ -5,7 +5,7 @@
             <mat-icon svgIcon="bubbleIcon"></mat-icon>
         </div> -->
 
-        <div id="createUser">
+        <!-- <div id="createUser">
             <p>Criação do Usuário</p>
 
             <mat-form-field appearance="outline" id='create-levelSelect'>
@@ -63,7 +63,7 @@
                 <button mat-raised-button color="basic" id='newUserBtn'>Cancelar</button>
                 <button mat-raised-button color="primary" id='newUserBtn' (click)="createUser()">Confirmar</button>
               </div>
-        </div>
+        </div> -->
     
         <!-- <div id="viewUser">
             <mat-icon svgIcon="bubbleIcon"></mat-icon>
@@ -72,8 +72,8 @@
                 <input
                     appearence='outline'
                     matInput
+                    value="{{level(selectedUser.level)}}"
                     [disabled]='true'
-                    placeholder="NIVEL"
                     autocomplete="off"
                 />
             </mat-form-field>
@@ -82,31 +82,29 @@
                 <input
                     appearence='outline'
                     matInput
+                    value="{{selectedUser.name}}"
                     [disabled]='true'
-                    placeholder="Nome"
                     autocomplete="off"
                 />
             </mat-form-field>
-
             <mat-form-field appearance="outline">
                 <input
                     appearence='outline'
                     matInput
+                    value="{{selectedUser.email}}"
                     [disabled]='true'
-                    placeholder="e-mail"
                     autocomplete="off"
                 />
             </mat-form-field>
 
             <div id="buttonsDiv">
-                <button mat-raised-button color="basic" id='newUserBtn'>Editar</button>
-                <button mat-raised-button color="warn" id='newUserBtn'>Remover</button>
-                <button mat-button color="primary" id='newUserBtn'>Confirmar</button>
+                <button mat-stroked-button color="basic" id='newUserBtn'>Editar</button>
+                <button mat-stroked-button color="warn" id='newUserBtn'>Remover</button>
+                <button>Recuperar Senha</button>
             </div>
-
         </div> -->
     
-        <!-- <div id='editUser'>
+        <div id='editUser'>
             <mat-icon svgIcon="bubbleIcon"></mat-icon>
 
             <mat-form-field appearance="outline">
@@ -122,6 +120,7 @@
                 <input
                     appearence='outline'
                     matInput
+                    value="{{selectedUser.name}}"
                     placeholder="Nome"
                     autocomplete="off"
                 />
@@ -131,6 +130,8 @@
                 <input
                     appearence='outline'
                     matInput
+                    
+                    value="{{selectedUser.email}}"
                     placeholder="e-mail"
                     autocomplete="off"
                 />
@@ -140,6 +141,6 @@
                 <button mat-raised-button color="basic" id='newUserBtn'>Cancelar</button>
                 <button mat-raised-button color="primary" id='newUserBtn'>Confirmar</button>
             </div>
-        </div> -->
+        </div>
     </div>
 </div>
