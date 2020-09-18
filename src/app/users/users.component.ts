@@ -28,12 +28,13 @@ export class UsersComponent implements OnInit {
 
   selectedUser: object;
 
-  componentPage: string = "edit";
+  componentPage: string = "view";
 
   constructor(public readonly UserService: UserService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) { 
     iconRegistry.addSvgIcon('atendenteIcon', sanitizer.bypassSecurityTrustResourceUrl('./../assets/icon/atendenteIcon.svg'));
     iconRegistry.addSvgIcon('admIcon', sanitizer.bypassSecurityTrustResourceUrl('./../assets/icon/admIcon.svg'));
   }
+
 
   switchIcon(userLevel: any){
     if(userLevel == 3){return "atendenteIcon"}

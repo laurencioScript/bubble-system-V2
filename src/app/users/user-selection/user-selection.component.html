@@ -5,7 +5,7 @@
             <mat-icon svgIcon="bubbleIcon"></mat-icon>
         </div>
 
-        <!-- <div id="createUser">
+        <div id="createUser" *ngIf='viewPages.create'>
             <p>Criação do Usuário</p>
 
             <mat-form-field appearance="outline" id='create-levelSelect'>
@@ -63,12 +63,13 @@
                 <button mat-raised-button color="basic" id='newUserBtn'>Cancelar</button>
                 <button mat-raised-button color="primary" id='newUserBtn' (click)="createUser()">Confirmar</button>
               </div>
-        </div> -->
+        </div>
     
-        <!-- <div id="viewUser">
+        <div id="viewUser" *ngIf='viewPages.view'>
             <mat-icon svgIcon="bubbleIcon"></mat-icon>
 
             <mat-form-field appearance="outline">
+                <mat-label>Nivel do Usuário</mat-label>
                 <input
                     appearence='outline'
                     matInput
@@ -79,6 +80,7 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline">
+                <mat-label>Nome</mat-label>
                 <input
                     appearence='outline'
                     matInput
@@ -88,6 +90,7 @@
                 />
             </mat-form-field>
             <mat-form-field appearance="outline">
+                <mat-label>E-mail</mat-label>
                 <input
                     appearence='outline'
                     matInput
@@ -98,11 +101,11 @@
             </mat-form-field>
 
             <div id="buttonsDiv">
-                <button mat-stroked-button color="basic" id='newUserBtn'>Editar</button>
+                <button mat-stroked-button color="basic" id='newUserBtn' (click)='switchPage("edit")'>Editar</button>
                 <button mat-stroked-button color="warn" id='newUserBtn'>Remover</button>
                 <button>Recuperar Senha</button>
             </div>
-        </div> -->
+        </div>
     
         <div id='editUser' *ngIf="viewPages.edit">
             <mat-icon svgIcon="bubbleIcon"></mat-icon>
@@ -117,6 +120,7 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline">
+                <mat-label>Nome</mat-label>
                 <input
                     appearence='outline'
                     matInput
@@ -127,6 +131,7 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline">
+                <mat-label>E-mail</mat-label>
                 <input
                     appearence='outline'
                     matInput

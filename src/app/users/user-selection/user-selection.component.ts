@@ -41,7 +41,8 @@ export class UserSelectionComponent implements OnInit {
   viewPages = {
     initial: true,
     view: false,
-    edit: false
+    edit: false,
+    create: false
   };
 
   @Input() componentPage: any;
@@ -75,9 +76,10 @@ export class UserSelectionComponent implements OnInit {
   }
 
   public switchPage(page: string){
-    if(page === "initial"){ this.viewPages = { initial: true, view: false, edit: false } }
-    if(page === "view"){ this.viewPages = { initial: false, view: true, edit: false } }
-    if(page === "edit"){ this.viewPages = { initial: false, view: false, edit: true } }
+    if(page === "initial"){ this.viewPages = { initial: true, view: false, edit: false, create: false } }
+    if(page === "view"){ this.viewPages = { initial: false, view: true, edit: false, create: false } }
+    if(page === "edit"){ this.viewPages = { initial: false, view: false, edit: true, create: false } }
+    if(page === "create"){ this.viewPages = { initial: false, view: false, edit: false, create: true } }
 
     console.log(page);
   }
