@@ -9,12 +9,10 @@
             <div id="userFilter">
               <p>Filtro por:</p>
               <mat-form-field appearence="outline">
-                <mat-select name="level">
-                  <mat-option value="Todos">Todos</mat-option>
-                  <mat-option value="Razao Social">Razao Social</mat-option>
-                  <mat-option value="CPF">CPF</mat-option>
-                  <mat-option value="CNPJ">CNPJ</mat-option>
-                  <mat-option value="Contato">Contato</mat-option>
+                <mat-select name="levelSelect" [(value)]="selectedLevel">
+                  <mat-option value="0">Todos</mat-option>
+                  <mat-option value="2">Admnistrador</mat-option>
+                  <mat-option value="3">Atendente</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -27,15 +25,16 @@
                 <input
                   matInput
                   placeholder="Pesquise por Nome..."
+                  [(ngModel)]="searchInputValue"
+                  (keyup)='filter()'
                   autocomplete="off"
                 />
               </mat-form-field>
           </div>
           <div id=userList>
-            <mat-selection-list [multiple]='false' #selectedUser>
-              <!-- <mat-list-option *ngFor='let user of data' [value]='data.name'>{{user}}</mat-list-option> -->
-              <mat-list-option *ngFor='let user of data' [value]='user' (click)="viewComponent.getUser(user)" (click)="viewComponent.switchPage('view')">
-                <div class="listOption">
+            <mat-selection-list #selectedUser [multiple]="false" *ngFor='let user of data' >
+              <mat-list-option *ngIf="validateList(user.level)" [value]='user' (click)="viewComponent.getUser(user)" (click)="viewComponent.switchPage('view')">
+                <div class="listOption" >
                   <mat-icon svgIcon="{{switchIcon(user.level)}}"></mat-icon>
                     <div id='userNameDiv'>
                       <p>{{user.name}}</p>

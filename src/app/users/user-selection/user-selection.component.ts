@@ -1,9 +1,11 @@
+import { ConfimActionComponent } from './confim-action/confim-action.component'
+import { MatDialog } from '@angular/material/dialog';
 import { UserService } from './../../service/user.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-user-selection',
@@ -15,7 +17,7 @@ export class UserSelectionComponent implements OnInit {
 
   createUserForm: FormGroup;
 
-  selectedValue: string;
+  selectedEditLevel: string;
 
   createSelectedLevel = new FormControl('', Validators.required);
   createName = new FormControl('', Validators.required);
@@ -23,7 +25,8 @@ export class UserSelectionComponent implements OnInit {
   createPass =  new FormControl('', Validators.compose([Validators.required,Validators.minLength(8),]));
   confirmCreatePass = new FormControl('', Validators.compose([Validators.required,Validators.minLength(8),]));
 
-  levels: any[] = ["Atendente", "Administrador", "Mestre"];
+  levels: any[] = [3, 2, 1];
+
   newUser: any ={
     level: "",
     name: "",
@@ -36,6 +39,7 @@ export class UserSelectionComponent implements OnInit {
     name: "",
     email: "",
     level: "",
+    password: "",
   };
 
   viewPages = {
@@ -45,10 +49,30 @@ export class UserSelectionComponent implements OnInit {
     create: false
   };
 
+  deleteUserBtn: boolean = false;
+
+  confirmActionResult: any = false;
+
   @Input() componentPage: any;
   
-  constructor(public readonly UserService: UserService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) { 
+  constructor(public readonly UserService: UserService, public dialog: MatDialog, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) { 
     iconRegistry.addSvgIcon('bubbleIcon', sanitizer.bypassSecurityTrustResourceUrl('./../assets/icon/bubbleIcon.svg'));
+  }
+
+  openRemoveDialog(){
+    const dialogRef = this.dialog.open(ConfimActionComponent,{
+      width: '360px',
+      height: '150px'
+    });
+
+    dialogRef.afterClosed().subscribe( result => {
+      this.confirmActionResult = result;
+
+      if(this.deleteUserBtn){
+        this.removeUser();
+        this.deleteUserBtn = false;
+      }else{console.log('vai dar não')}
+    })
   }
 
   level(level: any){
@@ -70,7 +94,6 @@ export class UserSelectionComponent implements OnInit {
   public getUser(user: any){
     this.selectedUser = user;
   }
-
   
   ngOnInit(): void {
   }
@@ -80,8 +103,6 @@ export class UserSelectionComponent implements OnInit {
     if(page === "view"){ this.viewPages = { initial: false, view: true, edit: false, create: false } }
     if(page === "edit"){ this.viewPages = { initial: false, view: false, edit: true, create: false } }
     if(page === "create"){ this.viewPages = { initial: false, view: false, edit: false, create: true } }
-
-    console.log(page);
   }
 
   createMesssageError(error){
@@ -95,32 +116,71 @@ export class UserSelectionComponent implements OnInit {
     if(error === "createEmail" && this.createEmail.hasError('email')){
       return "Email Invalido";
     }
-
+    
     if(error === "createPass" && this.createPass.hasError('required')){
       return "senha é um Campo Obrigatório";
     }
     if(error === "createPass" && this.createPass.hasError('minlength')){
       return "A senha deve ter no minimo 8 caracteres";
     }
-
+    
     if(error === "confirmCreatePass" && this.confirmCreatePass.hasError('required')){
       return "Você deve confirmar sua senha";
     }
     if(error === "confirmCreatePass" && this.confirmCreatePass.hasError('minlength')){
       return "A senha deve ter no minimo 8 caracteres";
     }
+
+    if(error === "createLevel" && this.createSelectedLevel.hasError('required')){
+      return "Cargo é um Campo Obrigatório";
+    }
   }
 
 
   async createUser(){
-    this.newUser = {
-      level: this.createSelectedLevel,
-      name: this.createName,
-      email: this.createEmail,
-      password: this.createPass
-    }
+    if( this.createName.hasError('required') ||
+        this.createSelectedLevel.hasError('required') ||
+        this.createEmail.hasError('required') ||
+        this.createPass.hasError('required') ||
 
-    console.log(this.newUser);
-    // await this.UserService.createUser(this.newUser);
+        this.createEmail.invalid ||
+        this.createPass.invalid ||
+        this.createEmail.hasError('badrequest') ||
+        this.createPass.hasError('badrequest')
+      )
+    { console.log("não criei"); return; }
+    else{
+      this.newUser = {
+        level: this.createSelectedLevel.value,
+        name: this.createName.value,
+        email: this.createEmail.value,
+        password: this.createPass.value
+      }
+
+      console.log(this.newUser);
+      await this.UserService.createUser(this.newUser);
+    }
+  }
+
+  async updateUser(){
+    // Não funcionando
+    // Precisa da senha para fazer alteração do usuário.
+    let data = {
+      "name": this.selectedUser.name,
+      "password": '',
+      "level": this.selectedUser.level,
+      "email": this.selectedUser.email,
+    }
+    await this.UserService.updateUser(this.selectedUser.id, data);
+  }
+
+  async removeUser(){
+    console.log(`ovo excluir ${this.selectedUser.id}`);
+    await this.UserService.deleteUser(this.selectedUser.id);
+  }
+
+  deleteUser(){
+    this.deleteUserBtn = true;
+    this.openRemoveDialog();
   }
 }

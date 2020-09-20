@@ -9,12 +9,13 @@
             <p>Criação do Usuário</p>
 
             <mat-form-field appearance="outline" id='create-levelSelect'>
-                <mat-label>Nivel da Conta</mat-label>
-                    <mat-select [(ngModel)]="createSelectedLevel" name="level">
-                        <mat-option *ngFor="let level of levels" [value]="levels.indexOf(level)+1">
-                            {{level}}
+                <mat-label>Cargo</mat-label>
+                    <mat-select [formControl]="createSelectedLevel" name="level">
+                        <mat-option *ngFor="let lvl of levels" [value]="lvl">
+                            {{level(lvl)}}
                         </mat-option>
                     </mat-select>
+                    <mat-error *ngIf='createSelectedLevel.invalid'>{{createMesssageError('createLevel')}}</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
@@ -44,23 +45,19 @@
             <mat-form-field appearance="outline" matTooltip='A senha deve Conter 8 Caracteres no Minimo.'>
                 <mat-label>Senha</mat-label>
                 <input matInput [type]="hide ? 'password' : 'text'" [formControl]="createPass">
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
+                <span style="cursor: pointer;" class="material-icons" matSuffix (click)="hide = !hide">{{hide? 'visibility_off' : 'visibility'}}</span>
                 <mat-error *ngIf='createPass.invalid'>{{createMesssageError('createPass')}}</mat-error>
               </mat-form-field>
 
             <mat-form-field appearance="outline" matTooltip="Repita a Senha Digitada no Campo Acima">
                 <mat-label>Confirmar Senha</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" [formControl]='confirmCreatePass'> 
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
+                <input matInput [type]="hide ? 'password' : 'text'" [formControl]='confirmCreatePass'>
+                <span style="cursor: pointer;" class="material-icons" matSuffix (click)="hide = !hide">{{hide? 'visibility_off' : 'visibility'}}</span>
                 <mat-error *ngIf='confirmCreatePass.invalid'>{{createMesssageError('confirmCreatePass')}}</mat-error>
               </mat-form-field>
 
               <div id="buttonsDiv">
-                <button mat-raised-button color="basic" id='newUserBtn'>Cancelar</button>
+                <button mat-raised-button color="basic" id='newUserBtn' (click)="switchPage('initial')">Cancelar</button>
                 <button mat-raised-button color="primary" id='newUserBtn' (click)="createUser()">Confirmar</button>
               </div>
         </div>
@@ -74,7 +71,7 @@
                     appearence='outline'
                     matInput
                     value="{{level(selectedUser.level)}}"
-                    [disabled]='true'
+                    readonly
                     autocomplete="off"
                 />
             </mat-form-field>
@@ -85,7 +82,7 @@
                     appearence='outline'
                     matInput
                     value="{{selectedUser.name}}"
-                    [disabled]='true'
+                    readonly
                     autocomplete="off"
                 />
             </mat-form-field>
@@ -95,14 +92,14 @@
                     appearence='outline'
                     matInput
                     value="{{selectedUser.email}}"
-                    [disabled]='true'
+                    readonly
                     autocomplete="off"
                 />
             </mat-form-field>
 
             <div id="buttonsDiv">
                 <button mat-stroked-button color="basic" id='newUserBtn' (click)='switchPage("edit")'>Editar</button>
-                <button mat-stroked-button color="warn" id='newUserBtn'>Remover</button>
+                <button mat-stroked-button color="warn" id='deleteUserBtn' (click)="deleteUser()">Remover</button>
                 <button>Recuperar Senha</button>
             </div>
         </div>
@@ -112,9 +109,9 @@
 
             <mat-form-field appearance="outline">
                 <mat-label>Nivel da Conta</mat-label>
-                    <mat-select [(ngModel)]="selectedValue" name="level">
-                        <mat-option *ngFor="let level of levels" [value]="level">
-                            {{level}}
+                    <mat-select [(value)]="selectedUser.level" name="userLevel">
+                        <mat-option *ngFor="let lvl of levels" [value]="lvl">
+                            {{level(lvl)}}
                         </mat-option>
                     </mat-select>
             </mat-form-field>
@@ -124,7 +121,7 @@
                 <input
                     appearence='outline'
                     matInput
-                    value="{{selectedUser.name}}"
+                    [(ngModel)]="selectedUser.name"
                     placeholder="Nome"
                     autocomplete="off"
                 />
@@ -143,8 +140,8 @@
             </mat-form-field>
 
             <div id="buttonsDiv">
-                <button mat-raised-button color="basic" id='newUserBtn'>Cancelar</button>
-                <button mat-raised-button color="primary" id='newUserBtn'>Confirmar</button>
+                <button mat-raised-button color="basic"  (click)="switchPage('view')">Cancelar</button>
+                <button mat-raised-button color="primary" (click)='updateUser()'>Confirmar</button>
             </div>
         </div>
     </div>

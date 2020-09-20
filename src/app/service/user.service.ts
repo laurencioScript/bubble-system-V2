@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ɵCodegenComponentFactoryResolver } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
@@ -38,6 +38,30 @@ export class UserService {
         .toPromise();
     } catch(e) {
       console.log('>>> error', e);
+      return null;
+    }
+  }
+
+  async updateUser(id, data){
+    try{
+      const options = this.getOptions();
+    const responseRequest: any = await this.http
+      .put(`${environment.apiUrl}/user/${id}`, data, options)
+      .toPromise();
+    } catch(e) {
+      console.log('>>> error', e);
+      return null;
+    }
+  }
+
+  async deleteUser(id){
+    try{
+      const options = this.getOptions();
+      const responseRequest: any = await this.http
+        .delete(`${environment.apiUrl}/user/${id}`, options)
+        .toPromise();
+    }catch(e){
+      console.log('>>>> error', e);
       return null;
     }
   }

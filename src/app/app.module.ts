@@ -37,6 +37,9 @@ import { FormsReadjustComponent } from './parts-page/forms-readjust/forms-readju
 import { UsersComponent } from './users/users.component';
 import { UserSelectionComponent } from './users/user-selection/user-selection.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCardModule } from '@angular/material/card';
+import { ConfimActionComponent } from './users/user-selection/confim-action/confim-action.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +54,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     FormsReadjustComponent,
     UsersComponent,
     UserSelectionComponent,
+    ConfimActionComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -73,6 +77,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatListModule,
     MatIconModule,
     MatTooltipModule,
+    MatCardModule,
   ],
   providers: [PropertyService, UserService, PartsService],
   bootstrap: [AppComponent],

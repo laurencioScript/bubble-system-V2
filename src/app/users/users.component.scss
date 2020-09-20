@@ -46,10 +46,14 @@
                 // border: 1px solid green;
                 height: 100%;
 
+                mat-selection-list{
+                    padding: 0px;
+                }
                 mat-list-option{
                     border-top: 2px solid #c4c4c4;
                     border-bottom: 2px solid #c4c4c4;
-                    margin: -2px;
+                    margin: -2px 0px;
+
                     // esse margin é crucial(aparentemente), sem ele as bordas entre itens ficam "bugadas".
 
                     height: 80px;

@@ -12,9 +12,8 @@ import { stringify } from 'querystring';
 })
 export class UsersComponent implements OnInit {
 
-  pageIndex: number = 0;
-  pageSize: number = 5;
-  
+  searchInputValue: any;
+  dataClone: any = [];
   data: any = [
     // {name: 'hdsuiah', group: 'abcd'},
     // {name: 'hdsudsaiah', group: 'abcd'},
@@ -27,6 +26,7 @@ export class UsersComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'group', 'options'];
 
   selectedUser: object;
+  selectedLevel: any = 0;
 
   componentPage: string = "view";
 
@@ -38,7 +38,7 @@ export class UsersComponent implements OnInit {
 
   switchIcon(userLevel: any){
     if(userLevel == 3){return "atendenteIcon"}
-    else if(userLevel == 1){return "admIcon"}
+    else if(userLevel == 2){return "admIcon"}
   }
 
   async getUsers(){
@@ -64,7 +64,7 @@ export class UsersComponent implements OnInit {
 
   async ngOnInit() {
     const users =  await this.UserService.getUsers();
-    this.data = users.map((user) =>{
+    const org = users.map((user) =>{
       return{
         id: user.id_user,
         name: user.name_user,
@@ -72,7 +72,32 @@ export class UsersComponent implements OnInit {
         email: user.email,
       };
     });
-
+    // organiza em ordem alfabetica a lista de usuários.
+    this.data = org.sort(function (a, b){
+      return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);
+    });
     console.log(this.data);
+  }
+
+  filter(){
+      this.data = this.dataClone;
+      this.data = this.data.filter((value) => value.name.indexOf(this.searchInputValue) >= 0);
+  
+  }
+
+  validateList(uLevel: any){
+    let retorno: boolean;
+    if(uLevel !== 1){
+      if(this.selectedLevel === 0){
+        retorno = true;
+      }else{
+        if(uLevel === this.selectedLevel) { retorno = true; }
+        else { retorno = false; }
+      }
+    }else{
+      retorno = false;
+    }
+
+    return retorno;
   }
 }
