@@ -43,6 +43,7 @@ import { ColorSketchModule } from 'ngx-color/sketch';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { FormUserComponent } from './profile-page/form-user/form-user.component';
 import { FormResetPasswordComponent } from './profile-page/form-reset-password/form-reset-password.component';
+import { SalePageComponent } from './sale-page/sale-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,6 +61,7 @@ import { FormResetPasswordComponent } from './profile-page/form-reset-password/f
     ProfilePageComponent,
     FormUserComponent,
     FormResetPasswordComponent,
+    SalePageComponent,
   ],
   imports: [
     ReactiveFormsModule,

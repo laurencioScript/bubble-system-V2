@@ -21,7 +21,7 @@
     </span>
     <label for="Home">Home</label>
   </div>
-  <div class="row">
+  <div [routerLink]="['/sale']" [ngClass]="{ selectedRow: rowSelected == 'sale' }" class="row">
     <span class="material-icons icon-row">
       storefront
     </span>

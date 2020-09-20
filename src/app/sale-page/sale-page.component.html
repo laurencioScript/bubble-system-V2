@@ -1,0 +1,164 @@
+<div id="container">
+  <app-sidebar rowSelected="sale"></app-sidebar>
+  <div class="content">
+    <h1>Vendas</h1>
+
+    <div class="content-button">
+      <div>
+        <mat-form-field appearance="outline">
+          <span style="padding-right: 8px;" matPrefix class="material-icons">
+            search
+          </span>
+          <input
+            matInput
+            placeholder="Pesquise aqui"
+            [(ngModel)]="searchValue"
+            (keyup)="filter()"
+            autocomplete="off"
+          />
+        </mat-form-field>
+      </div>
+      <div class="group-buttons">
+        <button mat-stroked-button class="btn btn-blue">
+          Orçamento
+        </button>
+        <button mat-stroked-button class="btn btn-blue">
+          Nova Ordem
+        </button>
+      </div>
+    </div>
+    <div id="container-table">
+      <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="NUMBER">
+          <mat-header-cell *matHeaderCellDef>
+            <label *ngIf="!viewSelect"> N°</label>
+            <mat-checkbox
+              color="primary"
+              *ngIf="viewSelect"
+              [(ngModel)]="selectedAll"
+              (change)="selectAll($event.checked)"
+            >
+              N°
+            </mat-checkbox>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element; let i = index">
+            <label *ngIf="!viewSelect">
+              {{ dataSource.filteredData.indexOf(element) + 1 + pageIndex * pageSize }}</label
+            >
+
+            <mat-checkbox
+              *ngIf="viewSelect"
+              color="primary"
+              (change)="validateSelectAll()"
+              [(ngModel)]="element.checked"
+            >
+              {{ dataSource.filteredData.indexOf(element) + 1 + pageIndex * pageSize }}
+            </mat-checkbox>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="ROL">
+          <mat-header-cell *matHeaderCellDef> ROL </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.rol }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="CLIENTE">
+          <mat-header-cell style="flex: 2;" *matHeaderCellDef> CLIENT </mat-header-cell>
+          <mat-cell style="flex: 2;" *matCellDef="let element"> {{ element.client }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="CPF/CNPJ">
+          <mat-header-cell *matHeaderCellDef> CPF/CNPJ </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.cpf_cnpj | mask: 'CPF_CNPJ' }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="ENTRADA">
+          <mat-header-cell *matHeaderCellDef> ENTRADA </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.date_input | date: 'dd/MM/yyyy' }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="RETIRADA PLANEJADA">
+          <mat-header-cell *matHeaderCellDef> RETIRADA </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.date_preview_output | date: 'dd/MM/yyyy' }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="VALOR TOTAL">
+          <mat-header-cell *matHeaderCellDef> VALOR TOTAL </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ 'R$ ' + getValue(element.valueTotal) }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="PAGAMENTO">
+          <mat-header-cell *matHeaderCellDef> PAGAMENTO </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <span
+              [ngClass]="{ sucess: element.payment, danger: !element.payment }"
+              class="material-icons"
+            >
+              local_atm
+            </span>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="ENTREGUE">
+          <mat-header-cell *matHeaderCellDef> ENTREGUE </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <span
+              [ngClass]="{ sucess: element.delivered, danger: !element.delivered }"
+              class="material-icons"
+            >
+              local_shipping
+            </span>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="SITUAÇÃO">
+          <mat-header-cell *matHeaderCellDef> SITUAÇÃO </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.state | uppercase }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="OPTIONS">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell style="justify-content: center;" *matCellDef="let element">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              aria-label="Example icon-button with a menu"
+            >
+              <span class="material-icons">
+                more_vert
+              </span>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                <span>Editar</span>
+              </button>
+              <button (click)="remove(element)" mat-menu-item>
+                <span>Remover</span>
+              </button>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row class="row-table" *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+
+      <div class="content-paginator">
+        <mat-paginator
+          [length]="data.length"
+          [pageIndex]="pageIndex"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[5, 10, 25]"
+          (page)="pageEvent = getServerData($event)"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>
