@@ -103,6 +103,21 @@
     #editUser{
         display: flex;
         flex-direction: column;
+
+        width: 500px;
+
+        mat-icon{
+            margin: 0 auto 25px;
+        }
+
+        #buttonsDiv{
+            display: flex;
+            flex-direction: row-reverse;
+            button{
+                margin: 10px;
+                align-self: right;
+            }
+        }
     }
 
 }

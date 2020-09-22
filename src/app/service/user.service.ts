@@ -42,14 +42,16 @@ export class UserService {
     }
   }
 
-  async updateUser(id, data){
-    try{
+  async updateUser(data) {
+    try {
       const options = this.getOptions();
-    const responseRequest: any = await this.http
-      .put(`${environment.apiUrl}/user/${id}`, data, options)
-      .toPromise();
-    } catch(e) {
-      console.log('>>> error', e);
+      const requestResult: any = await this.http
+        .put(`${environment.apiUrl}/user/${data.id}`, data, options)
+        .toPromise();
+      console.log('>>> requestResult', requestResult);
+      return requestResult;
+    } catch (error) {
+      console.log('>>> error', error )
       return null;
     }
   }

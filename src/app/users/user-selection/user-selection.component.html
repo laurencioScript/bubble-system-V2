@@ -100,7 +100,7 @@
             <div id="buttonsDiv">
                 <button mat-stroked-button color="basic" id='newUserBtn' (click)='switchPage("edit")'>Editar</button>
                 <button mat-stroked-button color="warn" id='deleteUserBtn' (click)="deleteUser()">Remover</button>
-                <button>Recuperar Senha</button>
+                <button (click)="openEditPassword()">Recuperar Senha</button>
             </div>
         </div>
     
@@ -140,8 +140,8 @@
             </mat-form-field>
 
             <div id="buttonsDiv">
-                <button mat-raised-button color="basic"  (click)="switchPage('view')">Cancelar</button>
                 <button mat-raised-button color="primary" (click)='updateUser()'>Confirmar</button>
+                <button mat-raised-button color="basic"  (click)="switchPage('view')">Cancelar</button>
             </div>
         </div>
     </div>

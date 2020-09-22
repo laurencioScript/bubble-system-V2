@@ -1,11 +1,12 @@
-import { ConfimActionComponent } from './confim-action/confim-action.component'
+import { async } from '@angular/core/testing';
+import { FormResetPasswordComponent } from './form-reset-password/form-reset-password.component';
+import { ConfimActionComponent } from './confim-action/confim-action.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from './../../service/user.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-user-selection',
@@ -72,6 +73,26 @@ export class UserSelectionComponent implements OnInit {
         this.removeUser();
         this.deleteUserBtn = false;
       }else{console.log('vai dar não')}
+    })
+  }
+
+  openEditPassword(){
+    const dialogRef = this.dialog.open(FormResetPasswordComponent,{
+      width: '400px',
+      height: '230px'
+    });
+
+    dialogRef.afterClosed().subscribe(async (resetPass) => {
+      if(!resetPass){
+        return;
+      }
+      this.UserService.updateUser({
+        "id": this.selectedUser.id,
+        "name": this.selectedUser.name,
+        "password": resetPass,
+        "email": this.selectedUser.email,
+        "level": this.selectedUser.level
+      })
     })
   }
 
@@ -163,19 +184,16 @@ export class UserSelectionComponent implements OnInit {
   }
 
   async updateUser(){
-    // Não funcionando
-    // Precisa da senha para fazer alteração do usuário.
     let data = {
+      "id": this.selectedUser.id,
       "name": this.selectedUser.name,
       "password": '',
-      "level": this.selectedUser.level,
       "email": this.selectedUser.email,
     }
-    await this.UserService.updateUser(this.selectedUser.id, data);
+    await this.UserService.updateUser(data);
   }
 
   async removeUser(){
-    console.log(`ovo excluir ${this.selectedUser.id}`);
     await this.UserService.deleteUser(this.selectedUser.id);
   }
 

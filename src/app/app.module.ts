@@ -28,6 +28,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { ClipboardModule } from '@angular/cdk/clipboard'; 
 
 
 import { PropertyService } from './service/property.service';
@@ -39,6 +40,7 @@ import { UserSelectionComponent } from './users/user-selection/user-selection.co
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 import { ConfimActionComponent } from './users/user-selection/confim-action/confim-action.component';
+import { FormResetPasswordComponent } from './users/user-selection/form-reset-password/form-reset-password.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,7 @@ import { ConfimActionComponent } from './users/user-selection/confim-action/conf
     UsersComponent,
     UserSelectionComponent,
     ConfimActionComponent,
+    FormResetPasswordComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -78,6 +81,7 @@ import { ConfimActionComponent } from './users/user-selection/confim-action/conf
     MatIconModule,
     MatTooltipModule,
     MatCardModule,
+    ClipboardModule,
   ],
   providers: [PropertyService, UserService, PartsService],
   bootstrap: [AppComponent],
