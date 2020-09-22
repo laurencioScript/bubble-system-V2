@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { NewSaleComponent } from './new-sale/new-sale.component';
 
 interface genericService {
   create: any;
@@ -82,7 +84,7 @@ export class SalePageComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   selectedAll: any = false;
 
-  constructor() {}
+  constructor(public dialog: MatDialog, public router: Router) {}
 
   ngOnInit(): void {
     this.paginator();
@@ -159,6 +161,10 @@ export class SalePageComponent implements OnInit {
 
   clone(object: any) {
     return JSON.parse(JSON.stringify(object));
+  }
+
+  openDialog(saleExist: any = {}) {
+    this.router.navigate(['/new-sale']);
   }
 
   filter() {

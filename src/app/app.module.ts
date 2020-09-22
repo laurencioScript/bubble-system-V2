@@ -28,6 +28,7 @@ import { PartsPageComponent } from './parts-page/parts-page.component';
 import { FormsPartsComponent } from './parts-page/forms-parts/forms-parts.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatStepperModule } from '@angular/material/stepper';
 
 import { PropertyService } from './service/property.service';
 import { UserService } from './service/user.service';
@@ -44,6 +45,12 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { FormUserComponent } from './profile-page/form-user/form-user.component';
 import { FormResetPasswordComponent } from './profile-page/form-reset-password/form-reset-password.component';
 import { SalePageComponent } from './sale-page/sale-page.component';
+import { NewSaleComponent } from './sale-page/new-sale/new-sale.component';
+import { SaleClientComponent } from './sale-page/new-sale/shared/sale-client/sale-client.component';
+import { SalePartComponent } from './sale-page/new-sale/shared/sale-part/sale-part.component';
+import { SaleSchedulingComponent } from './sale-page/new-sale/shared/sale-scheduling/sale-scheduling.component';
+import { SalePaymentComponent } from './sale-page/new-sale/shared/sale-payment/sale-payment.component';
+import { NewPartComponent } from './sale-page/new-sale/shared/sale-part/new-part/new-part.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +69,12 @@ import { SalePageComponent } from './sale-page/sale-page.component';
     FormUserComponent,
     FormResetPasswordComponent,
     SalePageComponent,
+    NewSaleComponent,
+    SaleClientComponent,
+    SalePartComponent,
+    SaleSchedulingComponent,
+    SalePaymentComponent,
+    NewPartComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -83,6 +96,7 @@ import { SalePageComponent } from './sale-page/sale-page.component';
     MatCheckboxModule,
     NgxMaskModule.forRoot(),
     ColorSketchModule,
+    MatStepperModule,
   ],
   providers: [
     PropertyService,

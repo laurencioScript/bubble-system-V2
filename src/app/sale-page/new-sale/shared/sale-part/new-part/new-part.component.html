@@ -1,0 +1,89 @@
+<div>
+  <h2>Adicionar Peça</h2>
+  <div style="display: flex; justify-content: space-between;">
+    <mat-form-field appearance="fill">
+      <mat-label>Peças</mat-label>
+      <mat-select [(ngModel)]="data.part" >
+        <mat-option *ngFor="let part of parts" [value]="part" >{{part.piece_name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">      
+      <mat-label>Unidade</mat-label>
+      <mat-select [(ngModel)]="data.unity" >
+        <mat-option *ngFor="let measure of measures" [value]="measure" >{{measure.unity_name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div style="display: flex; justify-content: space-between;">
+    <div style="display: flex; flex-direction: column;margin-right: 24px;">
+
+      <mat-form-field appearance="fill">      
+        <mat-label>Cores</mat-label>
+        <mat-select  [(ngModel)]="data.colors" multiple>
+          <mat-option *ngFor="let color of colors" [value]="color" >{{color.color_name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">      
+        <mat-label>Defeitos</mat-label>
+        <mat-select [(ngModel)]="data.defects" multiple>
+          <mat-option *ngFor="let defect of defects" [value]="defect" >{{defect.defect_name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">      
+        <mat-label>Caracteristicas</mat-label>
+        <mat-select [(ngModel)]="data.features" multiple>
+          <mat-option *ngFor="let feature of features" [value]="feature" >{{feature.characteristic_name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+    <div style="display: flex; flex-direction: column;">
+
+      <mat-form-field appearance="fill">
+        <mat-label>Quantidade</mat-label>
+        <input
+          matInput
+          [(ngModel)]="data.quantity"
+          type="number"
+          name="quantity"
+          placeholder="Digite a aqui"
+        />       
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Valor (U)</mat-label>
+        <input
+          placeholder="R$0,00"
+          [(ngModel)]="data.value_unity"
+          matInput
+          type="number"
+          name="quantity"
+          placeholder="Digite a aqui"
+        />       
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Valor (T)</mat-label>
+        <input
+          matInput
+          [(ngModel)]="data.value_total"
+          placeholder="R$0,00"
+          type="number"
+          name="quantity"
+          placeholder="Digite a aqui"
+        />       
+      </mat-form-field>
+
+    </div>
+  </div>
+  <div style="display: flex; justify-content: space-between;">
+    <button mat-stroked-button mat-dialog-close >
+      Cancelar
+    </button>
+    <button mat-stroked-button (click)="sendName()" class="btn btn-blue">
+      Salvar
+    </button>
+  </div>
+</div>
