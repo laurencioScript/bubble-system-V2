@@ -26,7 +26,7 @@ export class UsersComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'group', 'options'];
 
   selectedUser: object;
-  selectedLevel: string = 0;
+  selectedLevel: string = "0";
 
   componentPage: string = "view";
 
