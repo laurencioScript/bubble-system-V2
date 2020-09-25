@@ -29,6 +29,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { ClipboardModule } from '@angular/cdk/clipboard'; 
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 
 import { PropertyService } from './service/property.service';
@@ -82,6 +83,7 @@ import { FormResetPasswordComponent } from './users/user-selection/form-reset-pa
     MatTooltipModule,
     MatCardModule,
     ClipboardModule,
+    MatSnackBarModule,
   ],
   providers: [PropertyService, UserService, PartsService],
   bootstrap: [AppComponent],

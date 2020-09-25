@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-selection',
@@ -56,10 +57,18 @@ export class UserSelectionComponent implements OnInit {
 
   @Input() componentPage: any;
   
-  constructor(public readonly UserService: UserService, public dialog: MatDialog, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) { 
+  constructor(public readonly UserService: UserService, private snackBar: MatSnackBar, public dialog: MatDialog, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) { 
     iconRegistry.addSvgIcon('bubbleIcon', sanitizer.bypassSecurityTrustResourceUrl('./../assets/icon/bubbleIcon.svg'));
   }
 
+  openAlert(message: any){
+    this.snackBar.open(message, "Ok",{
+      duration: 2000,
+      horizontalPosition: "right",
+      verticalPosition: "top"
+    });
+  }
+  
   openRemoveDialog(){
     const dialogRef = this.dialog.open(ConfimActionComponent,{
       width: '360px',
@@ -159,6 +168,7 @@ export class UserSelectionComponent implements OnInit {
 
 
   async createUser(){
+    var verificaError = false;
     if( this.createName.hasError('required') ||
         this.createSelectedLevel.hasError('required') ||
         this.createEmail.hasError('required') ||
@@ -167,8 +177,7 @@ export class UserSelectionComponent implements OnInit {
         this.createEmail.invalid ||
         this.createPass.invalid ||
         this.createEmail.hasError('badrequest') ||
-        this.createPass.hasError('badrequest')
-      )
+        this.createPass.hasError('badrequest'))
     { console.log("não criei"); return; }
     else{
       this.newUser = {
@@ -178,8 +187,15 @@ export class UserSelectionComponent implements OnInit {
         password: this.createPass.value
       }
 
-      console.log(this.newUser);
-      await this.UserService.createUser(this.newUser);
+      await this.UserService.createUser(this.newUser).catch(e =>{
+        verificaError = true;
+      });
+
+      if(verificaError){
+        this.openAlert("Erro ao Cadastrar o Usuário");
+      }else{
+        this.openAlert("Usuário Cadastrado com Sucesso");
+      }
     }
   }
 

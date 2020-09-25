@@ -38,6 +38,7 @@ export class UserService {
         .toPromise();
     } catch(e) {
       console.log('>>> error', e);
+      throw e.status;
       return null;
     }
   }
