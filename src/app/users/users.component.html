@@ -30,6 +30,8 @@
                   autocomplete="off"
                 />
               </mat-form-field>
+            <button mat-raised-button color="primary" id='newUserBtn' (click)="viewComponent.switchPage('create')">Novo</button>
+            
           </div>
           <div id=userList>
             <mat-selection-list #selectedUser [multiple]="false" *ngFor='let user of data' >
@@ -44,8 +46,6 @@
               </mat-list-option>
             </mat-selection-list>
             
-            
-            <button mat-raised-button color="primary" id='newUserBtn' (click)="viewComponent.switchPage('create')">Novo</button>
           </div>
           
         </div>

@@ -38,6 +38,16 @@
                 #searchBarInput{
                     // Mat input (INPUT) DO FILTRO
                     width: 95%;
+                    ::ng-deep .mat-form-field-wrapper{
+                        padding-bottom: 0px;
+                    }
+                }
+
+                #newUserBtn{
+                    background-color: #3C7EFF;
+                    width: 100px;
+                    height: 40px;
+                    margin: 10px 0px; 
                 }
                 
             }
@@ -78,16 +88,6 @@
                             color: #2C94B5;
                         }
                     }
-                }
-
-                #newUserBtn{
-                    position: absolute;
-                    bottom: 20px;
-                    margin-left: 320px;
-
-                    background-color: #3C7EFF;
-                    width: 100px;
-                    height: 40px;
                 }
             }
         }

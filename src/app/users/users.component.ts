@@ -26,7 +26,7 @@ export class UsersComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'group', 'options'];
 
   selectedUser: object;
-  selectedLevel: any = 0;
+  selectedLevel: string = 0;
 
   componentPage: string = "view";
 
@@ -76,28 +76,27 @@ export class UsersComponent implements OnInit {
     this.data = org.sort(function (a, b){
       return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);
     });
-    console.log(this.data);
-  }
 
+    this.dataClone = this.clone(this.data);
+  }
+  clone(object: any){
+    return JSON.parse(JSON.stringify(object));
+  }
   filter(){
       this.data = this.dataClone;
-      this.data = this.data.filter((value) => value.name.indexOf(this.searchInputValue) >= 0);
-  
+      this.data = this.data.filter((value) => value.name.indexOf(this.searchInputValue) >= 0);  
   }
 
   validateList(uLevel: any){
-    let retorno: boolean;
     if(uLevel !== 1){
-      if(this.selectedLevel === 0){
-        retorno = true;
-      }else{
-        if(uLevel === this.selectedLevel) { retorno = true; }
-        else { retorno = false; }
+      if(this.selectedLevel == "0"){ return true }
+      else{
+        if(uLevel == this.selectedLevel) { return true; }
+        else { return false; }
       }
     }else{
-      retorno = false;
+      return false;
     }
-
-    return retorno;
+    this.filter();
   }
 }
