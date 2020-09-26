@@ -1,0 +1,11 @@
+#container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  .content {
+    margin: 32px;
+    width: 100%;
+    overflow: hidden;
+  }
+}

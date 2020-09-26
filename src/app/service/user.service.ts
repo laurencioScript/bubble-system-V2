@@ -1,4 +1,4 @@
-import { Injectable, ɵCodegenComponentFactoryResolver } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
@@ -6,6 +6,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class UserService {
   constructor(private http: HttpClient) {}
+
+  getOptions() {
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      }),
+    };
+  }
 
   async login(data) {
     try {
@@ -25,6 +34,18 @@ export class UserService {
         .get(`${environment.apiUrl}/user`, options)
         .toPromise();
       return result;
+    } catch (error) {
+      return null;
+    }
+  }
+  
+  async getUser(id) {
+    try {
+      const options = this.getOptions();
+      const { result }: any = await this.http
+        .get(`${environment.apiUrl}/user/${id}`, options)
+        .toPromise();
+      return result[0];
     } catch (error) {
       return null;
     }
@@ -52,7 +73,6 @@ export class UserService {
       console.log('>>> requestResult', requestResult);
       return requestResult;
     } catch (error) {
-      console.log('>>> error', error )
       return null;
     }
   }
@@ -68,14 +88,17 @@ export class UserService {
       return null;
     }
   }
-
-
-  getOptions() {
-    return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-      }),
-    };
+  
+  async resetPassword(id) {
+    try {
+      const options = this.getOptions();
+      const requestResult: any = await this.http
+        .put(`${environment.apiUrl}/user/${id}`, null, options)
+        .toPromise();
+      console.log('>>> requestResult', requestResult);
+      return requestResult;
+    } catch (error) {
+      return null;
+    }
   }
 }

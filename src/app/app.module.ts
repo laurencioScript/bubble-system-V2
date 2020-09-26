@@ -1,9 +1,12 @@
+import { FormResetPasswordComponent } from './users/user-selection/form-reset-password/form-reset-password.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID  } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
+
+import { NgxMaskModule } from 'ngx-mask';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -30,7 +33,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { ClipboardModule } from '@angular/cdk/clipboard'; 
 import { MatSnackBarModule } from "@angular/material/snack-bar";
-
+import { MatStepperModule } from '@angular/material/stepper';
 
 import { PropertyService } from './service/property.service';
 import { UserService } from './service/user.service';
@@ -41,8 +44,24 @@ import { UserSelectionComponent } from './users/user-selection/user-selection.co
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 import { ConfimActionComponent } from './users/user-selection/confim-action/confim-action.component';
-import { FormResetPasswordComponent } from './users/user-selection/form-reset-password/form-reset-password.component';
+import { FormResetPasswordComponent as FormResetProfile } from './profile-page/form-reset-password/form-reset-password.component';
 
+import { AuthService } from './auth/auth.service';
+import { AuthGuardService, HomeGuardService } from './auth/auth-guard.service';
+import { ClientPageComponent } from './client-page/client-page.component';
+import { FormsClientComponent } from './client-page/forms-client/forms-client.component';
+import { ClientService } from './service/client.service';
+
+import { ColorSketchModule } from 'ngx-color/sketch';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { FormUserComponent } from './profile-page/form-user/form-user.component';
+import { SalePageComponent } from './sale-page/sale-page.component';
+import { NewSaleComponent } from './sale-page/new-sale/new-sale.component';
+import { SaleClientComponent } from './sale-page/new-sale/shared/sale-client/sale-client.component';
+import { SalePartComponent } from './sale-page/new-sale/shared/sale-part/sale-part.component';
+import { SaleSchedulingComponent } from './sale-page/new-sale/shared/sale-scheduling/sale-scheduling.component';
+import { SalePaymentComponent } from './sale-page/new-sale/shared/sale-payment/sale-payment.component';
+import { NewPartComponent } from './sale-page/new-sale/shared/sale-part/new-part/new-part.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,6 +78,18 @@ import { FormResetPasswordComponent } from './users/user-selection/form-reset-pa
     UserSelectionComponent,
     ConfimActionComponent,
     FormResetPasswordComponent,
+    ClientPageComponent,
+    FormsClientComponent,
+    ProfilePageComponent,
+    FormUserComponent,
+    FormResetProfile,
+    SalePageComponent,
+    NewSaleComponent,
+    SaleClientComponent,
+    SalePartComponent,
+    SaleSchedulingComponent,
+    SalePaymentComponent,
+    NewPartComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -84,8 +115,19 @@ import { FormResetPasswordComponent } from './users/user-selection/form-reset-pa
     MatCardModule,
     ClipboardModule,
     MatSnackBarModule,
+    NgxMaskModule.forRoot(),
+    ColorSketchModule,
+    MatStepperModule,
   ],
-  providers: [PropertyService, UserService, PartsService],
+  providers: [
+    PropertyService, 
+    PartsService,
+    UserService, 
+    AuthService,
+    AuthGuardService,
+    HomeGuardService,
+    ClientService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

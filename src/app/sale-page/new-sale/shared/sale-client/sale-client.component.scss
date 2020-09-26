@@ -1,0 +1,61 @@
+#container-table {
+  display: flex;
+  flex-direction: column;
+  // border: 1px solid #d3d3d3;
+  // padding: 16px;
+  height: 500px;
+  width: 50%;
+} 
+
+.content-button {
+  width: 100%;
+  display: flex;
+  margin-bottom: -1.34375em;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  div:first-child {
+    width: 60%;
+    mat-form-field {
+      width: 100%;
+    }
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+      border-radius: 0px !important;
+    }
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start {
+      border-radius: 0px !important;
+    }
+  }
+  .group-buttons {
+    padding-bottom: 1.34375em;
+    button {
+      margin: 0 8px;
+    }
+  }
+}
+
+#sale-client-img{
+  width: 80%;
+}
+
+mat-table {
+  width: 100%;
+  height: 80%;
+  box-shadow: none;
+}
+
+.row-table:hover {
+  background: whitesmoke;
+}
+
+.row-table-selected {
+  color: #1E88E5 !important;
+  background: #E4DEDE;
+}
+
+.row-table-selected:hover{
+  color: #1E88E5 !important;
+  background: #E4DEDE;
+}
+
+
