@@ -109,29 +109,20 @@ import { NewPartComponent } from './sale-page/new-sale/shared/sale-part/new-part
     MatMenuModule,
     MatSelectModule,
     MatCheckboxModule,
-<<<<<<< HEAD
-=======
     MatListModule,
     MatIconModule,
     MatTooltipModule,
     MatCardModule,
     ClipboardModule,
     MatSnackBarModule,
->>>>>>> bdb3a3c5f621b2184bb05d9a6141769ef667fddd
     NgxMaskModule.forRoot(),
     ColorSketchModule,
     MatStepperModule,
   ],
   providers: [
-<<<<<<< HEAD
-    PropertyService,
-    UserService,
-    PartsService,
-=======
     PropertyService, 
     PartsService,
     UserService, 
->>>>>>> bdb3a3c5f621b2184bb05d9a6141769ef667fddd
     AuthService,
     AuthGuardService,
     HomeGuardService,
