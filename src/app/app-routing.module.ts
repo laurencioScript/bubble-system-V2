@@ -1,3 +1,4 @@
+import { UsersComponent } from './users/users.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'property', component: PropertyPageComponent, canActivate: [AuthGuard] },
   { path: 'parts', component: PartsPageComponent, canActivate: [AuthGuard] },
   { path: 'client', component: ClientPageComponent, canActivate: [AuthGuard] },
+  { path: 'users', component: UsersComponent, canActivate: [AuthGuard]},
   { path: 'profile', component: ProfilePageComponent, canActivate: [AuthGuard] },
   { path: 'sale', component: SalePageComponent, canActivate: [AuthGuard] },
   { path: 'new-sale', component: NewSaleComponent, canActivate: [AuthGuard] },

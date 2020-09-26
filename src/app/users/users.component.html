@@ -1,0 +1,60 @@
+<div id='container'>
+    <app-sidebar rowSelected="users"></app-sidebar>
+
+    <div id='container'>
+      <div id='content'>
+        <div id='userSidebar'>
+          <h1>Usuários</h1>
+          <div id='userSearchDiv'>
+            <div id="userFilter">
+              <p>Filtro por:</p>
+              <mat-form-field appearence="outline">
+                <mat-select name="levelSelect" [(value)]="selectedLevel">
+                  <mat-option value="0">Todos</mat-option>
+                  <mat-option value="2">Administrador</mat-option>
+                  <mat-option value="3">Atendente</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+
+            <mat-form-field appearance="outline" id="searchBarInput">
+                <span style="padding-right: 8px;" matPrefix class="material-icons">
+                  search
+                </span>
+                <input
+                  matInput
+                  placeholder="Pesquise por Nome..."
+                  [(ngModel)]="searchInputValue"
+                  (keyup)='filter()'
+                  autocomplete="off"
+                />
+              </mat-form-field>
+            <button mat-raised-button color="primary" id='newUserBtn' (click)="viewComponent.switchPage('create')">Novo</button>
+            
+          </div>
+          <div id=userList>
+            <mat-selection-list #selectedUser [multiple]="false" *ngFor='let user of data' >
+              <mat-list-option *ngIf="validateList(user.level)" [value]='user' (click)="viewComponent.getUser(user)" (click)="viewComponent.switchPage('view')">
+                <div class="listOption" >
+                  <mat-icon svgIcon="{{switchIcon(user.level)}}"></mat-icon>
+                    <div id='userNameDiv'>
+                      <p>{{user.name}}</p>
+                      <p>{{level(user.level)}}</p>
+                    </div>
+                </div>
+              </mat-list-option>
+            </mat-selection-list>
+            
+          </div>
+          
+        </div>
+        
+        <div id='userView'>
+          <app-user-selection #viewComponent componentPage='{{componentPage}}'></app-user-selection>
+        </div>
+      </div>
+    </div>
+
+
+</div>
