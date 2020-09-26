@@ -55,7 +55,10 @@
     </span>
     <label>Relatorios</label>
   </div>
-  <div class="row">
+  <div 
+    [routerLink]="['/users']"
+    [ngClass]="{ selectedRow: rowSelected == 'users' }"
+    class="row">
     <span class="material-icons icon-row">
       groups
     </span>

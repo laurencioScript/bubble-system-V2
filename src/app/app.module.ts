@@ -26,14 +26,26 @@ import { SimpleTableComponent } from './simple-table/simple-table.component';
 import { SimpleModalComponent } from './simple-table/simple-modal/simple-modal.component';
 import { PartsPageComponent } from './parts-page/parts-page.component';
 import { FormsPartsComponent } from './parts-page/forms-parts/forms-parts.component';
-import { MatSelectModule } from '@angular/material/select';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatSelectModule} from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { ClipboardModule } from '@angular/cdk/clipboard'; 
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatStepperModule } from '@angular/material/stepper';
 
 import { PropertyService } from './service/property.service';
 import { UserService } from './service/user.service';
 import { PartsService } from './service/parts.service';
 import { FormsReadjustComponent } from './parts-page/forms-readjust/forms-readjust.component';
+import { UsersComponent } from './users/users.component';
+import { UserSelectionComponent } from './users/user-selection/user-selection.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCardModule } from '@angular/material/card';
+import { ConfimActionComponent } from './users/user-selection/confim-action/confim-action.component';
+import { FormResetPasswordComponent as FormResetProfile } from './profile-page/form-reset-password/form-reset-password.component';
+import { FormResetPasswordComponent } from './users/user-selection/form-reset-password/form-reset-password.component';
+
 import { AuthService } from './auth/auth.service';
 import { AuthGuardService, HomeGuardService } from './auth/auth-guard.service';
 import { ClientPageComponent } from './client-page/client-page.component';
@@ -43,7 +55,6 @@ import { ClientService } from './service/client.service';
 import { ColorSketchModule } from 'ngx-color/sketch';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { FormUserComponent } from './profile-page/form-user/form-user.component';
-import { FormResetPasswordComponent } from './profile-page/form-reset-password/form-reset-password.component';
 import { SalePageComponent } from './sale-page/sale-page.component';
 import { NewSaleComponent } from './sale-page/new-sale/new-sale.component';
 import { SaleClientComponent } from './sale-page/new-sale/shared/sale-client/sale-client.component';
@@ -63,11 +74,15 @@ import { NewPartComponent } from './sale-page/new-sale/shared/sale-part/new-part
     PartsPageComponent,
     FormsPartsComponent,
     FormsReadjustComponent,
+    UsersComponent,
+    UserSelectionComponent,
+    ConfimActionComponent,
+    FormResetPasswordComponent,
+    FormResetProfile,
     ClientPageComponent,
     FormsClientComponent,
     ProfilePageComponent,
     FormUserComponent,
-    FormResetPasswordComponent,
     SalePageComponent,
     NewSaleComponent,
     SaleClientComponent,
@@ -94,14 +109,29 @@ import { NewPartComponent } from './sale-page/new-sale/shared/sale-part/new-part
     MatMenuModule,
     MatSelectModule,
     MatCheckboxModule,
+<<<<<<< HEAD
+=======
+    MatListModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatCardModule,
+    ClipboardModule,
+    MatSnackBarModule,
+>>>>>>> bdb3a3c5f621b2184bb05d9a6141769ef667fddd
     NgxMaskModule.forRoot(),
     ColorSketchModule,
     MatStepperModule,
   ],
   providers: [
+<<<<<<< HEAD
     PropertyService,
     UserService,
     PartsService,
+=======
+    PropertyService, 
+    PartsService,
+    UserService, 
+>>>>>>> bdb3a3c5f621b2184bb05d9a6141769ef667fddd
     AuthService,
     AuthGuardService,
     HomeGuardService,

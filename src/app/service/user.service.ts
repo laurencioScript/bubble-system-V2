@@ -27,6 +27,18 @@ export class UserService {
     }
   }
 
+  async getUsers() {
+    try {
+      const options = this.getOptions();
+      const { result }: any = await this.http
+        .get(`${environment.apiUrl}/user`, options)
+        .toPromise();
+      return result;
+    } catch (error) {
+      return null;
+    }
+  }
+  
   async getUser(id) {
     try {
       const options = this.getOptions();
@@ -35,6 +47,19 @@ export class UserService {
         .toPromise();
       return result[0];
     } catch (error) {
+      return null;
+    }
+  }
+
+  async createUser(data){
+    try{
+      const options = this.getOptions();
+      const responseRequest: any = await this.http
+        .post(`${environment.apiUrl}/user/register`, data, options)
+        .toPromise();
+    } catch(e) {
+      console.log('>>> error', e);
+      throw e.status;
       return null;
     }
   }
@@ -52,6 +77,18 @@ export class UserService {
     }
   }
 
+  async deleteUser(id){
+    try{
+      const options = this.getOptions();
+      const responseRequest: any = await this.http
+        .delete(`${environment.apiUrl}/user/${id}`, options)
+        .toPromise();
+    }catch(e){
+      console.log('>>>> error', e);
+      return null;
+    }
+  }
+  
   async resetPassword(id) {
     try {
       const options = this.getOptions();

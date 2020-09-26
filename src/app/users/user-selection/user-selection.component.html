@@ -1,0 +1,148 @@
+<div id="container">
+    <div id="content">
+        <div id="inicial" *ngIf="viewPages.initial">
+            <p>Selecione um Usuário ou Crie um Novo</p>
+            <mat-icon svgIcon="bubbleIcon"></mat-icon>
+        </div>
+
+        <div id="createUser" *ngIf='viewPages.create'>
+            <p>Criação do Usuário</p>
+
+            <mat-form-field appearance="outline" id='create-levelSelect'>
+                <mat-label>Cargo</mat-label>
+                    <mat-select [formControl]="createSelectedLevel" name="level">
+                        <mat-option *ngFor="let lvl of levels" [value]="lvl">
+                            {{level(lvl)}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf='createSelectedLevel.invalid'>{{createMesssageError('createLevel')}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <input
+                    appearence='outline'
+                    matInput
+                    [formControl]="createName"
+                    placeholder="Nome"
+                    autocomplete="off"
+                    required
+                />
+                <mat-error *ngIf='createName.invalid'>{{createMesssageError('createName')}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <input
+                    appearence='outline'
+                    matInput
+                    [formControl]="createEmail"
+                    placeholder="E-mail"
+                    autocomplete="off"
+                    required
+                />
+                <mat-error *ngIf='createEmail.invalid'>{{createMesssageError('createEmail')}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" matTooltip='A senha deve Conter 8 Caracteres no Minimo.'>
+                <mat-label>Senha</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="createPass">
+                <span style="cursor: pointer;" class="material-icons" matSuffix (click)="hide = !hide">{{hide? 'visibility_off' : 'visibility'}}</span>
+                <mat-error *ngIf='createPass.invalid'>{{createMesssageError('createPass')}}</mat-error>
+              </mat-form-field>
+
+            <mat-form-field appearance="outline" matTooltip="Repita a Senha Digitada no Campo Acima">
+                <mat-label>Confirmar Senha</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" [formControl]='confirmCreatePass'>
+                <span style="cursor: pointer;" class="material-icons" matSuffix (click)="hide = !hide">{{hide? 'visibility_off' : 'visibility'}}</span>
+                <mat-error *ngIf='confirmCreatePass.invalid'>{{createMesssageError('confirmCreatePass')}}</mat-error>
+              </mat-form-field>
+
+              <div id="buttonsDiv">
+                <button mat-raised-button color="basic" id='newUserBtn' (click)="switchPage('initial')">Cancelar</button>
+                <button mat-raised-button color="primary" id='newUserBtn' (click)="createUser()">Confirmar</button>
+              </div>
+        </div>
+    
+        <div id="viewUser" *ngIf='viewPages.view'>
+            <mat-icon svgIcon="bubbleIcon"></mat-icon>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Nivel do Usuário</mat-label>
+                <input
+                    appearence='outline'
+                    matInput
+                    value="{{level(selectedUser.level)}}"
+                    readonly
+                    autocomplete="off"
+                />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Nome</mat-label>
+                <input
+                    appearence='outline'
+                    matInput
+                    value="{{selectedUser.name}}"
+                    readonly
+                    autocomplete="off"
+                />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>E-mail</mat-label>
+                <input
+                    appearence='outline'
+                    matInput
+                    value="{{selectedUser.email}}"
+                    readonly
+                    autocomplete="off"
+                />
+            </mat-form-field>
+
+            <div id="buttonsDiv">
+                <button mat-stroked-button color="basic" id='newUserBtn' (click)='switchPage("edit")'>Editar</button>
+                <button mat-stroked-button color="warn" id='deleteUserBtn' (click)="deleteUser()">Remover</button>
+                <button (click)="openEditPassword()">Recuperar Senha</button>
+            </div>
+        </div>
+    
+        <div id='editUser' *ngIf="viewPages.edit">
+            <mat-icon svgIcon="bubbleIcon"></mat-icon>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Nivel da Conta</mat-label>
+                    <mat-select [(value)]="selectedUser.level" name="userLevel">
+                        <mat-option *ngFor="let lvl of levels" [value]="lvl">
+                            {{level(lvl)}}
+                        </mat-option>
+                    </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Nome</mat-label>
+                <input
+                    appearence='outline'
+                    matInput
+                    [(ngModel)]="selectedUser.name"
+                    placeholder="Nome"
+                    autocomplete="off"
+                />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>E-mail</mat-label>
+                <input
+                    appearence='outline'
+                    matInput
+                    
+                    value="{{selectedUser.email}}"
+                    placeholder="e-mail"
+                    autocomplete="off"
+                />
+            </mat-form-field>
+
+            <div id="buttonsDiv">
+                <button mat-raised-button color="primary" (click)='updateUser()'>Confirmar</button>
+                <button mat-raised-button color="basic"  (click)="switchPage('view')">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
