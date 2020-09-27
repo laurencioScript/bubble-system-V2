@@ -1,7 +1,7 @@
-<div style="display: flex; justify-content: space-between;margin-top: 40px;">
+<div style="display: flex; justify-content: space-between; margin-top: 40px;">
   <div id="container-table">
     <div class="content-button">
-      <h1 style="color:#F67B09; font-weight:500;">
+      <h1 style="color: #f67b09; font-weight: 600;">
         Cliente
       </h1>
       <div>
@@ -17,50 +17,62 @@
             (keyup)="filter()"
             autocomplete="off"
           />
-          <span *ngIf="searchValue" style="cursor:pointer" (click)="clearFilter()" class="material-icons" matSuffix>
+          <span
+            *ngIf="searchValue"
+            style="cursor: pointer;"
+            (click)="clearFilter()"
+            class="material-icons"
+            matSuffix
+          >
             clear
           </span>
         </mat-form-field>
       </div>
-      
     </div>
     <div style="display: flex; justify-content: flex-end;">
-      <button mat-button (click)="openDialog({},'create')">cadastre aqui</button>
+      <button mat-button (click)="openDialog({}, 'create')">cadastre aqui</button>
     </div>
-  
+
     <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
       <ng-container matColumnDef="number">
-        <mat-header-cell  *matHeaderCellDef>
+        <mat-header-cell *matHeaderCellDef>
           <label> N°</label>
         </mat-header-cell>
-  
+
         <mat-cell *matCellDef="let element; let i = index">
-          {{ dataSource.filteredData.indexOf(element) + 1 + pageIndex * pageSize }} 
-          <span [ngStyle]="{'color': element.observation_color , 'margin-left': '16px'}"class="material-icons"> bubble_chart </span>
+          {{ dataSource.filteredData.indexOf(element) + 1 + pageIndex * pageSize }}
+          <span
+            [ngStyle]="{ color: element.observation_color, 'margin-left': '16px' }"
+            class="material-icons"
+          >
+            bubble_chart
+          </span>
         </mat-cell>
       </ng-container>
-  
-      <ng-container  matColumnDef="name">
+
+      <ng-container matColumnDef="name">
         <mat-header-cell style="flex: 2;" *matHeaderCellDef> NOME </mat-header-cell>
         <mat-cell style="flex: 2;" *matCellDef="let element"> {{ element.name_client }} </mat-cell>
       </ng-container>
-  
+
       <ng-container matColumnDef="cpf_cnpj">
         <mat-header-cell style="flex: 2;" *matHeaderCellDef> CPF/CNPJ </mat-header-cell>
-        <mat-cell style="flex: 2;" *matCellDef="let element"> {{ element.cpf_cnpj | mask: 'CPF_CNPJ'  }} </mat-cell>
+        <mat-cell style="flex: 2;" *matCellDef="let element">
+          {{ element.cpf_cnpj | mask: 'CPF_CNPJ' }}
+        </mat-cell>
       </ng-container>
-  
+
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row
         class="row-table"
-        [ngClass]="{'row-table-selected':row.selected}"
+        [ngClass]="{ 'row-table-selected': row.selected }"
         *matRowDef="let row; columns: displayedColumns"
         (mouseenter)="mouseEnter(row)"
         (mouseleave)="mouseLeave(row)"
         (click)="selectRow(row)"
       ></mat-row>
     </mat-table>
-  
+
     <div class="content-paginator">
       <mat-paginator
         [length]="data.length"
@@ -72,7 +84,7 @@
       </mat-paginator>
     </div>
   </div>
-  <div style="display: flex;justify-content: center;">
-    <img id="sale-client-img" src="./../../../../../assets/client-sale.svg">
+  <div style="display: flex; justify-content: center;">
+    <img id="sale-client-img" src="./../../../../../assets/client-sale.svg" />
   </div>
 </div>

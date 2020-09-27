@@ -16,11 +16,10 @@ interface genericService {
 @Component({
   selector: 'app-sale-part',
   templateUrl: './sale-part.component.html',
-  styleUrls: ['./sale-part.component.scss']
+  styleUrls: ['./sale-part.component.scss'],
 })
 export class SalePartComponent implements OnInit {
-
-  dataClone: any;
+  dataClone: any = [];
   pageEvent: PageEvent;
   pageIndex: number = 0;
   pageSize: number = 5;
@@ -38,32 +37,30 @@ export class SalePartComponent implements OnInit {
   ];
   name: string = 'Peças';
   viewSelect: boolean = false;
-  displayedColumns: string[] = ['number', 'name', 'quantity', 'measure', 'quantityUnity', 'quantityTotal', 'options'];
+  displayedColumns: string[] = [
+    'number',
+    'name',
+    'quantity',
+    'measure',
+    'quantityUnity',
+    'quantityTotal',
+    'options',
+  ];
+  x: string[] = [
+    'number',
+    'name',
+    'quantity',
+    'measure',
+    'quantityUnity',
+    'quantityTotal',
+    'options',
+  ];
   dataSource = new MatTableDataSource<any>();
   selectedAll: any = false;
 
   constructor(public dialog: MatDialog, public readonly serviceParts: PartsService) {}
 
-  async ngOnInit() {
-    const pieces = await this.serviceParts.getParts();
-    this.data = pieces.map((piece) => {
-      return {
-        id: piece.id_piece,
-        name: piece.piece_name,
-        unity: piece.unity,
-        value: piece.value,
-      };
-    });
-    this.dataClone = this.clone(this.data);
-    this.length = this.data && Array.isArray(this.data) ? this.data.length : 0;
-    this.partsService = {
-      create: (data) => this.serviceParts.createParts(data),
-      update: (data) => this.serviceParts.updateParts(data),
-      delete: (id) => this.serviceParts.deleteParts(id),
-      get: () => this.serviceParts.getParts(),
-    };
-    this.paginator();
-  }
+  async ngOnInit() {}
 
   ngOnChanges() {
     this.dataClone = this.clone(this.data);
@@ -73,6 +70,10 @@ export class SalePartComponent implements OnInit {
 
   selectAll(value) {
     this.data.forEach((piece) => (piece.checked = value));
+  }
+
+  getTotalValue() {
+    return this.data.reduce((valueTotal, part) => valueTotal + part.value_total, 0);
   }
 
   validateSelectAll() {
@@ -94,8 +95,6 @@ export class SalePartComponent implements OnInit {
     }
   }
 
-  
-
   mouseEnter(value) {
     value.visible = true;
   }
@@ -104,7 +103,7 @@ export class SalePartComponent implements OnInit {
     value.visible = false;
   }
 
-  openDialog(partsExist: any = {}) {
+  openDialog(partsExist: any = null) {
     const dialogRef = this.dialog.open(NewPartComponent, {
       data: this.clone(partsExist),
     });
@@ -113,15 +112,7 @@ export class SalePartComponent implements OnInit {
       if (!objectGeneric) {
         return;
       }
-      // create
-      if (!objectGeneric.id && !this.dataClone.find((value) => objectGeneric.name == value.name)) {
-        let generic;
-        generic = await this.partsService.create({
-          ...objectGeneric,
-          name: objectGeneric.name.toLocaleLowerCase(),
-        });
-        this.data.push(generic);
-      }
+
       //update
       if (objectGeneric.id) {
         delete objectGeneric.visible;
@@ -130,10 +121,7 @@ export class SalePartComponent implements OnInit {
         this.dataClone.forEach((value) => {
           if (
             value.id == partsExist.id &&
-            !this.dataClone.find(
-              (valueExist) =>
-                objectGeneric.id != valueExist.id && objectGeneric.name == valueExist.name
-            )
+            !this.dataClone.find((valueExist) => objectGeneric.id != valueExist.id)
           ) {
             updateValidate = true;
           }
@@ -141,7 +129,6 @@ export class SalePartComponent implements OnInit {
         this.data = [];
         for (const value of this.dataClone) {
           if (updateValidate && objectGeneric.id == value.id) {
-            generic = await this.partsService.update(objectGeneric);
             this.data.push(generic);
           }
           if (objectGeneric.id != value.id) {
@@ -149,6 +136,13 @@ export class SalePartComponent implements OnInit {
           }
         }
       }
+
+      // create
+      if (!objectGeneric.id) {
+        objectGeneric.id = new Date().getTime();
+        this.data.push(objectGeneric);
+      }
+
       this.dataClone = this.clone(this.data);
       this.paginator();
     });
@@ -176,8 +170,7 @@ export class SalePartComponent implements OnInit {
     if (!element) {
       return;
     }
-    await this.partsService.delete(element.id);
-    this.dataClone = this.dataClone.filter((value) => value.name != element.name);
+    this.dataClone = this.dataClone.filter((value) => value.id != element.id);
     this.data = this.clone(this.dataClone);
     this.paginator();
   }
@@ -198,7 +191,6 @@ export class SalePartComponent implements OnInit {
         selectedValues.push(this.data[this.pageSize * this.pageIndex + index]);
       }
     }
-
     this.dataSource = new MatTableDataSource<any>(selectedValues);
   }
 

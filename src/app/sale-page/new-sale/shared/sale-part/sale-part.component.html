@@ -1,105 +1,118 @@
-<div style="display: flex; justify-content: space-between;margin-top: 40px;">
-<div id="container-table">
-  <div class="content-button">
-    <div>
-      <h1 style="color:#F67B09; font-weight:500;">
-        Peças
-      </h1>
+<div style="display: flex; justify-content: space-between; margin-top: 40px;">
+  <div id="container-table">
+    <div class="content-button">
+      <div>
+        <h1 style="color: #f67b09; font-weight: 600;">
+          Peças
+        </h1>
+      </div>
+      <div class="group-buttons">
+        <button mat-stroked-button class="btn btn-blue" (click)="openDialog()">
+          Novo
+        </button>
+      </div>
     </div>
-    <div class="group-buttons">
-      <button mat-stroked-button class="btn btn-blue" (click)="openDialog()">
-        Novo
-      </button>
+
+    <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="number">
+        <mat-header-cell *matHeaderCellDef>
+          <label *ngIf="!viewSelect"> N°</label>
+          <mat-checkbox
+            color="primary"
+            *ngIf="viewSelect"
+            [(ngModel)]="selectedAll"
+            (change)="selectAll($event.checked)"
+          >
+            N°
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+          <label *ngIf="!viewSelect">
+            {{ dataSource.filteredData.indexOf(element) + 1 + pageIndex * pageSize }}</label
+          >
+
+          <mat-checkbox
+            *ngIf="viewSelect"
+            color="primary"
+            (change)="validateSelectAll()"
+            [(ngModel)]="element.checked"
+          >
+            {{ dataSource.filteredData.indexOf(element) + 1 + pageIndex * pageSize }}
+          </mat-checkbox>
+        </mat-cell>
+        <mat-footer-cell *matFooterCellDef>
+          <strong>
+            {{ dataSource.data.length > 0 ? 'Total' : '' }}
+          </strong>
+        </mat-footer-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> NOME </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.part }} </mat-cell>
+        <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <mat-header-cell *matHeaderCellDef> QUANTIDADE </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.quantity }} </mat-cell>
+        <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="measure">
+        <mat-header-cell *matHeaderCellDef> MEDIDA </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.unity }} </mat-cell>
+        <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="quantityUnity">
+        <mat-header-cell *matHeaderCellDef> VALOR (U) </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ 'R$ ' + getValue(element.value_unity) }} </mat-cell>
+        <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="quantityTotal">
+        <mat-header-cell *matHeaderCellDef> VALOR (T) </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ 'R$ ' + getValue(element.value_total) }} </mat-cell>
+        <mat-footer-cell *matFooterCellDef>
+          <strong>
+            {{ dataSource.data.length > 0 ? 'R$ ' + getValue(getTotalValue()) : '' }}
+          </strong>
+        </mat-footer-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="options">
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <span class="material-icons" (click)="remove(element)" style="cursor: pointer;">
+            delete
+          </span>
+        </mat-cell>
+        <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row
+        class="row-table"
+        *matRowDef="let row; columns: displayedColumns"
+        (mouseenter)="mouseEnter(row)"
+        (mouseleave)="mouseLeave(row)"
+      ></mat-row>
+      <mat-footer-row *matFooterRowDef="x"></mat-footer-row>
+    </mat-table>
+
+    <div class="content-paginator">
+      <mat-paginator
+        [length]="data.length"
+        [pageIndex]="pageIndex"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[5, 10, 25]"
+        (page)="pageEvent = getServerData($event)"
+      >
+      </mat-paginator>
     </div>
   </div>
-
-  <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <ng-container matColumnDef="number">
-      <mat-header-cell *matHeaderCellDef>
-        <label *ngIf="!viewSelect"> N°</label>
-        <mat-checkbox
-          color="primary"
-          *ngIf="viewSelect"
-          [(ngModel)]="selectedAll"
-          (change)="selectAll($event.checked)"
-        >
-          N°
-        </mat-checkbox>
-      </mat-header-cell>
-      <mat-cell *matCellDef="let element; let i = index">
-        <label *ngIf="!viewSelect">
-          {{ dataSource.filteredData.indexOf(element) + 1 + pageIndex * pageSize }}</label
-        >
-
-        <mat-checkbox
-          *ngIf="viewSelect"
-          color="primary"
-          (change)="validateSelectAll()"
-          [(ngModel)]="element.checked"
-        >
-          {{ dataSource.filteredData.indexOf(element) + 1 + pageIndex * pageSize }}
-        </mat-checkbox>
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef> NOME </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="quantity">
-      <mat-header-cell *matHeaderCellDef> QUANTIDADE </mat-header-cell>
-      <mat-cell *matCellDef="let element"> 1 </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="measure">
-      <mat-header-cell *matHeaderCellDef> MEDIDA </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.unity }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="quantityUnity">
-      <mat-header-cell *matHeaderCellDef> VALOR (U) </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ 'R$ ' + getValue(element.value) }} </mat-cell>
-    </ng-container>
-
-
-    <ng-container matColumnDef="quantityTotal">
-      <mat-header-cell *matHeaderCellDef> VALOR (T) </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ 'R$ ' + getValue(element.value) }} </mat-cell>
-    </ng-container>
-
-
-    <ng-container matColumnDef="options">
-      <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
-      <mat-cell *matCellDef="let element"> <span class="material-icons">
-        delete
-        </span> </mat-cell>
-    </ng-container>
-
-
-  
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row
-      class="row-table"
-      *matRowDef="let row; columns: displayedColumns"
-      (mouseenter)="mouseEnter(row)"
-      (mouseleave)="mouseLeave(row)"
-    ></mat-row>
-  </mat-table>
-
-  <div class="content-paginator">
-    <mat-paginator
-      [length]="data.length"
-      [pageIndex]="pageIndex"
-      [pageSize]="pageSize"
-      [pageSizeOptions]="[5, 10, 25]"
-      (page)="pageEvent = getServerData($event)"
-    >
-    </mat-paginator>
+  <div style="display: flex; justify-content: center;">
+    <img id="part-client-img" src="./../../../../../assets/part-sale.svg" />
   </div>
-</div>
-<div style="display: flex;justify-content: center;">
-  <img id="part-client-img" src="./../../../../../assets/part-sale.svg">
-</div>
 </div>

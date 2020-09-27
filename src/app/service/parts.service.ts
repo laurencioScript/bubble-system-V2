@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,11 +9,11 @@ import { environment } from 'src/environments/environment';
 export class PartsService {
   options: any;
 
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient, public readonly authService: AuthService) {
     this.options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        Authorization: `Bearer ${this.authService.getToken()}`,
       }),
     };
   }
