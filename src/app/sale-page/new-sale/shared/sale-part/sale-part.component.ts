@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
@@ -58,6 +58,8 @@ export class SalePartComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   selectedAll: any = false;
 
+  @Output() parts = new EventEmitter();
+
   constructor(public dialog: MatDialog, public readonly serviceParts: PartsService) {}
 
   async ngOnInit() {}
@@ -113,37 +115,13 @@ export class SalePartComponent implements OnInit {
         return;
       }
 
-      //update
-      if (objectGeneric.id) {
-        delete objectGeneric.visible;
-        let generic,
-          updateValidate = false;
-        this.dataClone.forEach((value) => {
-          if (
-            value.id == partsExist.id &&
-            !this.dataClone.find((valueExist) => objectGeneric.id != valueExist.id)
-          ) {
-            updateValidate = true;
-          }
-        });
-        this.data = [];
-        for (const value of this.dataClone) {
-          if (updateValidate && objectGeneric.id == value.id) {
-            this.data.push(generic);
-          }
-          if (objectGeneric.id != value.id) {
-            this.data.push(value);
-          }
-        }
-      }
-
-      // create
       if (!objectGeneric.id) {
         objectGeneric.id = new Date().getTime();
         this.data.push(objectGeneric);
       }
 
       this.dataClone = this.clone(this.data);
+      this.parts.emit(this.dataClone);
       this.paginator();
     });
   }
