@@ -1,0 +1,100 @@
+#container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+
+    #content{
+        height: 100%;
+        width: 100%;
+        padding: 20px;
+
+        display: flex;
+        flex-direction: row;
+
+        #userSidebar{
+            // border: 1px solid rebeccapurple;
+            max-width: 450px;
+            width: 100%;
+            height: 100%;
+            border-right: 2px solid #c4c4c4;
+            h1{
+                font-size: 28px;
+                margin: 10px;
+                text-decoration: underline 1px solid black;
+            }
+            
+            #userSearchDiv{
+                #userFilter{
+                    display: flex;
+                    flex-direction: row;
+                }
+
+                p{
+                    margin-right: 20px;
+                    color: rgba(0, 0, 0, 0.5);
+                    font-size: 12px;
+                }
+                #searchBarInput{
+                    // Mat input (INPUT) DO FILTRO
+                    width: 95%;
+                    ::ng-deep .mat-form-field-wrapper{
+                        padding-bottom: 0px;
+                    }
+                }
+
+                #newUserBtn{
+                    background-color: #3C7EFF;
+                    width: 100px;
+                    height: 40px;
+                    margin: 10px 0px; 
+                }
+                
+            }
+
+            #userList{
+                // border: 1px solid green;
+                height: 100%;
+
+                mat-selection-list{
+                    padding: 0px;
+                }
+                mat-list-option{
+                    border-top: 2px solid #c4c4c4;
+                    border-bottom: 2px solid #c4c4c4;
+                    margin: -2px 0px;
+
+                    // esse margin é crucial(aparentemente), sem ele as bordas entre itens ficam "bugadas".
+
+                    height: 80px;
+
+                    .listOption{
+                        display: flex;
+                        flex-direction: row;
+
+                        margin: auto 0;
+                        margin-top: 15px;
+
+                        mat-icon{
+                            height: 50px;
+                            width: 50px;
+                        }
+                        p{
+                            margin-left: 15px;
+                            font-size: 23px;
+                        }
+                        p:last-child{
+                            font-size: 15px;
+                            color: #2C94B5;
+                        }
+                    }
+                }
+            }
+        }
+        #userView{
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
