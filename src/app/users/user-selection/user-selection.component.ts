@@ -27,7 +27,7 @@ export class UserSelectionComponent implements OnInit {
   createPass =  new FormControl('', Validators.compose([Validators.required,Validators.minLength(8),]));
   confirmCreatePass = new FormControl('', Validators.compose([Validators.required,Validators.minLength(8),]));
 
-  levels: any[] = [3, 2, 1];
+  levels: any[] = [3, 2];
 
   newUser: any ={
     level: "",
@@ -65,7 +65,8 @@ export class UserSelectionComponent implements OnInit {
     this.snackBar.open(message, "Ok",{
       duration: 2000,
       horizontalPosition: "right",
-      verticalPosition: "top"
+      verticalPosition: "top",
+      
     });
   }
   
@@ -78,10 +79,12 @@ export class UserSelectionComponent implements OnInit {
     dialogRef.afterClosed().subscribe( result => {
       this.confirmActionResult = result;
 
-      if(this.deleteUserBtn){
+      if(result){
         this.removeUser();
         this.deleteUserBtn = false;
-      }else{console.log('vai dar não')}
+        this.openAlert("Usuário Deletado");
+        this.refreshPage(2000);
+      }else{this.openAlert("Operação Cancelada")}
     })
   }
 
@@ -109,7 +112,7 @@ export class UserSelectionComponent implements OnInit {
     let retorno; 
     switch (level) {
       case 1:
-        retorno = "Mestre";
+        retorno = "Diretor";
         break;
       case 2:
         retorno = "Administrador";
@@ -177,8 +180,8 @@ export class UserSelectionComponent implements OnInit {
         this.createEmail.invalid ||
         this.createPass.invalid ||
         this.createEmail.hasError('badrequest') ||
-        this.createPass.hasError('badrequest'))
-    { console.log("não criei"); return; }
+        this.createPass.hasError('badrequest')){
+      console.log("não criei"); return null; }
     else{
       this.newUser = {
         level: this.createSelectedLevel.value,
@@ -195,6 +198,7 @@ export class UserSelectionComponent implements OnInit {
         this.openAlert("Erro ao Cadastrar o Usuário");
       }else{
         this.openAlert("Usuário Cadastrado com Sucesso");
+        this.refreshPage(2000);
       }
     }
   }
@@ -216,5 +220,9 @@ export class UserSelectionComponent implements OnInit {
   deleteUser(){
     this.deleteUserBtn = true;
     this.openRemoveDialog();
+  }
+
+  refreshPage(time: number){
+    setTimeout(()=>{ window.location.reload(true); }, time)
   }
 }

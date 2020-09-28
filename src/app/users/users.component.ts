@@ -1,6 +1,6 @@
 import { browser } from 'protractor';
 import { UserService } from './../service/user.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { stringify } from 'querystring';
@@ -41,6 +41,10 @@ export class UsersComponent implements OnInit {
     else if(userLevel == 2){return "admIcon"}
   }
 
+  insertNewUser(user: any){
+    this.data = this.data.push(user);
+  }
+
   async getUsers(){
     const users = await this.UserService.getUsers();
     this.componentPage="viewUser";
@@ -50,7 +54,7 @@ export class UsersComponent implements OnInit {
     let retorno; 
     switch (level) {
       case 1:
-        retorno = "Mestre";
+        retorno = "Diretor";
         break;
       case 2:
         retorno = "Administrador";

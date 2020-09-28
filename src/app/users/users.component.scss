@@ -15,6 +15,7 @@
         #userSidebar{
             // border: 1px solid rebeccapurple;
             max-width: 450px;
+            // max-height: 100%;
             width: 100%;
             height: 100%;
             border-right: 2px solid #c4c4c4;
@@ -53,8 +54,8 @@
             }
 
             #userList{
-                // border: 1px solid green;
-                height: 100%;
+                overflow: auto;
+                height: 74%;
 
                 mat-selection-list{
                     padding: 0px;
@@ -95,6 +96,25 @@
             width: 100%;
             height: 100%;
         }
+    }
+
+    // Altera o design da scrollBar
+
+    ::-webkit-scrollbar{
+        width: 5px;
+    }
+    ::-webkit-scrollbar-button{
+        display: none;
+    }
+    ::-webkit-scrollbar-track{
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+        border-radius: 10px;
+    }
+     
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        // -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+        background-color: #3C7EFF;
     }
 }
 
