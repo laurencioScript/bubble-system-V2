@@ -71,9 +71,9 @@ export class UserService {
         .put(`${environment.apiUrl}/user/${data.id}`, data, options)
         .toPromise();
       console.log('>>> requestResult', requestResult);
-      return requestResult;
+      return true;
     } catch (error) {
-      return null;
+      return false;
     }
   }
 

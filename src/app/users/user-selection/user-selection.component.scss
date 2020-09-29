@@ -2,13 +2,13 @@
     height: 100%;
     width: 100%;
     display: flex;
-    overflow-x: scroll;
+    overflow: hidden;
 
     #content, #inicial{
         height: 100%;
         width: 100%;
         
-        margin: 50px;
+        padding: 50px;
 
         display: flex;
         flex-direction: column;
@@ -36,8 +36,6 @@
     #createUser{
         display: flex;
         flex-direction: column;
-
-        overflow: auto;
 
         #create-levelSelect{
             width: 200px;

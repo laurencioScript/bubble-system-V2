@@ -43,6 +43,13 @@ export class UserSelectionComponent implements OnInit {
     level: "",
     password: "",
   };
+  selectedUserClone: any= {
+    id: "",
+    name: "",
+    email: "",
+    level: "",
+    password: "",
+  };
 
   viewPages = {
     initial: true,
@@ -89,23 +96,30 @@ export class UserSelectionComponent implements OnInit {
   }
 
   openEditPassword(){
-    const dialogRef = this.dialog.open(FormResetPasswordComponent,{
-      width: '400px',
-      height: '230px'
+
+    const confirmAction = this.dialog.open(ConfimActionComponent,{
+      width: '360px',
+      height: '150px'
     });
 
-    dialogRef.afterClosed().subscribe(async (resetPass) => {
-      if(!resetPass){
-        return;
+    confirmAction.afterClosed().subscribe( result => {
+      if(result){
+        const resetForm = this.dialog.open(FormResetPasswordComponent,{
+          width: '400px',
+          height: '230px'
+        });
+  
+        resetForm.afterClosed().subscribe(async (resetPass) => {
+          this.UserService.updateUser({
+            "id": this.selectedUser.id,
+            "name": this.selectedUser.name,
+            "password": resetPass,
+            "email": this.selectedUser.email,
+            "level": this.selectedUser.level
+          });
+        });
       }
-      this.UserService.updateUser({
-        "id": this.selectedUser.id,
-        "name": this.selectedUser.name,
-        "password": resetPass,
-        "email": this.selectedUser.email,
-        "level": this.selectedUser.level
-      })
-    })
+    });
   }
 
   level(level: any){
@@ -126,6 +140,7 @@ export class UserSelectionComponent implements OnInit {
 
   public getUser(user: any){
     this.selectedUser = user;
+    this.selectedUserClone = JSON.parse(JSON.stringify(this.selectedUser));
   }
   
   ngOnInit(): void {
@@ -205,12 +220,17 @@ export class UserSelectionComponent implements OnInit {
 
   async updateUser(){
     let data = {
-      "id": this.selectedUser.id,
-      "name": this.selectedUser.name,
+      "id": this.selectedUserClone.id,
+      "name": this.selectedUserClone.name,
       "password": '',
-      "email": this.selectedUser.email,
+      "email": this.selectedUserClone.email,
     }
-    await this.UserService.updateUser(data);
+    await this.UserService.updateUser(data).then(e=>{
+      if(e){
+        this.openAlert("Usuário Editado");
+        this.refreshPage(2000);
+      }else{ this.openAlert("Ocorreu um erro ao Editar"); }
+    })
   }
 
   async removeUser(){

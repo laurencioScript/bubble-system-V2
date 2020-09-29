@@ -41,10 +41,6 @@ export class UsersComponent implements OnInit {
     else if(userLevel == 2){return "admIcon"}
   }
 
-  insertNewUser(user: any){
-    this.data = this.data.push(user);
-  }
-
   async getUsers(){
     const users = await this.UserService.getUsers();
     this.componentPage="viewUser";

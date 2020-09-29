@@ -111,7 +111,7 @@
 
             <mat-form-field appearance="outline">
                 <mat-label>Nivel da Conta</mat-label>
-                    <mat-select [(value)]="selectedUser.level" name="userLevel">
+                    <mat-select [(value)]="selectedUserClone.level" name="userLevel">
                         <mat-option *ngFor="let lvl of levels" [value]="lvl">
                             {{level(lvl)}}
                         </mat-option>
@@ -123,7 +123,7 @@
                 <input
                     appearence='outline'
                     matInput
-                    [(ngModel)]="selectedUser.name"
+                    [(ngModel)]="selectedUserClone.name"
                     placeholder="Nome"
                     autocomplete="off"
                     oninput="this.value = this.value.toLowerCase()"
@@ -136,7 +136,7 @@
                     appearence='outline'
                     matInput
                     
-                    value="{{selectedUser.email}}"
+                    value="{{selectedUserClone.email}}"
                     placeholder="e-mail"
                     autocomplete="off"          
                     oninput="this.value = this.value.toLowerCase()"
