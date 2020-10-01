@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from '../auth/auth.service';
 import { UserService } from '../service/user.service';
 import { FormResetPasswordComponent } from './form-reset-password/form-reset-password.component';
 import { FormUserComponent } from './form-user/form-user.component';
@@ -18,10 +19,14 @@ export class ProfilePageComponent implements OnInit {
     cargo: '',
   };
 
-  constructor(private readonly userService: UserService, public dialog: MatDialog) {}
+  constructor(
+    private readonly userService: UserService,
+    public dialog: MatDialog,
+    public readonly authService: AuthService
+  ) {}
 
   async ngOnInit() {
-    const userStorage = JSON.parse(sessionStorage.getItem('user'));
+    const userStorage = JSON.parse(this.authService.getSessionStorage('user'));
     this.user = await this.userService.getUser(userStorage.id);
     if (this.user.level_user == 1) {
       this.user.cargo = 'Diretor';

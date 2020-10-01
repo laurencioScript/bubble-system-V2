@@ -1,1 +1,18 @@
-<p>sale-scheduling works!</p>
+<div style="display: flex; justify-content: space-between; margin-top: 40px;">
+  <div id="">
+    <h1 style="color: #f67b09; font-weight: 600;">
+      Agendamento
+    </h1>
+
+    <div style="margin-left: 24px;">
+      <mat-form-field appearance="legacy">
+        <mat-label>Data de Entrega</mat-label>
+        <input type="date" [ngModel]="outputDate" (ngModelChange)="valuechange($event)" matInput />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div style="display: flex; justify-content: center;">
+    <img id="part-client-img" style="width: 70%;" src="./../../../../../assets/calendario.svg" />
+  </div>
+</div>

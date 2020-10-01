@@ -2,13 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from './../service/user.service';
 import { Router } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
+import { AuthService } from '../auth/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  constructor(public readonly userService: UserService, private router: Router) {}
+  constructor(
+    public readonly userService: UserService,
+    private router: Router,
+    public readonly authService: AuthService
+  ) {}
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required, Validators.minLength(8)]);
   loading = false;
@@ -36,16 +41,9 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    sessionStorage.setItem(
-      'user',
-      JSON.stringify({
-        name: userSession.name_user,
-        office: userSession.level_user,
-        id: userSession.id_user,
-      })
-    );
-    sessionStorage.setItem('token', userSession.token);
-    sessionStorage.setItem('level', userSession.level_user);
+    this.authService.setSessionStorage(userSession);
+    this.authService.setToken(userSession.token);
+    this.authService.setItem(userSession.level_user);
 
     this.router.navigate(['/home']);
   }

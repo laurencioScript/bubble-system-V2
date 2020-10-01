@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,11 +13,13 @@ export class SidebarComponent implements OnInit {
 
   @Input('rowSelected') rowSelected: any;
 
-  constructor(public readonly router: Router) {
-    let sessionUser: any = sessionStorage.getItem('user');
-    if (sessionUser) {
-      sessionUser = JSON.parse(sessionUser);
+  constructor(public readonly router: Router, public readonly authService: AuthService) {
+    let sessionUser: any = this.authService.getSessionStorage('user');
+    if (!sessionUser) {
+      return;
     }
+
+    sessionUser = JSON.parse(sessionUser);
     this.username = sessionUser.name ? this.capitalize(sessionUser.name) : this.username;
     this.office = sessionUser.office === 1 ? 'Diretor' : this.office;
     this.office = sessionUser.office === 2 ? 'Administrador' : this.office;
@@ -29,8 +32,7 @@ export class SidebarComponent implements OnInit {
   }
 
   logout() {
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('user');
+    this.authService.logout();
     this.router.navigate(['']);
   }
 

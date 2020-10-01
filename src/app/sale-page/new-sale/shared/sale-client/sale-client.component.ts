@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,10 +16,9 @@ interface genericService {
 @Component({
   selector: 'app-sale-client',
   templateUrl: './sale-client.component.html',
-  styleUrls: ['./sale-client.component.scss']
+  styleUrls: ['./sale-client.component.scss'],
 })
 export class SaleClientComponent implements OnInit {
-
   dataClone: any;
   pageEvent: PageEvent;
   pageIndex: number = 0;
@@ -33,6 +32,8 @@ export class SaleClientComponent implements OnInit {
   displayedColumns: string[] = ['number', 'name', 'cpf_cnpj'];
   dataSource = new MatTableDataSource<any>();
   selectedAll: any = false;
+
+  @Output() client = new EventEmitter();
 
   constructor(public dialog: MatDialog, public readonly clientService: ClientService) {}
 
@@ -59,12 +60,12 @@ export class SaleClientComponent implements OnInit {
     }
   }
 
-  clearFilter(){
+  clearFilter() {
     this.searchValue = '';
     this.data = this.clone(this.dataClone);
     this.paginator();
   }
-  
+
   mouseEnter(value) {
     value.visible = true;
   }
@@ -73,19 +74,26 @@ export class SaleClientComponent implements OnInit {
     value.visible = false;
   }
 
-  selectRow(value){
-
-    this.data.forEach(row => {
-      if(row.id_client != value.id_client){
+  selectRow(value) {
+    this.data.forEach((row) => {
+      if (row.id_client != value.id_client) {
         row.selected = false;
       }
-    })
+    });
 
-    if(value.selected == undefined){
+    if (value.selected == undefined) {
       value.selected = true;
-    }
-    else{
+    } else {
       value.selected = !value.selected;
+    }
+    if (value.selected) {
+      this.client.emit({
+        ...value,
+        visible: undefined,
+        selected: undefined,
+      });
+    } else {
+      this.client.emit(null);
     }
   }
 
@@ -97,7 +105,7 @@ export class SaleClientComponent implements OnInit {
     dialogRef.afterClosed().subscribe(async (objectGeneric) => {
       if (!objectGeneric) {
         return;
-      } 
+      }
       // create
       if (!objectGeneric.id_client) {
         let generic;
@@ -118,7 +126,8 @@ export class SaleClientComponent implements OnInit {
             value.id_client == clientExist.id_client &&
             !this.dataClone.find(
               (valueExist) =>
-                objectGeneric.id_client != valueExist.id_client && objectGeneric.name_client == valueExist.name_client
+                objectGeneric.id_client != valueExist.id_client &&
+                objectGeneric.name_client == valueExist.name_client
             )
           ) {
             updateValidate = true;
@@ -143,10 +152,11 @@ export class SaleClientComponent implements OnInit {
   filter() {
     this.data = this.dataClone;
     this.pageIndex = 0;
-    this.data = this.data.filter((value) => 
-      value.name_client.indexOf(this.searchValue) >= 0 || 
-      value.cpf_cnpj.indexOf(this.searchValue) >= 0 || 
-      value.contact.find(contact=> contact.indexOf(this.searchValue) >= 0)
+    this.data = this.data.filter(
+      (value) =>
+        value.name_client.indexOf(this.searchValue) >= 0 ||
+        value.cpf_cnpj.indexOf(this.searchValue) >= 0 ||
+        value.contact.find((contact) => contact.indexOf(this.searchValue) >= 0)
     );
 
     this.paginator();
@@ -205,5 +215,4 @@ export class SaleClientComponent implements OnInit {
   clone(object: any) {
     return JSON.parse(JSON.stringify(object));
   }
-
 }

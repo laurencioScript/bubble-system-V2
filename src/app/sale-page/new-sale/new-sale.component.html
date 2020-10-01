@@ -1,45 +1,52 @@
 <div id="container">
   <app-sidebar rowSelected="sale"></app-sidebar>
   <div class="content">
-    <h1 style="font-weight: 500;color:#1E88E5;text-align: center;"> <span class="material-icons">
-      bubble_chart
-      </span> Cadastro de Vendas</h1>
-    <mat-horizontal-stepper [linear]='false' labelPosition="bottom" #stepper>
-      <mat-step [stepControl]="firstFormGroup">
-        <form [formGroup]="firstFormGroup">
+    <h1 style="font-weight: 500; color: #1e88e5; text-align: center;">
+      <span class="material-icons">
+        bubble_chart
+      </span>
+      Cadastro de Vendas
+    </h1>
+    <mat-horizontal-stepper [linear]="true" labelPosition="bottom" #stepper>
+      <mat-step [stepControl]="saleClient">
+        <form [formGroup]="saleClient">
           <ng-template matStepLabel>Cliente</ng-template>
-          <app-sale-client></app-sale-client>
+          <app-sale-client (client)="setClient($event)"></app-sale-client>
           <div style="display: flex; justify-content: flex-end;">
             <button mat-button matStepperNext>Proximo</button>
           </div>
         </form>
       </mat-step>
-      <mat-step [stepControl]="secondFormGroup">
-        <form [formGroup]="secondFormGroup">
+      <mat-step [stepControl]="salePart">
+        <form [formGroup]="salePart">
           <ng-template matStepLabel>Peças</ng-template>
-          <app-sale-part></app-sale-part>
+          <app-sale-part (parts)="setParts($event)"></app-sale-part>
           <div style="display: flex; justify-content: space-between;">
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext>Next</button>
           </div>
         </form>
       </mat-step>
-      <mat-step [stepControl]="secondFormGroup">
-        <form [formGroup]="secondFormGroup">
+      <mat-step [stepControl]="saleScheduling">
+        <form [formGroup]="saleScheduling">
           <ng-template matStepLabel>Agendamento</ng-template>
-          <app-sale-payment></app-sale-payment>
-          <div>
+          <app-sale-scheduling (scheduling)="setScheduling($event)"></app-sale-scheduling>
+          <div style="display: flex; justify-content: space-between;">
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext>Next</button>
           </div>
         </form>
       </mat-step>
-      <mat-step [stepControl]="secondFormGroup">
-        <form [formGroup]="secondFormGroup">
+      <mat-step [stepControl]="salePayment">
+        <form [formGroup]="salePayment">
           <ng-template matStepLabel>Pagamento</ng-template>
-          <app-sale-scheduling></app-sale-scheduling>
-          <div>
+          <app-sale-payment></app-sale-payment>
+
+          <div style="display: flex; justify-content: space-between;">
             <button mat-button matStepperPrevious>Back</button>
+            <button mat-raised-button style="background-color: #3acc6c; color: white;">
+              Finalizar
+            </button>
           </div>
         </form>
       </mat-step>

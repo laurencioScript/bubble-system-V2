@@ -1,18 +1,19 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SaleService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public readonly authService: AuthService) {}
 
   getOptions() {
     return {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        Authorization: `Bearer ${this.authService.getToken()}`,
       }),
     };
   }
