@@ -42,7 +42,7 @@ export class UsersComponent implements OnInit {
   }
 
   async getUsers(){
-    const users = await this.UserService.getUsers();
+    const users = await this.UserService.getUsers(9999);
     this.componentPage="viewUser";
   }
 
