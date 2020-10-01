@@ -35,7 +35,7 @@
           </div>
           <div id=userList>
             <mat-selection-list  [multiple]="false" > 
-              <div *ngFor='let user of data'>  <!--SEM ESSA DIV, A LISTA VIRA MULTI SELECTION-->
+              <div *ngFor='let user of dataClone'>  <!--SEM ESSA DIV, A LISTA VIRA MULTI SELECTION-->
                 <mat-list-option *ngIf="validateList(user.level)" [value]='user' #selectedUser (click)="viewComponent.getUser(user)" (click)="viewComponent.switchPage('view')">
                   <div class="listOption">
                     <mat-icon svgIcon="{{switchIcon(user.level)}}"></mat-icon>

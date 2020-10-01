@@ -1,4 +1,4 @@
-import { async } from '@angular/core/testing';
+import { PasswordValidator } from './../password-validator';
 import { FormResetPasswordComponent } from './form-reset-password/form-reset-password.component';
 import { ConfimActionComponent } from './confim-action/confim-action.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,6 +20,8 @@ export class UserSelectionComponent implements OnInit {
   createUserForm: FormGroup;
 
   selectedEditLevel: string;
+
+  createForm: FormGroup = new FormGroup({});
 
   createSelectedLevel = new FormControl('', Validators.required);
   createName = new FormControl('', Validators.required);
@@ -64,9 +66,20 @@ export class UserSelectionComponent implements OnInit {
 
   @Input() componentPage: any;
   
-  constructor(public readonly UserService: UserService, private snackBar: MatSnackBar, public dialog: MatDialog, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) { 
+  constructor(public readonly UserService: UserService, private snackBar: MatSnackBar, public dialog: MatDialog, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder) { 
     iconRegistry.addSvgIcon('bubbleIcon', sanitizer.bypassSecurityTrustResourceUrl('./../assets/icon/bubbleIcon.svg'));
+
+    // this.createForm = fb.group({
+    //   createSelectedLevel: [null, Validators.required],
+    //   createName: [null, Validators.required],
+    //   createEmail: [null, Validators.compose([Validators.required, Validators.email])],
+    //   createPass: [null, Validators.compose([Validators.required, Validators.minLength(8)])],
+    //   confirmCreatePass: [null, Validators.compose([Validators.required, Validators.minLength(8)])]
+    // },{ validator: PasswordValidator('createPass', 'confirmCreatePass') });
+
   }
+
+
 
   openAlert(message: any){
     this.snackBar.open(message, "Ok",{
@@ -116,7 +129,7 @@ export class UserSelectionComponent implements OnInit {
             "password": resetPass,
             "email": this.selectedUser.email,
             "level": this.selectedUser.level
-          });
+          }).then(() => this.openAlert("Senha Resetada Com Sucesso!"));
         });
       }
     });
@@ -178,6 +191,9 @@ export class UserSelectionComponent implements OnInit {
     if(error === "confirmCreatePass" && this.confirmCreatePass.hasError('minlength')){
       return "A senha deve ter no minimo 8 caracteres";
     }
+    if(error === "confirmCreatePass" && this.confirmCreatePass.hasError('passNotMatch')){
+      return "As senhas digitadas não coincidem";
+    }
 
     if(error === "createLevel" && this.createSelectedLevel.hasError('required')){
       return "Cargo é um Campo Obrigatório";
@@ -195,27 +211,37 @@ export class UserSelectionComponent implements OnInit {
         this.createEmail.invalid ||
         this.createPass.invalid ||
         this.createEmail.hasError('badrequest') ||
-        this.createPass.hasError('badrequest')){
-      console.log("não criei"); return null; }
-    else{
+        this.createPass.hasError('badrequest'))
+    {
+        this.openAlert("Usuário não criado, verifique os Campos !");
+        console.log("não criei"); 
+        return; 
+    }
+
+    else if(this.createPass.value != this.confirmCreatePass.value){
+      this.openAlert("As Senhas digitas não coincidem");
+      this.confirmCreatePass.setErrors({"passNotMatch": true});
+      return;
+    }else{
       this.newUser = {
         level: this.createSelectedLevel.value,
         name: this.createName.value,
         email: this.createEmail.value,
         password: this.createPass.value
       }
-
       await this.UserService.createUser(this.newUser).catch(e =>{
         verificaError = true;
       });
-
-      if(verificaError){
-        this.openAlert("Erro ao Cadastrar o Usuário");
-      }else{
-        this.openAlert("Usuário Cadastrado com Sucesso");
-        this.refreshPage(2000);
-      }
     }
+
+    if(verificaError){
+      this.openAlert("Erro ao Cadastrar o Usuário");
+    }else{
+      this.openAlert("Usuário Cadastrado com Sucesso");
+      this.refreshPage(2000);
+    }
+
+
   }
 
   async updateUser(){

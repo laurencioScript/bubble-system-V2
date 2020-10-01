@@ -63,7 +63,7 @@ export class UsersComponent implements OnInit {
   }
 
   async ngOnInit() {
-    const users =  await this.UserService.getUsers();
+    const users =  await this.UserService.getUsers(9999);
     const org = users.map((user) =>{
       return{
         id: user.id_user,
