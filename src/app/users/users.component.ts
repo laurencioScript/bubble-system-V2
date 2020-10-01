@@ -1,10 +1,7 @@
-import { browser } from 'protractor';
 import { UserService } from './../service/user.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { stringify } from 'querystring';
-
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',

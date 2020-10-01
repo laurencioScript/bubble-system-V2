@@ -1,8 +1,5 @@
 import { MatDialogRef } from '@angular/material/dialog';
-import { FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { $ } from 'protractor';
-import { WeekDay } from '@angular/common';
 
 @Component({
   selector: 'app-form-reset-password',

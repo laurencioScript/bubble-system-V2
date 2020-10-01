@@ -1,4 +1,3 @@
-import { PasswordValidator } from './../password-validator';
 import { FormResetPasswordComponent } from './form-reset-password/form-reset-password.component';
 import { ConfimActionComponent } from './confim-action/confim-action.component';
 import { MatDialog } from '@angular/material/dialog';
