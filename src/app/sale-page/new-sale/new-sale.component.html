@@ -12,7 +12,8 @@
         <form [formGroup]="saleClient">
           <ng-template matStepLabel>Cliente</ng-template>
           <app-sale-client (client)="setClient($event)"></app-sale-client>
-          <div style="display: flex; justify-content: flex-end;">
+          <div style="display: flex; justify-content: space-between;">
+            <button mat-button (click)="back()">Cancelar</button>
             <button mat-button matStepperNext>Proximo</button>
           </div>
         </form>
@@ -22,8 +23,8 @@
           <ng-template matStepLabel>Peças</ng-template>
           <app-sale-part (parts)="setParts($event)"></app-sale-part>
           <div style="display: flex; justify-content: space-between;">
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+            <button mat-button matStepperPrevious>Voltar</button>
+            <button mat-button matStepperNext>Proximo</button>
           </div>
         </form>
       </mat-step>
@@ -32,19 +33,23 @@
           <ng-template matStepLabel>Agendamento</ng-template>
           <app-sale-scheduling (scheduling)="setScheduling($event)"></app-sale-scheduling>
           <div style="display: flex; justify-content: space-between;">
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+            <button mat-button matStepperPrevious>Voltar</button>
+            <button mat-button matStepperNext>Proximo</button>
           </div>
         </form>
       </mat-step>
       <mat-step [stepControl]="salePayment">
         <form [formGroup]="salePayment">
           <ng-template matStepLabel>Pagamento</ng-template>
-          <app-sale-payment></app-sale-payment>
+          <app-sale-payment [sale]="sale" (payment)="setPayment($event)"></app-sale-payment>
 
           <div style="display: flex; justify-content: space-between;">
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-raised-button style="background-color: #3acc6c; color: white;">
+            <button mat-button matStepperPrevious>Voltar</button>
+            <button
+              mat-raised-button
+              (click)="save()"
+              style="background-color: #3acc6c; color: white;"
+            >
               Finalizar
             </button>
           </div>

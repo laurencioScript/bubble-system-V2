@@ -45,6 +45,13 @@
   }
 }
 
+#container-table {
+  mat-table {
+    width: 100%;
+    box-shadow: none;
+  }
+}
+
 .sucess {
   color: green;
 }

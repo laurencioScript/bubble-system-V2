@@ -51,22 +51,17 @@ export class NewPartComponent implements OnInit {
   async ngOnInit() {
     const parts = await this.serviceParts.getParts();
     this.parts = parts;
-    console.log('>>> parts', parts);
     const measures = await this.serviceProperty.getUnity();
     this.measures = measures;
-    console.log('>>> measures', measures);
 
     const colors = await this.serviceProperty.getColor();
     this.colors = colors;
-    console.log('>>> colors', colors);
 
     const defects = await this.serviceProperty.getDefect();
     this.defects = defects;
-    console.log('>>> defects', defects);
 
     const features = await this.serviceProperty.getFeature();
     this.features = features;
-    console.log('>>> features', features);
   }
 
   getValue(value) {

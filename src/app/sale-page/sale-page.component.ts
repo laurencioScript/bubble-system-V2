@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { SaleService } from '../service/sale.service';
 import { NewSaleComponent } from './new-sale/new-sale.component';
 
 interface genericService {
@@ -19,57 +20,17 @@ interface genericService {
 })
 export class SalePageComponent implements OnInit {
   searchValue: string;
+  sales: any;
   dataClone: any;
   pageEvent: PageEvent;
   pageIndex: number = 0;
   pageSize: number = 5;
   length: number;
   partsService: genericService;
-  data: any = [
-    {
-      rol: 'BS-0001',
-      client: 'Vanessa Capteemo',
-      cpf_cnpj: '69231581813',
-      date_input: new Date(),
-      date_preview_output: new Date(),
-      date_payment: new Date(),
-      valueTotal: '120',
-      date_output: new Date(),
-      payment: true,
-      delivered: true,
-      state: 'aprovado',
-    },
-    {
-      rol: 'BS-0002',
-      client: 'Fernanda Monte Negro ',
-      cpf_cnpj: '25814736954',
-      date_input: new Date(),
-      date_preview_output: new Date(),
-      date_payment: new Date(),
-      valueTotal: '350',
-      date_output: new Date(),
-      payment: false,
-      delivered: false,
-      state: 'em processo',
-    },
-    {
-      rol: 'BS-0003',
-      client: 'Taynara Lunar',
-      cpf_cnpj: '74125896356',
-      date_input: new Date(),
-      date_preview_output: new Date(),
-      date_payment: new Date(),
-      valueTotal: '500',
-      date_output: new Date(),
-      payment: false,
-      delivered: true,
-      state: 'cancelado',
-    },
-  ];
+  data: any = [];
   name: string = 'Peças';
   viewSelect: boolean = false;
   displayedColumns: string[] = [
-    'NUMBER',
     'ROL',
     'CLIENTE',
     'CPF/CNPJ',
@@ -84,9 +45,22 @@ export class SalePageComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   selectedAll: any = false;
 
-  constructor(public dialog: MatDialog, public router: Router) {}
+  constructor(
+    public dialog: MatDialog,
+    public router: Router,
+    public readonly serviceSale: SaleService
+  ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    await this.load();
+  }
+
+  async load() {
+    const sales = await this.serviceSale.getSaleAll();
+    if (sales) {
+      this.data = sales;
+    }
+    console.log('>>> this.sales', this.data);
     this.paginator();
   }
 
@@ -106,16 +80,6 @@ export class SalePageComponent implements OnInit {
     return value;
   }
 
-  async remove(element) {
-    if (!element) {
-      return;
-    }
-    await this.partsService.delete(element.id);
-    this.dataClone = this.dataClone.filter((value) => value.name != element.name);
-    this.data = this.clone(this.dataClone);
-    this.paginator();
-  }
-
   public getServerData(event?: PageEvent) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
@@ -132,7 +96,6 @@ export class SalePageComponent implements OnInit {
         selectedValues.push(this.data[this.pageSize * this.pageIndex + index]);
       }
     }
-    console.log('>>> selectedValues', selectedValues);
     this.dataSource = new MatTableDataSource<any>(selectedValues);
   }
 
@@ -165,6 +128,11 @@ export class SalePageComponent implements OnInit {
 
   openDialog(saleExist: any = {}) {
     this.router.navigate(['/new-sale']);
+  }
+
+  async deleteSale(sale) {
+    await this.serviceSale.deleteSale(sale.id_service);
+    await this.load();
   }
 
   filter() {

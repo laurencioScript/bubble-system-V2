@@ -19,9 +19,6 @@
         </mat-form-field>
       </div>
       <div class="group-buttons">
-        <button mat-stroked-button class="btn btn-blue">
-          Orçamento
-        </button>
         <button mat-stroked-button (click)="openDialog()" class="btn btn-blue">
           Nova Ordem
         </button>
@@ -29,34 +26,6 @@
     </div>
     <div id="container-table">
       <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-        <ng-container matColumnDef="NUMBER">
-          <mat-header-cell *matHeaderCellDef>
-            <label *ngIf="!viewSelect"> N°</label>
-            <mat-checkbox
-              color="primary"
-              *ngIf="viewSelect"
-              [(ngModel)]="selectedAll"
-              (change)="selectAll($event.checked)"
-            >
-              N°
-            </mat-checkbox>
-          </mat-header-cell>
-          <mat-cell *matCellDef="let element; let i = index">
-            <label *ngIf="!viewSelect">
-              {{ dataSource.filteredData.indexOf(element) + 1 + pageIndex * pageSize }}</label
-            >
-
-            <mat-checkbox
-              *ngIf="viewSelect"
-              color="primary"
-              (change)="validateSelectAll()"
-              [(ngModel)]="element.checked"
-            >
-              {{ dataSource.filteredData.indexOf(element) + 1 + pageIndex * pageSize }}
-            </mat-checkbox>
-          </mat-cell>
-        </ng-container>
-
         <ng-container matColumnDef="ROL">
           <mat-header-cell *matHeaderCellDef> ROL </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.rol }} </mat-cell>
@@ -64,12 +33,16 @@
 
         <ng-container matColumnDef="CLIENTE">
           <mat-header-cell style="flex: 2;" *matHeaderCellDef> CLIENT </mat-header-cell>
-          <mat-cell style="flex: 2;" *matCellDef="let element"> {{ element.client }} </mat-cell>
+          <mat-cell style="flex: 2;" *matCellDef="let element">
+            {{ element.client.nome }}
+          </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="CPF/CNPJ">
-          <mat-header-cell *matHeaderCellDef> CPF/CNPJ </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{ element.cpf_cnpj | mask: 'CPF_CNPJ' }} </mat-cell>
+          <mat-header-cell style="flex: 2;" *matHeaderCellDef> CPF/CNPJ </mat-header-cell>
+          <mat-cell style="flex: 2;" *matCellDef="let element">
+            {{ element.client.cpf_cnpj | mask: 'CPF_CNPJ' }}
+          </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="ENTRADA">
@@ -82,22 +55,25 @@
         <ng-container matColumnDef="RETIRADA PLANEJADA">
           <mat-header-cell *matHeaderCellDef> RETIRADA </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            {{ element.date_preview_output | date: 'dd/MM/yyyy' }}
+            {{ element.date_ouput | date: 'dd/MM/yyyy' }}
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="VALOR TOTAL">
           <mat-header-cell *matHeaderCellDef> VALOR TOTAL </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            {{ 'R$ ' + getValue(element.valueTotal) }}
+            {{ 'R$ ' + getValue(element.payment.value_total) }}
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="PAGAMENTO">
-          <mat-header-cell *matHeaderCellDef> PAGAMENTO </mat-header-cell>
-          <mat-cell *matCellDef="let element">
+          <mat-header-cell style="flex: 1;" *matHeaderCellDef> PAGAMENTO </mat-header-cell>
+          <mat-cell style="flex: 1;" *matCellDef="let element">
             <span
-              [ngClass]="{ sucess: element.payment, danger: !element.payment }"
+              [ngClass]="{
+                sucess: element.payment.amount_paid == 0,
+                danger: element.payment.amount_paid > 0
+              }"
               class="material-icons"
             >
               local_atm
@@ -109,7 +85,7 @@
           <mat-header-cell *matHeaderCellDef> ENTREGUE </mat-header-cell>
           <mat-cell *matCellDef="let element">
             <span
-              [ngClass]="{ sucess: element.delivered, danger: !element.delivered }"
+              [ngClass]="{ sucess: element.date_removed, danger: !element.date_removed }"
               class="material-icons"
             >
               local_shipping
@@ -119,7 +95,9 @@
 
         <ng-container matColumnDef="SITUAÇÃO">
           <mat-header-cell *matHeaderCellDef> SITUAÇÃO </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{ element.state | uppercase }} </mat-cell>
+          <mat-cell *matCellDef="let element">
+            <strong> {{ element.situation | uppercase }}</strong>
+          </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="OPTIONS">
@@ -138,7 +116,7 @@
               <button mat-menu-item>
                 <span>Editar</span>
               </button>
-              <button (click)="remove(element)" mat-menu-item>
+              <button (click)="deleteSale(element)" mat-menu-item>
                 <span>Remover</span>
               </button>
             </mat-menu>

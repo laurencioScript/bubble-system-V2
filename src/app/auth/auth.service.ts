@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class AuthService {
   constructor() {}
-  // ...
   public isAuthenticated(): boolean {
-    const token = localStorage.getItem('token');
-    return token ? true : false;
+    const token = localStorage.getItem('bubbletoken');
+    const user = this.getSessionStorage('user');
+    return token && user ? true : false;
   }
 
   getSessionStorage(session) {
@@ -24,11 +24,11 @@ export class AuthService {
   }
 
   setToken(token) {
-    localStorage.setItem('token', token);
+    localStorage.setItem('bubbletoken', token);
   }
 
   getToken() {
-    return localStorage.getItem('token');
+    return localStorage.getItem('bubbletoken');
   }
 
   setItem(level_user) {
@@ -36,7 +36,7 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('bubbletoken');
     localStorage.removeItem('user');
   }
 }

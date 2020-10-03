@@ -20,10 +20,12 @@ export class SaleService {
 
   async createSale(data) {
     try {
+      console.log('>>> data', data);
       const options = this.getOptions();
       const requestResult: any = await this.http
-        .put(`${environment.apiUrl}/service/register`, data, options)
+        .post(`${environment.apiUrl}/service/register`, data, options)
         .toPromise();
+      console.log('>>> requestResult', requestResult);
       return requestResult;
     } catch (error) {
       return null;
@@ -48,7 +50,7 @@ export class SaleService {
       const { result }: any = await this.http
         .get(`${environment.apiUrl}/service/`, options)
         .toPromise();
-      return result[0];
+      return result;
     } catch (error) {
       return null;
     }
