@@ -28,11 +28,11 @@ export class UserService {
     }
   }
 
-  async getUsers() {
+  async getUsers(limit: number) {
     try {
       const options = this.getOptions();
       const { result }: any = await this.http
-        .get(`${environment.apiUrl}/user`, options)
+        .get(`${environment.apiUrl}/user?limit=${limit}`, options)
         .toPromise();
       return result;
     } catch (error) {
@@ -72,9 +72,9 @@ export class UserService {
         .put(`${environment.apiUrl}/user/${data.id}`, data, options)
         .toPromise();
       console.log('>>> requestResult', requestResult);
-      return requestResult;
+      return true;
     } catch (error) {
-      return null;
+      return false;
     }
   }
 

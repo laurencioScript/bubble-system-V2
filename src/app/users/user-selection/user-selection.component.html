@@ -10,7 +10,7 @@
 
             <mat-form-field appearance="outline" id='create-levelSelect'>
                 <mat-label>Cargo</mat-label>
-                    <mat-select [formControl]="createSelectedLevel" name="level">
+                    <mat-select [formControl]="createSelectedLevel" name="level" required>
                         <mat-option *ngFor="let lvl of levels" [value]="lvl">
                             {{level(lvl)}}
                         </mat-option>
@@ -19,24 +19,26 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline">
+                <mat-label>Nome</mat-label>
                 <input
                     appearence='outline'
                     matInput
                     [formControl]="createName"
-                    placeholder="Nome"
                     autocomplete="off"
+                    oninput="this.value = this.value.toLowerCase()"
                     required
                 />
                 <mat-error *ngIf='createName.invalid'>{{createMesssageError('createName')}}</mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline">                
+                <mat-label>E-mail</mat-label>
                 <input
                     appearence='outline'
                     matInput
                     [formControl]="createEmail"
-                    placeholder="E-mail"
                     autocomplete="off"
+                    oninput="this.value = this.value.toLowerCase()"
                     required
                 />
                 <mat-error *ngIf='createEmail.invalid'>{{createMesssageError('createEmail')}}</mat-error>
@@ -44,14 +46,14 @@
 
             <mat-form-field appearance="outline" matTooltip='A senha deve Conter 8 Caracteres no Minimo.'>
                 <mat-label>Senha</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="createPass">
+                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="createPass" required>
                 <span style="cursor: pointer;" class="material-icons" matSuffix (click)="hide = !hide">{{hide? 'visibility_off' : 'visibility'}}</span>
                 <mat-error *ngIf='createPass.invalid'>{{createMesssageError('createPass')}}</mat-error>
               </mat-form-field>
 
             <mat-form-field appearance="outline" matTooltip="Repita a Senha Digitada no Campo Acima">
                 <mat-label>Confirmar Senha</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" [formControl]='confirmCreatePass'>
+                <input matInput [type]="hide ? 'password' : 'text'" [formControl]='confirmCreatePass' required>
                 <span style="cursor: pointer;" class="material-icons" matSuffix (click)="hide = !hide">{{hide? 'visibility_off' : 'visibility'}}</span>
                 <mat-error *ngIf='confirmCreatePass.invalid'>{{createMesssageError('confirmCreatePass')}}</mat-error>
               </mat-form-field>
@@ -109,7 +111,7 @@
 
             <mat-form-field appearance="outline">
                 <mat-label>Nivel da Conta</mat-label>
-                    <mat-select [(value)]="selectedUser.level" name="userLevel">
+                    <mat-select [(value)]="selectedUserClone.level" name="userLevel">
                         <mat-option *ngFor="let lvl of levels" [value]="lvl">
                             {{level(lvl)}}
                         </mat-option>
@@ -121,9 +123,10 @@
                 <input
                     appearence='outline'
                     matInput
-                    [(ngModel)]="selectedUser.name"
+                    [(ngModel)]="selectedUserClone.name"
                     placeholder="Nome"
                     autocomplete="off"
+                    oninput="this.value = this.value.toLowerCase()"
                 />
             </mat-form-field>
 
@@ -133,9 +136,10 @@
                     appearence='outline'
                     matInput
                     
-                    value="{{selectedUser.email}}"
+                    value="{{selectedUserClone.email}}"
                     placeholder="e-mail"
-                    autocomplete="off"
+                    autocomplete="off"          
+                    oninput="this.value = this.value.toLowerCase()"
                 />
             </mat-form-field>
 

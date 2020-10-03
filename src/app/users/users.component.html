@@ -34,16 +34,18 @@
             
           </div>
           <div id=userList>
-            <mat-selection-list #selectedUser [multiple]="false" *ngFor='let user of data' >
-              <mat-list-option *ngIf="validateList(user.level)" [value]='user' (click)="viewComponent.getUser(user)" (click)="viewComponent.switchPage('view')">
-                <div class="listOption" >
-                  <mat-icon svgIcon="{{switchIcon(user.level)}}"></mat-icon>
-                    <div id='userNameDiv'>
-                      <p>{{user.name}}</p>
-                      <p>{{level(user.level)}}</p>
-                    </div>
-                </div>
-              </mat-list-option>
+            <mat-selection-list  [multiple]="false" > 
+              <div *ngFor='let user of data'>  <!--SEM ESSA DIV, A LISTA VIRA MULTI SELECTION-->
+                <mat-list-option *ngIf="validateList(user.level)" [value]='user' #selectedUser (click)="viewComponent.getUser(user)" (click)="viewComponent.switchPage('view')">
+                  <div class="listOption">
+                    <mat-icon svgIcon="{{switchIcon(user.level)}}"></mat-icon>
+                      <div id='userNameDiv'>
+                        <p>{{user.name}}</p>
+                        <p>{{level(user.level)}}</p>
+                      </div>
+                  </div>
+                </mat-list-option> 
+              </div>
             </mat-selection-list>
             
           </div>

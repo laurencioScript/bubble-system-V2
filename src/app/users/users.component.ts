@@ -1,10 +1,7 @@
-import { browser } from 'protractor';
 import { UserService } from './../service/user.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { stringify } from 'querystring';
-
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -42,7 +39,7 @@ export class UsersComponent implements OnInit {
   }
 
   async getUsers(){
-    const users = await this.UserService.getUsers();
+    const users = await this.UserService.getUsers(9999);
     this.componentPage="viewUser";
   }
 
@@ -50,7 +47,7 @@ export class UsersComponent implements OnInit {
     let retorno; 
     switch (level) {
       case 1:
-        retorno = "Mestre";
+        retorno = "Diretor";
         break;
       case 2:
         retorno = "Administrador";
@@ -63,7 +60,7 @@ export class UsersComponent implements OnInit {
   }
 
   async ngOnInit() {
-    const users =  await this.UserService.getUsers();
+    const users =  await this.UserService.getUsers(9999);
     const org = users.map((user) =>{
       return{
         id: user.id_user,

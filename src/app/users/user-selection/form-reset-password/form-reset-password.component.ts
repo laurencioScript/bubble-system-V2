@@ -1,5 +1,4 @@
 import { MatDialogRef } from '@angular/material/dialog';
-import { FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -10,7 +9,8 @@ import { Component, OnInit } from '@angular/core';
 export class FormResetPasswordComponent implements OnInit {
 
   hide: boolean = true;
-  resetPass = new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)]));
+  day: Date = new Date();
+  resetPass: any = `bubble${this.day.getDate()}`;
 
   constructor(public dialogRef: MatDialogRef<FormResetPasswordComponent>) { }
 
@@ -18,23 +18,10 @@ export class FormResetPasswordComponent implements OnInit {
   }
 
   copyPassword(){
-    return this.resetPass.value;
+    return this.resetPass;
   }
 
   savePassword(){
-    if(this.resetPass.hasError('required') || this.resetPass.hasError('minlength')){
-      return;
-    }
-
-    return this.dialogRef.close(this.resetPass.value);
+    return this.dialogRef.close(this.resetPass);
   }
-
-  createMesssageError(){
-    if(this.resetPass.hasError('required'))
-      return "Digite uma senha";
-
-    if(this.resetPass.hasError('minlength'))
-      return "A senha deve conter 8 digitos no minimo";
-  }
-
 }
