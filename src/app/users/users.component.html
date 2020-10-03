@@ -26,9 +26,13 @@
                   matInput
                   placeholder="Pesquise por Nome..."
                   [(ngModel)]="searchInputValue"
+                  oninput="this.value = this.value.toLowerCase()"
                   (keyup)='filter()'
                   autocomplete="off"
                 />
+                <span *ngIf="searchInputValue" style="cursor:pointer" (click)="clearFilter()" class="material-icons" matSuffix>
+                  clear
+                </span>
               </mat-form-field>
             <button mat-raised-button color="primary" id='newUserBtn' (click)="viewComponent.switchPage('create')">Novo</button>
             

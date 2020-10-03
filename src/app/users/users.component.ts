@@ -38,6 +38,11 @@ export class UsersComponent implements OnInit {
     else if(userLevel == 2){return "admIcon"}
   }
 
+  clearFilter(){
+    this.searchInputValue = "";
+    this.filter();
+  }
+
   async getUsers(){
     const users = await this.UserService.getUsers(9999);
     this.componentPage="viewUser";
