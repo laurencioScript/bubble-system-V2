@@ -19,13 +19,14 @@
         overflow: auto;
 
         p{
+            padding: 30px;
             font-size: 45px;
             color: #3C7EFF;
-            border-bottom: 1px solid #3C7EFF;
-            padding: 30px;
-            box-shadow: 0px 5px 2px -2px rgba(0, 0, 0, 0.25);
+            text-align: center;
             margin-bottom: 80px;
+            border-bottom: 1px solid #3C7EFF;
             text-shadow: 2px 3px 4px rgba(0, 0, 0, 0.25);
+            box-shadow: 0px 5px 2px -2px rgba(0, 0, 0, 0.25);
         }
         mat-icon {
             width: 250px;
@@ -37,21 +38,22 @@
         display: flex;
         flex-direction: column;
 
+        
+
         #create-levelSelect{
             width: 200px;
         }
-        mat-icon{
-            // Sem isso o 
-            margin: auto;
-            height: 35px;
-            width: 35px;
-        }
+        // mat-icon{
+        //     // Sem isso o 
+        //     margin: auto;
+        //     height: 35px;
+        //     width: 35px;
+        // }
         
         #buttonsDiv{
             // position: absolute;
             // bottom: 30px;
             // right: 200px;
-
             margin-left: 45%;
 
             button{
@@ -64,10 +66,12 @@
     #viewUser{
         display: flex;
         flex-direction: column;
+        padding-top: 100px;
 
         width: 500px;
 
         // align-items: center;
+        
 
         mat-icon{
             margin: 0 auto 25px;
@@ -101,6 +105,7 @@
     #editUser{
         display: flex;
         flex-direction: column;
+        padding-top: 100px;
 
         width: 500px;
 
