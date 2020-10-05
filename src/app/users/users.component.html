@@ -18,13 +18,13 @@
             </div>
 
 
-            <mat-form-field appearance="outline" id="searchBarInput">
+            <mat-form-field appearance="outline" id="searchBarInput" matTooltip="Pesquise pelo nome ou sobrenome">
                 <span style="padding-right: 8px;" matPrefix class="material-icons">
                   search
                 </span>
                 <input
                   matInput
-                  placeholder="Pesquise por Nome..."
+                  placeholder="Pesquise aqui"
                   [(ngModel)]="searchInputValue"
                   oninput="this.value = this.value.toLowerCase()"
                   (keyup)='filter()'

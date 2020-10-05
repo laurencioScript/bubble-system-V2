@@ -9,15 +9,27 @@ import { Component, OnInit } from '@angular/core';
 export class FormResetPasswordComponent implements OnInit {
 
   hide: boolean = true;
-  day: Date = new Date();
-  resetPass: any = `bubble${this.day.getDate()}`;
+  resetPass: any = `bubble${this.generatePass()}`;
 
   constructor(public dialogRef: MatDialogRef<FormResetPasswordComponent>) { }
 
   ngOnInit(): void {
   }
+  
+  generatePass(){
+    let min = 0;
+    let max = 9;
+    var num = "";
+    for(let x = 1; x <= 4; x++){
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      num = num + (Math.floor(Math.random() * (max - min + 1)) + min).toString();
+    }
+    return num;
+  }
 
   copyPassword(){
+    this.generatePass();
     return this.resetPass;
   }
 

@@ -99,6 +99,5 @@ export class UsersComponent implements OnInit {
     }else{
       return false;
     }
-    this.filter();
   }
 }
