@@ -65,10 +65,12 @@
         </div>
     
         <div id="viewUser" *ngIf='viewPages.view'>
-            <mat-icon svgIcon="bubbleIcon"></mat-icon>
+            <!-- <mat-icon svgIcon="bubbleIcon"></mat-icon> -->
+
+            <p>Visualizar Usuário</p>
 
             <mat-form-field appearance="outline">
-                <mat-label>Nivel do Usuário</mat-label>
+                <mat-label>Cargo</mat-label>
                 <input
                     appearence='outline'
                     matInput
@@ -107,10 +109,12 @@
         </div>
     
         <div id='editUser' *ngIf="viewPages.edit">
-            <mat-icon svgIcon="bubbleIcon"></mat-icon>
+            <!-- <mat-icon svgIcon="bubbleIcon"></mat-icon> -->
+
+            <p>Editar Usuário</p>
 
             <mat-form-field appearance="outline">
-                <mat-label>Nivel da Conta</mat-label>
+                <mat-label>Cargo</mat-label>
                     <mat-select [(value)]="selectedUserClone.level" name="userLevel">
                         <mat-option *ngFor="let lvl of levels" [value]="lvl">
                             {{level(lvl)}}
