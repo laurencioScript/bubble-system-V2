@@ -113,7 +113,7 @@
               </span>
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item>
+              <button (click)="editSale(element)" mat-menu-item>
                 <span>Editar</span>
               </button>
               <button (click)="deleteSale(element)" mat-menu-item>

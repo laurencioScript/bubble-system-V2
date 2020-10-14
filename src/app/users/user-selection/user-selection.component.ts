@@ -213,7 +213,6 @@ export class UserSelectionComponent implements OnInit {
         this.createPass.hasError('badrequest'))
     {
         this.openAlert("Usuário não criado, verifique os Campos !");
-        console.log("não criei"); 
         return; 
     }
 

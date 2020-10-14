@@ -89,7 +89,6 @@ export class SimpleTableComponent implements OnInit {
             updateValidate = true;
           }
         });
-        console.log('>>> PRE', this.dataClone);
         this.data = [];
         for (const value of this.dataClone) {
           if (updateValidate && objectGeneric.id == value.id) {
@@ -101,7 +100,6 @@ export class SimpleTableComponent implements OnInit {
           }
         }
       }
-      console.log('>>> this.dataClone', this.dataClone);
       this.dataClone = this.clone(this.data);
       this.paginator();
     });

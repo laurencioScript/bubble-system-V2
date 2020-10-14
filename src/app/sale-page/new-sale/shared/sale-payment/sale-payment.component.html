@@ -7,31 +7,31 @@
       <div class="group-field">
         <mat-form-field class="input-field" appearance="outline">
           <mat-label>Credito</mat-label>
-          <input [(ngModel)]="credit" (ngModelChange)="setValue()" type="number" matInput />
+          <input [(ngModel)]="credit" (ngModelChange)="setValue($event,credit)" type="number" matInput />
         </mat-form-field>
         <mat-form-field class="input-field" appearance="outline">
           <mat-label>Debito</mat-label>
-          <input [(ngModel)]="debit" (ngModelChange)="setValue()" type="number" matInput />
+          <input [(ngModel)]="debit" (ngModelChange)="setValue($event,debit)" type="number" matInput />
         </mat-form-field>
         <mat-form-field class="input-field" appearance="outline">
           <mat-label>Dinheiro</mat-label>
-          <input [(ngModel)]="money" (ngModelChange)="setValue()" type="number" matInput />
+          <input [(ngModel)]="money" (ngModelChange)="setValue($event,money)" type="number" matInput />
         </mat-form-field>
         <mat-form-field class="input-field" appearance="outline">
           <mat-label>Cheque</mat-label>
-          <input [(ngModel)]="check" (ngModelChange)="setValue()" type="number" matInput />
+          <input [(ngModel)]="check" (ngModelChange)="setValue($event,check)" type="number" matInput />
         </mat-form-field>
       </div>
       <div class="group-field">
         <mat-form-field class="input-field" appearance="outline">
           <mat-label>Descontos</mat-label>
           <span matSuffix>%</span>
-          <input [(ngModel)]="discount" (ngModelChange)="setValue()" type="number" matInput />
+          <input [(ngModel)]="discount" (ngModelChange)="setValue($event,discount)" type="number" matInput />
         </mat-form-field>
         <mat-form-field class="input-field" appearance="outline">
           <mat-label>Juros</mat-label>
           <span matSuffix>%</span>
-          <input [(ngModel)]="interest" (ngModelChange)="setValue()" type="number" matInput />
+          <input [(ngModel)]="interest" (ngModelChange)="setValue($event,interest)" type="number" matInput />
         </mat-form-field>
         <mat-form-field class="input-field" appearance="outline">
           <mat-label>Troco</mat-label>

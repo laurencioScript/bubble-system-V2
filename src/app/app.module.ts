@@ -62,6 +62,7 @@ import { SalePartComponent } from './sale-page/new-sale/shared/sale-part/sale-pa
 import { SaleSchedulingComponent } from './sale-page/new-sale/shared/sale-scheduling/sale-scheduling.component';
 import { SalePaymentComponent } from './sale-page/new-sale/shared/sale-payment/sale-payment.component';
 import { NewPartComponent } from './sale-page/new-sale/shared/sale-part/new-part/new-part.component';
+import { EditSaleComponent } from './sale-page/edit-sale/edit-sale.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -90,6 +91,7 @@ import { NewPartComponent } from './sale-page/new-sale/shared/sale-part/new-part
     SaleSchedulingComponent,
     SalePaymentComponent,
     NewPartComponent,
+    EditSaleComponent,
   ],
   imports: [
     ReactiveFormsModule,

@@ -4,6 +4,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { SaleService } from '../service/sale.service';
+import { EditSaleComponent } from './edit-sale/edit-sale.component';
 import { NewSaleComponent } from './new-sale/new-sale.component';
 
 interface genericService {
@@ -60,7 +61,6 @@ export class SalePageComponent implements OnInit {
     if (sales) {
       this.data = sales;
     }
-    console.log('>>> this.sales', this.data);
     this.paginator();
   }
 
@@ -133,6 +133,21 @@ export class SalePageComponent implements OnInit {
   async deleteSale(sale) {
     await this.serviceSale.deleteSale(sale.id_service);
     await this.load();
+  }
+
+  editSale(element){
+    console.log('>>> element',element);
+    this.openSale(element);
+  }
+
+  openSale(saleExist: any = {}) {
+    const dialogRef = this.dialog.open(EditSaleComponent, {
+      data: this.clone(saleExist),
+    });
+
+    dialogRef.afterClosed().subscribe(async (sale) => {
+      console.log('>>> sale',sale);
+    });
   }
 
   filter() {
