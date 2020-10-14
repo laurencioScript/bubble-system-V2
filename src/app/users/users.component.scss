@@ -32,11 +32,12 @@
                 #userFilter{
                     display: flex;
                     flex-direction: row;
-                    align-items: flex-end;
+                    align-items: center;
                 }
 
                 p{
                     margin-right: 20px;
+                    margin-bottom: 0px;
                     color: rgba(0, 0, 0, 0.5);
                     font-size: 12px;
                 }

@@ -178,7 +178,7 @@ export class UserSelectionComponent implements OnInit {
     }
     
     if(error === "createPass" && this.createPass.hasError('required')){
-      return "senha é um Campo Obrigatório";
+      return "Senha é um Campo Obrigatório";
     }
     if(error === "createPass" && this.createPass.hasError('minlength')){
       return "A senha deve ter no minimo 8 caracteres";
