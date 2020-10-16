@@ -5,7 +5,7 @@
       </span>
   </div>
   <mat-tab-group dynamicHeight  mat-align-tabs="center">
-    <mat-tab label="CLIENTES">
+    <mat-tab label="CLIENTE">
       <div style="margin: 16px;">
         <div style="display: flex;flex-direction: column;"> 
           <mat-form-field class="input-field" appearance="outline">
@@ -141,19 +141,19 @@
       <div style="display: flex; justify-content: center; margin: 16px 0;">
         <mat-form-field style="margin: 0 8px;" appearance="legacy">
           <mat-label>Data de Entrada</mat-label>
-          <input type="date" [ngModel] ="sale.date_input | date:'yyyy-MM-dd'"  matInput />
+          <input type="date" [value]="getDateFormat(sale.date_input)" (input)="setDateInput($event)"  matInput />
         </mat-form-field>
         <mat-form-field style="margin: 0 8px;" appearance="legacy">
           <mat-label>Data de Entrega</mat-label>
-          <input type="date" [ngModel]="sale.date_ouput | date:'yyyy-MM-dd'"  matInput />
+          <input type="date" [value]="getDateFormat(sale.date_ouput)" (input)="setDateOutput($event)"  matInput />
         </mat-form-field>
         <mat-form-field  style="margin: 0 8px;" appearance="legacy">
           <mat-label>Data de Pagamento</mat-label>
-          <input type="date" [readonly]="paymentSelect == 'Não'" [(ngModel)]="this.sale.date_payment"  matInput />
+          <input type="date" [readonly]="paymentSelect == 'Não' || sale.situation == 'CANCELADO' " [value]="getDateFormat(sale.date_payment)" (input)="setDatePayment($event)"  matInput />
         </mat-form-field>
         <mat-form-field  style="margin: 0 8px;" appearance="legacy">
           <mat-label>Data de Retirada</mat-label>
-          <input type="date" [readonly]="partSelect == 'Não'" [ngModel]="sale.date_removed | date:'yyyy-MM-dd'"  matInput />
+          <input type="date" [readonly]="partSelect == 'Não' || sale.situation == 'CANCELADO'" [value]="getDateFormat(sale.date_removed)" (input)="setDateRemoved($event)"  matInput />
         </mat-form-field>
        </div>
 
@@ -223,7 +223,7 @@
   
           <mat-form-field appearance="fill">
             <mat-label>Situação da Venda</mat-label>
-            <mat-select [(ngModel)]="sale.situation" >
+            <mat-select [(ngModel)]="sale.situation"  (selectionChange)="cleanDate()">
               <mat-option *ngFor="let situation of situationPay" [value]="situation">
                 {{situation}}
               </mat-option>
@@ -232,7 +232,7 @@
           
           <mat-form-field appearance="fill">
             <mat-label>Serviço Pago</mat-label>
-            <mat-select [(ngModel)]="paymentSelect" (selectionChange)="cleanDate()"> 
+            <mat-select [(ngModel)]="paymentSelect" (selectionChange)="cleanDate($event,'payment')"> 
               <mat-option  *ngFor="let x of paymentOptions" [value]="x">
                 {{x}}
               </mat-option>
@@ -241,7 +241,7 @@
   
           <mat-form-field appearance="fill">
             <mat-label>Peças Retiradas</mat-label>
-            <mat-select [(ngModel)]="partSelect" (selectionChange)="cleanDate()">
+            <mat-select [(ngModel)]="partSelect" (selectionChange)="cleanDate($event,'part')">
               <mat-option  *ngFor="let y of partsOutputOptions" [value]="y">
                 {{y}}
               </mat-option>
@@ -252,7 +252,7 @@
       </div>
 
        <div style="margin: 16px 16px;display: flex;justify-content: flex-end;">
-         <button mat-raised-button style="margin-right: 8px;" type="button">Cancelar</button>
+         <button mat-raised-button style="margin-right: 8px;" type="button" mat-dialog-close>Cancelar</button>
          <button mat-raised-button style="background-color: chartreuse;color: white;" (click)="sendSale()" type="button">Atualizar</button>
        </div>
 

@@ -42,6 +42,7 @@ import { UsersComponent } from './users/users.component';
 import { UserSelectionComponent } from './users/user-selection/user-selection.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import { ConfimActionComponent } from './users/user-selection/confim-action/confim-action.component';
 import { FormResetPasswordComponent as FormResetProfile } from './profile-page/form-reset-password/form-reset-password.component';
 import { FormResetPasswordComponent } from './users/user-selection/form-reset-password/form-reset-password.component';
@@ -120,6 +121,7 @@ import { EditSaleComponent } from './sale-page/edit-sale/edit-sale.component';
     NgxMaskModule.forRoot(),
     ColorSketchModule,
     MatStepperModule,
+    MatDatepickerModule
   ],
   providers: [
     PropertyService, 

@@ -58,7 +58,7 @@ export class SaleService {
     try {
       const options = this.getOptions();
       const requestResult: any = await this.http
-        .put(`${environment.apiUrl}/service/${data.id}`, data, options)
+        .put(`${environment.apiUrl}/service/${data.id_service}`, data, options)
         .toPromise();
       return requestResult;
     } catch (error) {

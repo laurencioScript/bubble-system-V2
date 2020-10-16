@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NewPartComponent } from '../new-sale/shared/sale-part/new-part/new-part.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-edit-sale',
@@ -21,6 +22,7 @@ export class EditSaleComponent implements OnInit {
     this.paymentSelect = !this.sale.date_payment ? 'Não' : 'Sim';
     this.partSelect = !this.sale.date_removed ? 'Não' : 'Sim';
     this.valueTotal = this.sale.payment.value_total;
+    this.sale.payment.interest = this.sale.payment.interest ? this.sale.payment.interest : 0;
     this.data = this.sale.itens;
     this.dataClone = this.clone(this.data);
     // console.log('>>> data',this.data);
@@ -164,23 +166,83 @@ export class EditSaleComponent implements OnInit {
     
   }
 
-  cleanDate(){
+  setDateInput(event){
+    this.sale.date_input = event.target.value;
+  }
 
-    if(this.paymentSelect == 'Sim' && this.partSelect == 'Sim'){
+  setDateOutput(event){
+    this.sale.date_ouput = event.target.value;
+  }
+
+  setDatePayment(event){
+    this.sale.date_payment = event.target.value;
+    this.cleanDate();
+  }
+
+  setDateRemoved(event){
+    this.sale.date_removed = event.target.value;
+    this.cleanDate();
+  }
+
+  getDateFormat(date){
+    if (date !== null) {
+      return moment(date).format("YYYY-MM-DD");
+    }
+    return null;
+  }
+
+  cleanDate(event?,type?){
+
+
+    if(type == 'payment'){
+
+      if(event.value == 'Sim'){
+        this.sale.date_payment = new Date();
+      }
+
+      if(event.value != 'Sim'){
+        this.sale.date_payment = null;
+      }
+
+      
+    }
+
+    if(type == 'part'){
+
+      if(event.value == 'Sim'){
+        this.sale.date_removed = new Date();
+      }
+
+      if(event.value != 'Sim'){
+        this.sale.date_removed = null;
+      }
+
+      
+    }
+
+    console.log(1,this.paymentSelect == 'Sim' && this.partSelect == 'Sim');
+    
+    console.log('2',this.sale.date_payment && this.sale.date_removed);
+    
+    console.log('Final',this.paymentSelect == 'Sim' && this.partSelect == 'Sim' && this.sale.date_payment && this.sale.date_removed);
+    
+    if(this.paymentSelect == 'Sim' && this.partSelect == 'Sim' && this.sale.date_payment && this.sale.date_removed && this.sale.situation != 'CANCELADO'){
       this.sale.situation = "FINALIZADO";
     }
-
-    if(this.paymentSelect == 'Não'){
-      this.sale.date_payment = undefined;
+    else if(this.sale.situation != 'CANCELADO'){
+      this.sale.situation = "EM PROCESSO";
     }
-
-    if(this.partSelect == 'Não'){
-      this.sale.date_removed = undefined;
+    else if(this.sale.situation == 'CANCELADO'){
+      this.paymentSelect = 'Não';
+      this.partSelect = 'Não';
+      this.sale.date_removed = null;
+      this.sale.date_payment = null;
     }
   }
 
   sendSale(): void {
-    alert('Ainda não funciona seu trouxa')
-    // this.dialogRef.close(this.object);
+    console.log('this.sale',this.sale);
+    
+    this.dialogRef.close(this.sale);
   }
 }
