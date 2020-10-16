@@ -149,6 +149,7 @@ export class SalePartComponent implements OnInit {
       return;
     }
     this.dataClone = this.dataClone.filter((value) => value.id != element.id);
+    this.parts.emit(this.dataClone);
     this.data = this.clone(this.dataClone);
     this.paginator();
   }

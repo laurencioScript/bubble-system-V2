@@ -28,7 +28,7 @@ export class SalePaymentComponent implements OnInit {
     this.valueTotal = 0;
     for (const part of this.sale.parts) {
       this.valueTotal += part.value_total;
-      this.setValue();
+      this.calculation();
     }
   }
 
@@ -42,7 +42,7 @@ export class SalePaymentComponent implements OnInit {
     return 'R$ ' + value;
   }
 
-  setValue() {
+  calculation(){
     this.payValue = this.credit + this.debit + this.money + this.check;
 
     if (this.valueTotal >= 1 && this.interest > 0) {
@@ -73,5 +73,12 @@ export class SalePaymentComponent implements OnInit {
       payValue: this.payValue,
       valueTotal: this.valueTotal,
     });
+  }
+
+  setValue(event,input) {
+    if(event < 0){
+      input = 0;
+    }
+    this.calculation();
   }
 }

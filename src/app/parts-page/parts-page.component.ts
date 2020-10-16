@@ -26,13 +26,6 @@ export class PartsPageComponent implements OnInit {
   searchValue: string;
   partsService: genericService;
   data: any = [
-    // { name: 'Camisa', measure: 'Unidade', unityValue: '40,00' },
-    // { name: 'Roupa Social', measure: 'Unidade', unityValue: '100,00' },
-    // { name: 'Calçado', measure: 'Par', unityValue: '20,00' },
-    // { name: 'Tapete', measure: 'Metros', unityValue: '15,00' },
-    // { name: 'Cortina', measure: 'Metros', unityValue: '13,50' },
-    // { name: 'Cortina', measure: 'Metros', unityValue: '13,50' },
-    // { name: 'Cortina', measure: 'Metros', unityValue: '13,50' },
   ];
   name: string = 'Peças';
   viewSelect: boolean = false;

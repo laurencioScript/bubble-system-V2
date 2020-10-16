@@ -4,6 +4,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { SaleService } from '../service/sale.service';
+import { EditSaleComponent } from './edit-sale/edit-sale.component';
 import { NewSaleComponent } from './new-sale/new-sale.component';
 
 interface genericService {
@@ -59,13 +60,12 @@ export class SalePageComponent implements OnInit {
     const sales = await this.serviceSale.getSaleAll();
     if (sales) {
       this.data = sales;
+      this.dataClone = sales;
     }
-    console.log('>>> this.sales', this.data);
     this.paginator();
   }
 
   ngOnChanges() {
-    this.dataClone = this.clone(this.data);
     this.length = this.data && Array.isArray(this.data) ? this.data.length : 0;
     this.paginator();
   }
@@ -133,6 +133,40 @@ export class SalePageComponent implements OnInit {
   async deleteSale(sale) {
     await this.serviceSale.deleteSale(sale.id_service);
     await this.load();
+  }
+
+  editSale(element){
+    console.log('>>> element',element);
+    this.openSale(element);
+  }
+
+  openSale(saleExist: any = {}) {
+    const dialogRef = this.dialog.open(EditSaleComponent, {
+      data: this.clone(saleExist),
+    });
+
+    dialogRef.afterClosed().subscribe(async (sale) => {
+      console.log('>>> sale',sale);
+
+      if(!sale){
+        return
+      }
+
+      const {result} = await this.serviceSale.updateSale(sale);
+      
+      this.data = this.dataClone.map(saleExist => {
+        if(saleExist.id_service == result.id_service){
+          console.log(saleExist.id_service , result.id_service);
+          saleExist = result;
+        }
+
+        return saleExist;
+      })
+
+      this.dataClone = this.clone(this.data);
+
+      this.paginator();
+    });
   }
 
   filter() {

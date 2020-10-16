@@ -15,6 +15,11 @@ export class SaleSchedulingComponent implements OnInit {
   ngOnInit(): void {}
 
   valuechange(value) {
+    console.log('>>> value', value);
+    console.log(typeof value, value.length);
+    value = value.length > 0 ? value : null;
+    console.log('>>> value', value);
+
     this.scheduling.emit({
       outputDate: value,
     });

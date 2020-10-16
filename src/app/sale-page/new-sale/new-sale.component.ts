@@ -64,6 +64,11 @@ export class NewSaleComponent implements OnInit {
   }
 
   setScheduling(scheduling) {
+    if (scheduling && !scheduling.outputDate) {
+      this.sale.scheduling = null;
+      this.saleScheduling.setValue({ scheduling: null });
+      return;
+    }
     this.sale.scheduling = scheduling;
     this.saleScheduling.setValue({
       scheduling,

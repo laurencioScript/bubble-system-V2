@@ -32,7 +32,7 @@
         </ng-container>
 
         <ng-container matColumnDef="CLIENTE">
-          <mat-header-cell style="flex: 2;" *matHeaderCellDef> CLIENT </mat-header-cell>
+          <mat-header-cell style="flex: 2;" *matHeaderCellDef> CLIENTE </mat-header-cell>
           <mat-cell style="flex: 2;" *matCellDef="let element">
             {{ element.client.nome }}
           </mat-cell>
@@ -71,8 +71,8 @@
           <mat-cell style="flex: 1;" *matCellDef="let element">
             <span
               [ngClass]="{
-                sucess: element.payment.amount_paid == 0,
-                danger: element.payment.amount_paid > 0
+                sucess: element.date_payment,
+                danger: !element.date_payment
               }"
               class="material-icons"
             >
@@ -113,7 +113,7 @@
               </span>
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item>
+              <button (click)="editSale(element)" mat-menu-item>
                 <span>Editar</span>
               </button>
               <button (click)="deleteSale(element)" mat-menu-item>

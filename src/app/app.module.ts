@@ -42,6 +42,7 @@ import { UsersComponent } from './users/users.component';
 import { UserSelectionComponent } from './users/user-selection/user-selection.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import { ConfimActionComponent } from './users/user-selection/confim-action/confim-action.component';
 import { FormResetPasswordComponent as FormResetProfile } from './profile-page/form-reset-password/form-reset-password.component';
 import { FormResetPasswordComponent } from './users/user-selection/form-reset-password/form-reset-password.component';
@@ -62,6 +63,7 @@ import { SalePartComponent } from './sale-page/new-sale/shared/sale-part/sale-pa
 import { SaleSchedulingComponent } from './sale-page/new-sale/shared/sale-scheduling/sale-scheduling.component';
 import { SalePaymentComponent } from './sale-page/new-sale/shared/sale-payment/sale-payment.component';
 import { NewPartComponent } from './sale-page/new-sale/shared/sale-part/new-part/new-part.component';
+import { EditSaleComponent } from './sale-page/edit-sale/edit-sale.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -90,6 +92,7 @@ import { NewPartComponent } from './sale-page/new-sale/shared/sale-part/new-part
     SaleSchedulingComponent,
     SalePaymentComponent,
     NewPartComponent,
+    EditSaleComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -118,6 +121,7 @@ import { NewPartComponent } from './sale-page/new-sale/shared/sale-part/new-part
     NgxMaskModule.forRoot(),
     ColorSketchModule,
     MatStepperModule,
+    MatDatepickerModule
   ],
   providers: [
     PropertyService, 
