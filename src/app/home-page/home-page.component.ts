@@ -31,7 +31,7 @@ export class HomePageComponent implements OnInit {
   colors = [
     
     {
-      backgroundColor: ['#3C7EFF','#696969','#836FFF','#40E0D0'],
+      backgroundColor: ['#368AD8','#83BBCD','#749FC8','#ABD8E2'],
     },
   ]
   doughnutChartLabels  = []; 
