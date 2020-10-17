@@ -1,3 +1,127 @@
-<div id="container">
+<div id="container" style="background-color: #E5E5E5;">
   <app-sidebar rowSelected="home"></app-sidebar>
+  <div id="content">
+    <div style="display: flex; flex-direction: row;width: 100%;height: 50%;">
+
+      <div style="width: 100%;background-color: white;border-radius: 5px;padding: 8px;overflow: auto;" >
+
+        <h2 style="font-weight: 600;color: #3C7EFF;margin:0;">Entregas da semana</h2>
+        <mat-table style="box-shadow: none;border-radius: 5px;" [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="ROL">
+            <mat-header-cell *matHeaderCellDef> ROL </mat-header-cell>  
+            <mat-cell *matCellDef="let element"> {{ element.rol }} </mat-cell>
+          </ng-container>
+  
+          <ng-container matColumnDef="CLIENTE">
+            <mat-header-cell style="flex: 2;" *matHeaderCellDef> CLIENTE </mat-header-cell>
+            <mat-cell style="flex: 2;" *matCellDef="let element">
+              {{ element.client.nome }}
+            </mat-cell>
+          </ng-container>
+  
+          <ng-container matColumnDef="CPF/CNPJ">
+            <mat-header-cell style="flex: 2;" *matHeaderCellDef> CPF/CNPJ </mat-header-cell>
+            <mat-cell style="flex: 2;" *matCellDef="let element">
+              {{ element.client.cpf_cnpj | mask: 'CPF_CNPJ' }}
+            </mat-cell>
+          </ng-container>
+  
+          <ng-container matColumnDef="PAGAMENTO">
+            <mat-header-cell style="flex: 1;" *matHeaderCellDef> PAGAMENTO </mat-header-cell>
+            <mat-cell style="flex: 1;" *matCellDef="let element">
+              <span
+                [ngClass]="{
+                  sucess: element.date_payment,
+                  danger: !element.date_payment
+                }"
+                class="material-icons"
+              >
+                local_atm
+              </span>
+            </mat-cell>
+          </ng-container>
+  
+          <ng-container matColumnDef="RETIRADA">
+            <mat-header-cell *matHeaderCellDef> RETIRADA </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.date_ouput | date: 'dd/MM/yyyy' }}
+            </mat-cell>
+          </ng-container>
+  
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row class="row-table" *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+
+      </div>
+      <div style="width: 250px;padding: 8px;margin-left: 8px;background-color: white;border-radius: 5px;display: flex;flex-direction: column;justify-content: space-between;">
+        <div>
+          <h2 style="font-weight: 600;color: #3C7EFF;">Bem-vindo</h2>
+          <p>Bubble System é um sistema de Gerenciamento de Lavanderias com diversas funcionalidades.</p>
+          <p>Gostaria de ver como funciona?</p>
+        </div>
+        <div style="display: flex;justify-content: center;">
+          <a mat-raised-button style="background-color: #3C7EFF;color: white;cursor: pointer;" href="https://www.youtube.com/?gl=BR" target="_blank">Conferir Video <span class="material-icons">open_in_new</span></a>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:8px;display: flex; flex-direction: row; width: 100%;height: 50%;">
+
+      <div style="background-color: white; width: 100% ;padding: 8px;border-radius: 5px;margin-right: 8px;overflow: auto;">
+        <h2 style="font-weight: 600;color: #3C7EFF;margin:0;">Clientes mais frequentes</h2>
+        <mat-table style="box-shadow: none;border-radius: 5px;" [dataSource]="dataSourceClient" class="mat-elevation-z8">
+          
+          <ng-container matColumnDef="CLIENTE">
+            <mat-header-cell style="flex: 2;" *matHeaderCellDef> CLIENTE </mat-header-cell>
+            <mat-cell style="flex: 2;" *matCellDef="let element">
+              {{ element.name }}
+            </mat-cell>
+          </ng-container>
+  
+  
+          <ng-container matColumnDef="PEDIDOS">
+            <mat-header-cell style="flex: 1;" *matHeaderCellDef> Pedidos </mat-header-cell>
+            <mat-cell style="flex: 1;" *matCellDef="let element">
+              {{ element.count }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="PECAS">
+            <mat-header-cell style="flex: 1;" *matHeaderCellDef> Peças </mat-header-cell>
+            <mat-cell style="flex: 1;" *matCellDef="let element">
+              {{ element.parts }}
+            </mat-cell>
+          </ng-container>
+          
+          <mat-header-row *matHeaderRowDef="displayClient"></mat-header-row>
+          <mat-row class="row-table" *matRowDef="let row; columns: displayClient"></mat-row>
+        </mat-table>
+      </div>
+
+      <div style="width:450px;background-color: white; padding: 8px;border-radius: 5px;display: flex;flex-direction: column;">
+        <h2 style="font-weight: 600;color: #3C7EFF;margin:0;">Peças mais frequentes</h2>
+        <div style="display: flex;justify-content: center;align-content: center;height: 100%;flex-direction: column;">
+          <canvas baseChart 
+          style="width:450px"
+          [data] = "doughnutChartData" 
+          [labels] = "doughnutChartLabels" 
+          [chartType] = "doughnutChartType"
+          [colors]="colors"
+          [legend]="true"
+          > </canvas> 
+        </div>
+      </div>
+
+      <!-- <div style="background-color: white; height: 100% ;padding: 8px;border-radius: 5px;margin-left: 8px;">
+
+        <h2 style="font-weight: 600;color: #3C7EFF;">Total de vendas meses</h2>
+
+        <p>R$ 4.000,00 em Agosto</p>
+        <p>R$ 1.200,00 em Setembro</p>
+
+      </div> -->
+
+    </div>
+  </div>
 </div>

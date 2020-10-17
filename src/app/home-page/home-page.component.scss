@@ -4,3 +4,18 @@
   display: flex;
   overflow: hidden;
 }
+
+#content{
+  margin: 8px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.sucess {
+  color: green;
+}
+
+.danger {
+  color: red;
+}
+

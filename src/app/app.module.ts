@@ -33,6 +33,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ClipboardModule } from '@angular/cdk/clipboard'; 
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatStepperModule } from '@angular/material/stepper';
+import {ChartsModule} from 'ng2-charts';
 
 import { PropertyService } from './service/property.service';
 import { UserService } from './service/user.service';
@@ -121,7 +122,8 @@ import { EditSaleComponent } from './sale-page/edit-sale/edit-sale.component';
     NgxMaskModule.forRoot(),
     ColorSketchModule,
     MatStepperModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    ChartsModule
   ],
   providers: [
     PropertyService, 

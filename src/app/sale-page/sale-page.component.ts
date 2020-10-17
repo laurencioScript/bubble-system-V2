@@ -99,19 +99,6 @@ export class SalePageComponent implements OnInit {
     this.dataSource = new MatTableDataSource<any>(selectedValues);
   }
 
-  selectAll(value) {
-    this.data.forEach((piece) => (piece.checked = value));
-  }
-
-  validateSelectAll() {
-    let existNotChecked = this.data.find((piece) => !piece.checked);
-    if (existNotChecked) {
-      this.selectedAll = false;
-    } else {
-      this.selectedAll = true;
-    }
-  }
-
   orderBy(current, next) {
     if (current.name > next.name) {
       return 1;
@@ -136,7 +123,6 @@ export class SalePageComponent implements OnInit {
   }
 
   editSale(element){
-    console.log('>>> element',element);
     this.openSale(element);
   }
 

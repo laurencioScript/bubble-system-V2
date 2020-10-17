@@ -17,6 +17,7 @@ export class SalePaymentComponent implements OnInit {
   receiveValue: number = 0;
   payValue: number = 0;
   valueTotal: number = 0;
+  backValueTotal : number = 0;
 
   constructor(public readonly serviceSale: SaleService) {}
   @Input() sale: any;
@@ -25,12 +26,13 @@ export class SalePaymentComponent implements OnInit {
   ngOnInit(): void {}
 
   ngAfterViewChecked(): void {
-    this.valueTotal = 0;
+    this.backValueTotal = 0;
     for (const part of this.sale.parts) {
-      this.valueTotal += part.value_total;
+      this.backValueTotal += part.value_total;
       this.calculation();
     }
   }
+  
 
   getValue(value) {
     value = (+value).toFixed(2);
@@ -43,6 +45,9 @@ export class SalePaymentComponent implements OnInit {
   }
 
   calculation(){
+
+    this.valueTotal = this.backValueTotal;
+
     this.payValue = this.credit + this.debit + this.money + this.check;
 
     if (this.valueTotal >= 1 && this.interest > 0) {
