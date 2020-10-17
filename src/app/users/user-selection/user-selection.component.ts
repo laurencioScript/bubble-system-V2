@@ -16,8 +16,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class UserSelectionComponent implements OnInit {
   hide: boolean = true;
 
-  createUserForm: FormGroup;
-
   selectedEditLevel: string;
 
   createForm: FormGroup = new FormGroup({});
@@ -43,14 +41,11 @@ export class UserSelectionComponent implements OnInit {
     email: "",
     level: "",
     password: "",
-  };
-  selectedUserClone: any= {
-    id: "",
-    name: "",
-    email: "",
-    level: "",
-    password: "",
-  };
+  };  
+  editLevel  = new FormControl('', [Validators.required]);
+  editName = new FormControl('', [Validators.required]);
+  editEmail = new FormControl('', [Validators.required, Validators.email]);
+
 
   viewPages = {
     initial: true,
@@ -65,20 +60,9 @@ export class UserSelectionComponent implements OnInit {
 
   @Input() componentPage: any;
   
-  constructor(public readonly UserService: UserService, private snackBar: MatSnackBar, public dialog: MatDialog, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder) { 
+  constructor(public readonly UserService: UserService, private snackBar: MatSnackBar, public dialog: MatDialog, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) { 
     iconRegistry.addSvgIcon('bubbleIcon', sanitizer.bypassSecurityTrustResourceUrl('./../assets/icon/bubbleIcon.svg'));
-
-    // this.createForm = fb.group({
-    //   createSelectedLevel: [null, Validators.required],
-    //   createName: [null, Validators.required],
-    //   createEmail: [null, Validators.compose([Validators.required, Validators.email])],
-    //   createPass: [null, Validators.compose([Validators.required, Validators.minLength(8)])],
-    //   confirmCreatePass: [null, Validators.compose([Validators.required, Validators.minLength(8)])]
-    // },{ validator: PasswordValidator('createPass', 'confirmCreatePass') });
-
   }
-
-
 
   openAlert(message: any){
     this.snackBar.open(message, "Ok",{
@@ -152,7 +136,10 @@ export class UserSelectionComponent implements OnInit {
 
   public getUser(user: any){
     this.selectedUser = user;
-    this.selectedUserClone = JSON.parse(JSON.stringify(this.selectedUser));
+    this.editLevel.setValue(user.level);
+    this.editName.setValue(user.name);
+    this.editEmail.setValue(user.email);
+
   }
   
   ngOnInit(): void {
@@ -166,14 +153,14 @@ export class UserSelectionComponent implements OnInit {
   }
 
   createMesssageError(error){
-    if(error === "createName" && this.createName.hasError('required')){
+    if((error === "createName" && this.createName.hasError('required')) || (error === "editName" && this.editName.hasError('required'))){
       return "Informe seu Nome";
     }
 
-    if(error === "createEmail" && this.createEmail.hasError('required')){
+    if((error === "createEmail" && this.createEmail.hasError('required')) || (error === "editEmail" && this.editEmail.hasError('required'))){
       return "Email é um Campo Obrigatório";
     }
-    if(error === "createEmail" && this.createEmail.hasError('email')){
+    if((error === "createEmail" && this.createEmail.hasError('email')) ||  (error === "editEmail" && this.editEmail.hasError('email'))){
       return "Email Invalido";
     }
     
@@ -194,7 +181,7 @@ export class UserSelectionComponent implements OnInit {
       return "As senhas digitadas não coincidem";
     }
 
-    if(error === "createLevel" && this.createSelectedLevel.hasError('required')){
+    if((error === "createLevel" && this.createSelectedLevel.hasError('required')) ||  (error === "editLevel" && this.editLevel.hasError('required'))){
       return "Cargo é um Campo Obrigatório";
     }
   }
@@ -202,6 +189,9 @@ export class UserSelectionComponent implements OnInit {
 
   async createUser(){
     var verificaError = false;
+    var message = "Erro ao cadastrar o usuário";
+
+    // caso algum campo tenha erro, ele bloqueia a criação
     if( this.createName.hasError('required') ||
         this.createSelectedLevel.hasError('required') ||
         this.createEmail.hasError('required') ||
@@ -214,47 +204,65 @@ export class UserSelectionComponent implements OnInit {
     {
         this.openAlert("Usuário não criado, verifique os Campos !");
         return; 
-    }
-
+    } //Caso nenhum dos campo contenha algum erro, ele verifica se as senha coicidem e manda um logError pro input.
     else if(this.createPass.value != this.confirmCreatePass.value){
       this.openAlert("As Senhas digitas não coincidem");
       this.confirmCreatePass.setErrors({"passNotMatch": true});
       return;
-    }else{
+    }else{ //Caso tudo esteja correto, ele monta o dataRequest.
       this.newUser = {
         level: this.createSelectedLevel.value,
         name: this.createName.value,
         email: this.createEmail.value,
         password: this.createPass.value
-      }
-      await this.UserService.createUser(this.newUser).catch(e =>{
+      } //E aqui faz o request pro Bakc-End
+      await this.UserService.createUser(this.newUser).catch(e =>{ //Com esse catch, ele verifica se não teve algum erro por parte do banco ou e-mail ja cadastrado.
+        if(e.error.error.includes("email") && e.error.error.includes("already exists")){
+          message = "O E-mail informado, ja está cadastrado.";          
+        }
         verificaError = true;
       });
     }
 
     if(verificaError){
-      this.openAlert("Erro ao Cadastrar o Usuário");
+      // Aqui ele mostra na tela, que o usuário não cadastrado, por motivo X
+      this.openAlert(message);
     }else{
+      // Aqui, ele mostra se o usuário foi cadastrado e depois de 2seg, reseta a pagina.
       this.openAlert("Usuário Cadastrado com Sucesso");
       this.refreshPage(2000);
     }
-
-
   }
 
   async updateUser(){
     let data = {
-      "id": this.selectedUserClone.id,
-      "name": this.selectedUserClone.name,
+      "id": this.selectedUser.id,
+      "name": this.editName.value,
       "password": '',
-      "email": this.selectedUserClone.email,
+      "email": this.editEmail.value,
+      "level": this.editLevel.value,
     }
-    await this.UserService.updateUser(data).then(e=>{
-      if(e){
-        this.openAlert("Usuário Editado");
-        this.refreshPage(2000);
-      }else{ this.openAlert("Ocorreu um erro ao Editar"); }
-    })
+
+    if(this.editEmail.hasError('required')){
+      this.openAlert("E-mail é um campo Obrigatório");
+    }else if(this.editEmail.invalid){
+      this.openAlert("O e-mail digitado não é valido");
+    }else if(this.editName.invalid){
+      this.openAlert("Por Favor, digite um nome");
+    }else{
+      await this.UserService.updateUser(data).catch(e=>{
+        if(e.error.error.includes("email") && e.error.error.includes("must be a valid")){
+          this.openAlert("O e-mail digitado não é valido");           
+        }else if(e){
+          this.openAlert("Ocorreu um erro ao Editar"); 
+        }
+      }).then(e=> {
+        if(e){ 
+          this.openAlert("Usuário Editado"); 
+          this.refreshPage(2000);
+        }
+      })
+    }
   }
 
   async removeUser(){

@@ -60,7 +60,7 @@ export class UserService {
         .toPromise();
     } catch(e) {
       console.log('>>> error', e);
-      throw e.status;
+      throw e;
       return null;
     }
   }
@@ -71,10 +71,10 @@ export class UserService {
       const requestResult: any = await this.http
         .put(`${environment.apiUrl}/user/${data.id}`, data, options)
         .toPromise();
-      console.log('>>> requestResult', requestResult);
-      return true;
-    } catch (error) {
-      return false;
+        return true;
+    } catch (e) {
+      console.log('>>> error', e);
+      throw e;
     }
   }
 
