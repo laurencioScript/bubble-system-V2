@@ -7,7 +7,11 @@
     <div style="margin-left: 24px;">
       <mat-form-field appearance="legacy">
         <mat-label>Data de Entrega</mat-label>
-        <input type="date" [ngModel]="outputDate" (ngModelChange)="valuechange($event)" matInput />
+        <input 
+          type="date" 
+          [value]="getDateFormat(outputDate)" 
+          (input)="setDateOutput($event)" 
+        matInput />
       </mat-form-field>
     </div>
   </div>

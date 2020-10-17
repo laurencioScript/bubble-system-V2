@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-sale-scheduling',
@@ -6,22 +7,43 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['./sale-scheduling.component.scss'],
 })
 export class SaleSchedulingComponent implements OnInit {
-  constructor() {}
+  @Output() scheduling = new EventEmitter();
+
+  constructor() {
+    this.outputDate = moment().add(7, 'days').toDate();
+    
+  }
 
   outputDate: Date;
 
-  @Output() scheduling = new EventEmitter();
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.scheduling.emit({
+      outputDate: this.outputDate,
+    });
+  }
 
   valuechange(value) {
-    console.log('>>> value', value);
-    console.log(typeof value, value.length);
     value = value.length > 0 ? value : null;
-    console.log('>>> value', value);
 
     this.scheduling.emit({
       outputDate: value,
     });
+  }
+
+  setDateOutput(event){
+    let value = event.target.value;
+    value = value.length > 0 ? value : null;
+    this.outputDate = value;
+    this.scheduling.emit({
+      outputDate: value,
+    });
+  }
+
+  getDateFormat(date){
+    if (date !== null) {
+      return moment(date).format("YYYY-MM-DD");
+    }
+    return null;
   }
 }

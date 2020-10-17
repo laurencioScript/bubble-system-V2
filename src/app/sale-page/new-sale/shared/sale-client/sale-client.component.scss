@@ -49,12 +49,16 @@ mat-table {
 }
 
 .row-table-selected {
-  color: #1E88E5 !important;
+  *{
+    color: #1E88E5 !important;
+  }
   background: #E4DEDE;
 }
 
 .row-table-selected:hover{
-  color: #1E88E5 !important;
+  *{
+    color: #1E88E5 !important;
+  }
   background: #E4DEDE;
 }
 

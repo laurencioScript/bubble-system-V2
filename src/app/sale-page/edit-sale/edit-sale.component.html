@@ -14,7 +14,7 @@
           </mat-form-field>
           <mat-form-field class="input-field" appearance="outline">
             <mat-label>CPF/CNPJ</mat-label>
-            <input type="text" [(ngModel)]="sale.client.cpf_cnpj" readonly matInput />
+            <input type="text" [value]="sale.client.cpf_cnpj | mask: 'CPF_CNPJ'" readonly matInput />
           </mat-form-field>
           <mat-form-field class="input-field" appearance="outline">
             <mat-label>Email</mat-label>
@@ -24,7 +24,7 @@
             <mat-label>Contatos</mat-label>
             <mat-select>
               <mat-option disabled *ngFor="let contact of sale.client.contato" [value]="contact">
-                {{contact}}
+                {{contact | mask:"(00) 0000-0000||(00) 0 0000-0000"}}
               </mat-option>
             </mat-select>
           </mat-form-field>          
@@ -128,7 +128,7 @@
             [length]="data.length"
             [pageIndex]="pageIndex"
             [pageSize]="pageSize"
-            [pageSizeOptions]="[5, 10, 25]"
+            [pageSizeOptions]="[5]"
             (page)="pageEvent = getServerData($event)"
           >
           </mat-paginator>
@@ -141,11 +141,11 @@
       <div style="display: flex; justify-content: center; margin: 16px 0;">
         <mat-form-field style="margin: 0 8px;" appearance="legacy">
           <mat-label>Data de Entrada</mat-label>
-          <input type="date" [value]="getDateFormat(sale.date_input)" (input)="setDateInput($event)"  matInput />
+          <input type="date" readonly [value]="getDateFormat(sale.date_input)" (input)="setDateInput($event)"  matInput />
         </mat-form-field>
         <mat-form-field style="margin: 0 8px;" appearance="legacy">
           <mat-label>Data de Entrega</mat-label>
-          <input type="date" [value]="getDateFormat(sale.date_ouput)" (input)="setDateOutput($event)"  matInput />
+          <input type="date" [readonly]="sale.situation == 'CANCELADO'" [value]="getDateFormat(sale.date_ouput)" (input)="setDateOutput($event)"  matInput />
         </mat-form-field>
         <mat-form-field  style="margin: 0 8px;" appearance="legacy">
           <mat-label>Data de Pagamento</mat-label>

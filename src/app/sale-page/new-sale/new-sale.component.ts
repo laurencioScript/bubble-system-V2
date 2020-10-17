@@ -105,13 +105,13 @@ export class NewSaleComponent implements OnInit {
         email: this.sale.client.email,
       },
       payment: {
-        debit_card: this.sale.payment.debit,
-        credit_card: this.sale.payment.credit,
-        check_pay: this.sale.payment.check,
-        money_pay: this.sale.payment.money,
-        discount: this.sale.payment.discount,
-        amount_paid: this.sale.payment.receiveValue,
-        value_total: this.sale.payment.valueTotal,
+        debit_card: this.sale.payment.debit || 0,
+        credit_card: this.sale.payment.credit || 0,
+        check_pay: this.sale.payment.check || 0,
+        money_pay: this.sale.payment.money || 0,
+        discount: this.sale.payment.discount || 0,
+        amount_paid: this.sale.payment.receiveValue || 0,
+        value_total: this.sale.payment.valueTotal || 0,
       },
       itens: this.sale.parts.map((iten) => {
         return {
