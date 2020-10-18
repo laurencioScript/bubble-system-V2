@@ -206,7 +206,7 @@ export class EditSaleComponent implements OnInit {
 
       
     }
-
+    console.log('>>> type == part',type == 'part');
     if(type == 'part'){
 
       if(event.value == 'Sim'){
@@ -220,12 +220,6 @@ export class EditSaleComponent implements OnInit {
       
     }
 
-    console.log(1,this.paymentSelect == 'Sim' && this.partSelect == 'Sim');
-    
-    console.log('2',this.sale.date_payment && this.sale.date_removed);
-    
-    console.log('Final',this.paymentSelect == 'Sim' && this.partSelect == 'Sim' && this.sale.date_payment && this.sale.date_removed);
-    
     if(this.paymentSelect == 'Sim' && this.partSelect == 'Sim' && this.sale.date_payment && this.sale.date_removed && this.sale.situation != 'CANCELADO'){
       this.sale.situation = "FINALIZADO";
     }

@@ -62,8 +62,16 @@ export class SalePaymentComponent implements OnInit {
     }
 
     this.receiveValue = this.valueTotal - this.payValue > 0 ? this.valueTotal - this.payValue : 0;
-    this.changeMoney = this.getValue(
-      this.payValue - this.valueTotal > 0 && this.money > 0 ? this.payValue - this.valueTotal : 0
+    
+    
+    let changeMoney = this.payValue - this.valueTotal > 0 && this.money > 0 ? this.payValue - this.valueTotal : 0
+
+
+    if( this.valueTotal - (this.credit + this.debit + this.check) <= 0 && this.money > 0 ){
+      changeMoney = this.money;
+    }
+
+    this.changeMoney = this.getValue(changeMoney
     );
 
     this.payment.emit({

@@ -163,22 +163,22 @@
            <div style="border: 3px solid #3c7eff;border-radius: 5px;padding-top: 1.34375em; display: flex;justify-content: space-around;">
               <mat-form-field class="input-field"  appearance="outline">
                 <mat-label>Credito</mat-label>
-                <input type="number" [(ngModel)]="sale.payment.credit_card" (ngModelChange)="calculation()" matInput />
+                <input autocomplete="off" type="number" [(ngModel)]="sale.payment.credit_card" (ngModelChange)="calculation()" matInput />
               </mat-form-field>
         
               <mat-form-field class="input-field"  appearance="outline">
                 <mat-label>Debito</mat-label>
-                <input type="number" [(ngModel)]="sale.payment.debit_card" (ngModelChange)="calculation()" matInput />
+                <input autocomplete="off" type="number" [(ngModel)]="sale.payment.debit_card" (ngModelChange)="calculation()" matInput />
               </mat-form-field>
         
               <mat-form-field class="input-field"  appearance="outline">
                 <mat-label>Dinheiro</mat-label>
-                <input type="number" [(ngModel)]="sale.payment.money_pay" (ngModelChange)="calculation()" matInput />
+                <input autocomplete="off" type="number" [(ngModel)]="sale.payment.money_pay" (ngModelChange)="calculation()" matInput />
               </mat-form-field>
         
               <mat-form-field class="input-field"  appearance="outline">
                 <mat-label>Cheque</mat-label>
-                <input type="number" [(ngModel)]="sale.payment.check_pay" (ngModelChange)="calculation()" matInput />
+                <input autocomplete="off" type="number" [(ngModel)]="sale.payment.check_pay" (ngModelChange)="calculation()" matInput />
               </mat-form-field>
            </div>
          </div>
@@ -191,24 +191,24 @@
               <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Desconto</mat-label>
                 <span matSuffix>%</span>
-                <input type="number" [(ngModel)]="sale.payment.discount" (ngModelChange)="calculation()" matInput />
+                <input type="number" autocomplete="off" [(ngModel)]="sale.payment.discount" (ngModelChange)="calculation()" matInput />
               </mat-form-field>
       
               <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Juros</mat-label>
                 <span matSuffix>%</span>
-                <input type="number" readonly [(ngModel)]="sale.payment.interest" (ngModelChange)="calculation()" matInput />
+                <input type="number" autocomplete="off" readonly [(ngModel)]="sale.payment.interest" (ngModelChange)="calculation()" matInput />
               </mat-form-field>
       
              
               <mat-form-field class="input-field" appearance="outline">
                 <mat-label>A Receber</mat-label>
-                <input [ngModel]="getValue(sale.payment.amount_paid)" readonly matInput />
+                <input autocomplete="off" [ngModel]="getValue(sale.payment.amount_paid)" readonly matInput />
               </mat-form-field>
     
               <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Valor Total</mat-label>
-                <input [ngModel]="getValue(sale.payment.value_total)" readonly matInput />
+                <input autocomplete="off" [ngModel]="getValue(sale.payment.value_total)" readonly matInput />
               </mat-form-field>
             </div>
     
@@ -251,11 +251,10 @@
         </div>
       </div>
 
-       <div style="margin: 16px 16px;display: flex;justify-content: flex-end;">
+       <div style="margin: 8px 16px;display: flex;justify-content: flex-end;">
          <button mat-raised-button style="margin-right: 8px;" type="button" mat-dialog-close>Cancelar</button>
          <button mat-raised-button style="background-color: chartreuse;color: white;" (click)="sendSale()" type="button">Atualizar</button>
        </div>
-
      
     </mat-tab>
   </mat-tab-group>

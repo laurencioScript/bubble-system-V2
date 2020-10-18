@@ -71,7 +71,7 @@ export class HomePageComponent implements OnInit {
       this.data = sales;
       this.dataClone = sales;
     }
-
+    console.log('>>> sales',sales);
     this.filterWeek(sales);
     this.filterParts(sales);
     this.filterClients(sales);
@@ -84,14 +84,33 @@ export class HomePageComponent implements OnInit {
         const clientExist = this.clientPopular.find(client => client.name == sale.client.nome)
           if(clientExist){
             clientExist.count++;
-            clientExist.parts += sale.itens.length
+            
+            sale.itens.forEach(iten => {
+              // console.log('>>> iten.amount',iten.amount);
+              if(iten.amount){
+                clientExist.parts += iten.amount;
+              }
+            })
+            
           }
           else{
-            this.clientPopular.push({
+            
+            let newIten = {
               name: sale.client.nome,
               count: 1, 
-              parts: sale.itens.length
-            });
+              parts: 0
+            }
+
+            sale.itens.forEach(iten => {
+
+              if(iten.amount){
+                console.log('>>> iten.amount',iten.amount);
+                newIten.parts += iten.amount;
+              }
+            })
+
+
+            this.clientPopular.push(newIten);
 
           }
       }
@@ -104,6 +123,15 @@ export class HomePageComponent implements OnInit {
       if (current.count > next.count) {
         return -1;
       }
+
+      if(current.count == next.count && current.parts > next.parts){
+        return -1;
+      }
+
+      if(current.count == next.count && current.parts < next.parts){
+        return 1;
+      }
+
       return 0;
     })
 
@@ -119,12 +147,12 @@ export class HomePageComponent implements OnInit {
         for (const iten of sale.itens) {
           const partExist = this.partPopular.find(part => part.name == iten.piece)
           if(partExist){
-            partExist.count++;
+            partExist.count += iten.amount;
           }
           else{
             this.partPopular.push({
               name: iten.piece,
-              count:1
+              count:iten.amount
             })
           }
 
@@ -152,11 +180,9 @@ export class HomePageComponent implements OnInit {
 
 
   filterWeek(sales){
-    const startWeek = moment().day(1);
-    const endWeek = moment().day(5);
-
+    const startWeek = moment().day(0);
+    const endWeek = moment().day(6);
     for (const sale of sales) {
-     
       if(
         moment(sale.date_ouput).isSameOrBefore(endWeek) && 
         moment(sale.date_ouput).isSameOrAfter(startWeek) && 
