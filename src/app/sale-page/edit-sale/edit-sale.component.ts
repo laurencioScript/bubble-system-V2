@@ -4,6 +4,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NewPartComponent } from '../new-sale/shared/sale-part/new-part/new-part.component';
 import * as moment from 'moment';
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 
 @Component({
   selector: 'app-edit-sale',
@@ -230,8 +231,19 @@ export class EditSaleComponent implements OnInit {
     }
   }
 
+  openDialogEdit(){
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {tittle:'Aviso',message:'Você tem certeza que deseja finalizar a venda?'},
+    });
+
+    dialogRef.afterClosed().subscribe(async (response) => {
+      if(response){
+        this.sendSale()
+      }
+    });
+  }
+
   sendSale(): void {
-    
     this.dialogRef.close(this.sale);
   }
 }

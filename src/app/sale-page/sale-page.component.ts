@@ -137,19 +137,7 @@ export class SalePageComponent implements OnInit {
         this.deleteSale(element)
       }
     });
-  }
-
-  openDialogEdit(element){
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: {tittle:'Aviso',message:'Você tem certeza que deseja finalizar a venda?'},
-    });
-
-    dialogRef.afterClosed().subscribe(async (response) => {
-      if(response){
-        this.editSale(element)
-      }
-    });
-  }
+  } 
 
   openSale(saleExist: any = {}) {
     const dialogRef = this.dialog.open(EditSaleComponent, {
