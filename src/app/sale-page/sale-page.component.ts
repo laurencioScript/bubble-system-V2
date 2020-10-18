@@ -120,7 +120,9 @@ export class SalePageComponent implements OnInit {
 
   async deleteSale(sale) {
     await this.serviceSale.deleteSale(sale.id_service);
-    await this.load();
+    this.data = this.data.filter(saleExist => saleExist.id_service != sale.id_service )
+    this.dataClone = this.clone(this.data);
+    this.paginator();
   }
 
   editSale(element){

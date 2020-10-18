@@ -192,15 +192,21 @@ export class HomePageComponent implements OnInit {
   filterWeek(sales){
     const startWeek = moment().day(0);
     const endWeek = moment().day(6);
+    if(sales && Array.isArray(sales)){
+      return ;
+    }
+
     for (const sale of sales) {
       if(
         moment(sale.date_ouput).isSameOrBefore(endWeek) && 
         moment(sale.date_ouput).isSameOrAfter(startWeek) && 
         sale.situation == "EM PROCESSO"
         ){
-
-          const existClient = this.clients.find(client => client.cpf_cnpj == sale.client.cpf_cnpj);
-            
+          let existClient = null; 
+          
+          if(this.clients && Array.isArray(this.clients)){
+            existClient = this.clients.find(client => client.cpf_cnpj == sale.client.cpf_cnpj);
+          }
 
           if(existClient){
             sale.client.nome = existClient.name_client;
