@@ -15,6 +15,7 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { SalePageComponent } from './sale-page/sale-page.component';
 import { NewSaleComponent } from './sale-page/new-sale/new-sale.component';
 import { EditSaleComponent} from './sale-page/edit-sale/edit-sale.component';
+import { DialogComponent } from './shared/dialog/dialog.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [HomeGuard] },
@@ -26,7 +27,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfilePageComponent, canActivate: [AuthGuard] },
   { path: 'sale', component: SalePageComponent, canActivate: [AuthGuard] },
   { path: 'new-sale', component: NewSaleComponent, canActivate: [AuthGuard] },
-   { path: 'dev', component: EditSaleComponent },
+   { path: 'dev', component: DialogComponent },
   { path: '**', component: HomePageComponent, canActivate: [AuthGuard] },
 ];
 

@@ -3,6 +3,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { SaleService } from '../service/sale.service';
 import * as moment from 'moment';
+import { ClientService } from '../service/client.service';
 
 @Component({
   selector: 'app-home-page',
@@ -58,20 +59,20 @@ export class HomePageComponent implements OnInit {
   dataSourceClient = new MatTableDataSource<any>();
 
 
-  constructor(public readonly serviceSale: SaleService) { }
+  constructor(public readonly serviceSale: SaleService, public readonly clientService: ClientService) { }
 
   async ngOnInit() {
     await this.load();
   }
 
+  clients : any = [];
   async load() {
     const sales = await this.serviceSale.getSaleAll();
-    
+    this.clients = await  this.clientService.getClients();
     if (sales) {
       this.data = sales;
       this.dataClone = sales;
     }
-    console.log('>>> sales',sales);
     this.filterWeek(sales);
     this.filterParts(sales);
     this.filterClients(sales);
@@ -81,12 +82,11 @@ export class HomePageComponent implements OnInit {
   filterClients(sales){
     for (const sale of sales) {
       if(moment(sale.date_input).month() == moment().month() && moment(sale.date_input).year() == moment().year()){
-        const clientExist = this.clientPopular.find(client => client.name == sale.client.nome)
+        const clientExist = this.clientPopular.find(client => client.cpf_cnpj == sale.client.cpf_cnpj)
           if(clientExist){
             clientExist.count++;
             
             sale.itens.forEach(iten => {
-              // console.log('>>> iten.amount',iten.amount);
               if(iten.amount){
                 clientExist.parts += iten.amount;
               }
@@ -95,16 +95,26 @@ export class HomePageComponent implements OnInit {
           }
           else{
             
+            const existClient = this.clients.find(client => client.cpf_cnpj == sale.client.cpf_cnpj);
+            
             let newIten = {
               name: sale.client.nome,
               count: 1, 
-              parts: 0
+              parts: 0,
+              cpf_cnpj:sale.client.cpf_cnpj
+            }
+
+            if(existClient){
+              newIten = {
+                name: existClient.name_client,
+                count: 1, 
+                parts: 0,
+                cpf_cnpj:existClient.cpf_cnpj
+              }
             }
 
             sale.itens.forEach(iten => {
-
               if(iten.amount){
-                console.log('>>> iten.amount',iten.amount);
                 newIten.parts += iten.amount;
               }
             })
@@ -188,6 +198,14 @@ export class HomePageComponent implements OnInit {
         moment(sale.date_ouput).isSameOrAfter(startWeek) && 
         sale.situation == "EM PROCESSO"
         ){
+
+          const existClient = this.clients.find(client => client.cpf_cnpj == sale.client.cpf_cnpj);
+            
+
+          if(existClient){
+            sale.client.nome = existClient.name_client;
+          }
+
         this.saleWeek.push(sale);
         
       }

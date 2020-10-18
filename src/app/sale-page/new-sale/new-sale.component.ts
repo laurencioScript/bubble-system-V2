@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SaleService } from 'src/app/service/sale.service';
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 
 @Component({
   selector: 'app-new-sale',
@@ -20,6 +22,7 @@ export class NewSaleComponent implements OnInit {
   };
   constructor(
     private _formBuilder: FormBuilder,
+    public dialog: MatDialog,
     private router: Router,
     public readonly serviceSale: SaleService
   ) {}
@@ -87,6 +90,30 @@ export class NewSaleComponent implements OnInit {
     const newSale = this.tratamentObject();
     await this.serviceSale.createSale(newSale);
     this.router.navigate(['/sale']);
+  }
+
+  openDialogSave(){
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {tittle:'Aviso',message:'Você tem certeza que deseja finalizar a venda?'},
+    });
+
+    dialogRef.afterClosed().subscribe(async (response) => {
+      if(response){
+        this.save()
+      }
+    });
+  }
+
+  openDialogBack(){
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {tittle:'Aviso',message:'Você tem certeza que deseja finalizar a venda?'},
+    });
+
+    dialogRef.afterClosed().subscribe(async (response) => {
+      if(response){
+        this.back()
+      }
+    });
   }
 
   tratamentObject() {

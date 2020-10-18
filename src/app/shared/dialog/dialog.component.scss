@@ -1,0 +1,23 @@
+mat-dialog-content{
+    overflow: hidden;
+    height: 90px;
+    width: 100%;
+
+    padding: 0px;
+    margin: 0px;
+
+    p{
+        font-size: 20px;
+
+    }
+
+    mat-dialog-actions{
+        button{
+            width: 120px;
+        }
+        #confirmButton{
+            color: #ffffff;
+            background-color: #3C7EFF;
+        }
+    }
+}

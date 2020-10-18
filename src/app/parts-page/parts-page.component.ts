@@ -18,7 +18,7 @@ interface genericService {
   styleUrls: ['./parts-page.component.scss'],
 })
 export class PartsPageComponent implements OnInit {
-  dataClone: any;
+  dataClone: any = [];
   pageEvent: PageEvent;
   pageIndex: number = 0;
   pageSize: number = 5;
@@ -37,15 +37,18 @@ export class PartsPageComponent implements OnInit {
 
   async ngOnInit() {
     const pieces = await this.serviceParts.getParts();
-    this.data = pieces.map((piece) => {
-      return {
-        id: piece.id_piece,
-        name: piece.piece_name,
-        unity: piece.unity,
-        value: piece.value,
-      };
-    });
-    this.dataClone = this.clone(this.data);
+    if(pieces){
+      this.data = pieces.map((piece) => {
+        return {
+          id: piece.id_piece,
+          name: piece.piece_name,
+          unity: piece.unity,
+          value: piece.value,
+        };
+      });
+      this.dataClone = this.clone(this.data);
+    }
+    
     this.length = this.data && Array.isArray(this.data) ? this.data.length : 0;
     this.partsService = {
       create: (data) => this.serviceParts.createParts(data),
@@ -152,6 +155,7 @@ export class PartsPageComponent implements OnInit {
         return;
       }
       // create
+
       if (!objectGeneric.id && !this.dataClone.find((value) => objectGeneric.name == value.name)) {
         let generic;
         generic = await this.partsService.create({
@@ -160,6 +164,8 @@ export class PartsPageComponent implements OnInit {
         });
         this.data.push(generic);
       }
+
+
       //update
       if (objectGeneric.id) {
         delete objectGeneric.visible;
@@ -251,6 +257,9 @@ export class PartsPageComponent implements OnInit {
   }
 
   clone(object: any) {
+    if(!object){
+      return [];
+    }
     return JSON.parse(JSON.stringify(object));
   }
 }

@@ -52,7 +52,6 @@ export class ClientService {
           cep: data.cep,
         },
       };
-      console.log('>>> body', body);
       const options = this.options;
       const id = data.id_client;
       const { result }: any = await this.http
@@ -83,7 +82,6 @@ export class ClientService {
 
   async createClient(data) {
     try {
-      console.log('>>> this.data', data);
       const options = this.options;
       const responseRequest: any = await this.http
         .post(`${environment.apiUrl}/client/register`, data, options)

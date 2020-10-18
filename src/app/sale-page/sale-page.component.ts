@@ -4,6 +4,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { SaleService } from '../service/sale.service';
+import { DialogComponent } from '../shared/dialog/dialog.component';
 import { EditSaleComponent } from './edit-sale/edit-sale.component';
 import { NewSaleComponent } from './new-sale/new-sale.component';
 
@@ -62,7 +63,6 @@ export class SalePageComponent implements OnInit {
       this.data = sales;
       this.dataClone = sales;
     }
-    console.log('>>> sales',sales);
     this.paginator();
   }
 
@@ -127,13 +127,36 @@ export class SalePageComponent implements OnInit {
     this.openSale(element);
   }
 
+  openDialogRemove(element){
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {tittle:'Aviso',message:'Você tem certeza que deseja finalizar a venda?'},
+    });
+
+    dialogRef.afterClosed().subscribe(async (response) => {
+      if(response){
+        this.deleteSale(element)
+      }
+    });
+  }
+
+  openDialogEdit(element){
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {tittle:'Aviso',message:'Você tem certeza que deseja finalizar a venda?'},
+    });
+
+    dialogRef.afterClosed().subscribe(async (response) => {
+      if(response){
+        this.editSale(element)
+      }
+    });
+  }
+
   openSale(saleExist: any = {}) {
     const dialogRef = this.dialog.open(EditSaleComponent, {
       data: this.clone(saleExist),
     });
 
     dialogRef.afterClosed().subscribe(async (sale) => {
-      console.log('>>> sale',sale);
 
       if(!sale){
         return
@@ -143,7 +166,6 @@ export class SalePageComponent implements OnInit {
       
       this.data = this.dataClone.map(saleExist => {
         if(saleExist.id_service == result.id_service){
-          console.log(saleExist.id_service , result.id_service);
           saleExist = result;
         }
 

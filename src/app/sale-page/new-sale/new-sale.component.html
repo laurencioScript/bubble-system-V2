@@ -13,7 +13,7 @@
           <ng-template matStepLabel>Cliente</ng-template>
           <app-sale-client (client)="setClient($event)"></app-sale-client>
           <div style="display: flex; justify-content: space-between;">
-            <button mat-raised-button (click)="back()">Cancelar</button>
+            <button mat-raised-button (click)="openDialogBack()">Cancelar</button>
             <button mat-raised-button color="primary" matStepperNext>Proximo</button>
           </div>
         </form>
@@ -47,7 +47,7 @@
             <button mat-raised-button matStepperPrevious>Voltar</button>
             <button
               mat-raised-button
-              (click)="save()"
+              (click)="openDialogSave()"
               style="background-color: #3acc6c; color: white;"
             >
               Finalizar

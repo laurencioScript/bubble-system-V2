@@ -17,7 +17,6 @@ export class EditSaleComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public sale: any,
     public dialog: MatDialog
   ) {
-    // console.log('>>> this.sale',this.sale);
     // this.sale = JSON.parse(`{"id_service":"a5497e9b-26a7-4af4-ad0c-38858ac1c273","payment_id":"18b506a8-1fe7-49e5-a139-ac8f98d0dcd7","date_input":"2020-10-03T23:45:56.622Z","date_ouput":"2020-10-06T00:00:00.000Z","date_payment":null,"date_removed":null,"observation":"","situation":"EM PROCESSO","client":{"nome":"sasuke uchiha","cpf_cnpj":"38165719050","contato":["1335661547"],"tipo":"J","email":"sasuke_trevoso@gmail.com"},"rol":"E8X2Y5ET","payment":{"id_payment":"18b506a8-1fe7-49e5-a139-ac8f98d0dcd7","debit_card":"0","credit_card":"0","check_pay":"0","money_pay":"0","discount":0,"amount_paid":"25","value_total":"25"},"itens":[{"id_item":"ef1751fc-d24b-48b7-aa89-8b6a3e1ca2b5","service_id":"a5497e9b-26a7-4af4-ad0c-38858ac1c273","piece":"tapete","amount":5,"unity":"metros","value_unity":"5","value_total":"25","colors":[],"defects":[],"characteristics":[]}]}`);
     this.paymentSelect = !this.sale.date_payment ? 'Não' : 'Sim';
     this.partSelect = !this.sale.date_removed ? 'Não' : 'Sim';
@@ -25,7 +24,6 @@ export class EditSaleComponent implements OnInit {
     this.sale.payment.interest = this.sale.payment.interest ? this.sale.payment.interest : 0;
     this.data = this.sale.itens;
     this.dataClone = this.clone(this.data);
-    // console.log('>>> data',this.data);
     this.paginator();
   }
   partsOutputOptions = ['Sim','Não'];
@@ -157,7 +155,6 @@ export class EditSaleComponent implements OnInit {
         this.sale.payment.value_total = 0;
       }
     }
-    // console.log('>>> this.sale.payment.value_total - payValue',this.sale.payment.value_total , payValue);
     this.sale.payment.amount_paid = this.sale.payment.value_total - payValue > 0 ? this.sale.payment.value_total - payValue : 0;
     // this.changeMoney = this.getValue(
     //   payValue - this.sale.payment.value_total > 0 && this.money > 0 ? payValue - this.sale.payment.value_total : 0
@@ -206,7 +203,6 @@ export class EditSaleComponent implements OnInit {
 
       
     }
-    console.log('>>> type == part',type == 'part');
     if(type == 'part'){
 
       if(event.value == 'Sim'){
@@ -235,7 +231,6 @@ export class EditSaleComponent implements OnInit {
   }
 
   sendSale(): void {
-    console.log('this.sale',this.sale);
     
     this.dialogRef.close(this.sale);
   }
