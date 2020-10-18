@@ -192,7 +192,7 @@ export class HomePageComponent implements OnInit {
   filterWeek(sales){
     const startWeek = moment().day(0);
     const endWeek = moment().day(6);
-    if(sales && Array.isArray(sales)){
+    if(!sales || !Array.isArray(sales)){
       return ;
     }
 
