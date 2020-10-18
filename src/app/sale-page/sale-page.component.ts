@@ -62,6 +62,7 @@ export class SalePageComponent implements OnInit {
       this.data = sales;
       this.dataClone = sales;
     }
+    console.log('>>> sales',sales);
     this.paginator();
   }
 
@@ -156,9 +157,10 @@ export class SalePageComponent implements OnInit {
   }
 
   filter() {
-    // this.data = this.dataClone;
-    // this.pageIndex = 0;
-    // this.data = this.data.filter((value) => value.name.indexOf(this.searchValue) >= 0);
-    // this.paginator();
+    this.data = this.dataClone;
+    this.pageIndex = 0;
+    this.data = this.data.filter((value) =>  value.rol.toLowerCase().indexOf(this.searchValue) >= 0 || 
+    value.client.cpf_cnpj.indexOf(this.searchValue) >= 0 || value.client.nome.indexOf(this.searchValue) >= 0);
+    this.paginator();
   }
 }

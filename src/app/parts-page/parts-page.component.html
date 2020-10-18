@@ -13,6 +13,7 @@
               matInput
               placeholder="Pesquise aqui"
               [(ngModel)]="searchValue"
+              oninput="this.value = this.value.toLowerCase()"
               (keyup)="filter()"
               autocomplete="off"
             />
